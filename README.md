@@ -1,2 +1,0 @@
-# stockishV2
- 

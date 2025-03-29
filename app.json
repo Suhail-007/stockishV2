@@ -1,20 +1,18 @@
 {
   "expo": {
     "name": "stockishV2",
-    "slug": "stockishV2",
+    "slug": "stockish",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-
     "ios": {
       "supportsTablet": true
     },
@@ -32,6 +30,7 @@
     "plugins": [
       "expo-router",
       "expo-font",
+      "@logrocket/react-native",
       [
         "expo-secure-store",
         {
@@ -49,7 +48,18 @@
       ]
     ],
     "experiments": {
-      "typedRoutes": true
-    }
+      "typedRoutes": true,
+      "baseUrl": "stockishV2"
+    },
+
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f4d875de-dfca-4a6f-958e-65ac653b1f9b"
+      }
+    },
+    "owner": "suhail-007"
   }
 }

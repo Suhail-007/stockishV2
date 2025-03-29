@@ -8,12 +8,12 @@ import { Fonts } from '../../constants/fonts';
 
 export {
   // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
+  ErrorBoundary
 } from 'expo-router';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: '(tabs)'
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -21,6 +21,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function AppLayout() {
   const { session, isLoading } = useSession();
+  console.log('🚀 ~ AppLayout ~ isLoading:', isLoading);
+  console.log('🚀 ~ AppLayout ~ session:', session);
 
   // Set up the auth context and render our layout inside of it.
 
@@ -29,7 +31,7 @@ export default function AppLayout() {
     [Fonts.quicksandRegular]: require('../../assets/fonts/Quicksand-Regular.ttf'),
     [Fonts.quicksandMedium]: require('../../assets/fonts/Quicksand-Medium.ttf'),
     [Fonts.quicksandSemiBold]: require('../../assets/fonts/Quicksand-SemiBold.ttf'),
-    [Fonts.quicksandBold]: require('../../assets/fonts/Quicksand-Bold.ttf'),
+    [Fonts.quicksandBold]: require('../../assets/fonts/Quicksand-Bold.ttf')
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -41,8 +43,6 @@ export default function AppLayout() {
     if (loaded) {
       SplashScreen.hideAsync();
     }
-    console.log('🚀 ~ useEffect ~ loaded:', loaded);
-    console.log('🚀 ~ AppLayout ~ isLoading:', isLoading);
   }, [loaded]);
 
   if (!loaded) {
@@ -58,5 +58,10 @@ export default function AppLayout() {
   }
 
   // This layout can be deferred because it's not the root layout.
-  return <Stack initialRouteName='(tabs)' screenOptions={{ headerShown: false }} />;
+  return (
+    <Stack
+      initialRouteName='(tabs)'
+      screenOptions={{ headerShown: false }}
+    />
+  );
 }

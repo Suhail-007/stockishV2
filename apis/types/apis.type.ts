@@ -1,9 +1,6 @@
-export type BASE_RESPONSE<T> = {
+export type BASE_RESPONSE<T> = API_BASE_RESPONSE & {
   data: T;
-  message: string;
-  error?: string | ValidationError[] | Error[];
-  status: number;
-  success: boolean;
+ 
 };
 
 export type ValidationError = {
@@ -14,4 +11,9 @@ export type ValidationError = {
   location: string;
 };
 
-export type Error = {};
+export type API_BASE_RESPONSE = {
+  message: string;
+  error?: string | ValidationError[];
+  status: number;
+  success: boolean;
+};

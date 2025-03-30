@@ -35,7 +35,7 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const { control, handleSubmit, watch, setValue } = useForm<FormData>();
   const dispatch = useAppDispatch();
-  const email = watch('email');
+  const [email, password] = watch(['email', 'password']);
 
   useEffect(() => {
     if (emailParam) {
@@ -74,32 +74,41 @@ export default function SignIn() {
     isPending: signInIsPending
   } = useMutation({
     mutationFn: login,
-    mutationKey: [' checkEmail', login],
-    onSuccess: ({ data }) => {
-      if (data.status === STATUS_CODES.success) {
-        const { token, ...userData } = data.data;
-
-        signIn(token);
-
-        dispatch(
-          setAuth({
-            isAuth: true,
-            user: {
-              ...userData,
-              isTenant: userData.role === USER_ROLE.admin ? true : false
-            }
-          })
-        );
-        router.replace('/(app)/(tabs)');
-      }
-    }
+    mutationKey: [' checkEmail', email, password]
   });
 
   const TYPED_EMAIL_ERROR = emailError as unknown as API_BASE_RESPONSE;
   const TYPED_SIGNIN_ERROR = signInError as unknown as API_BASE_RESPONSE;
 
   const handleSubmitEmail = () => checkEmailMutation(email);
-  const handleSignIn = ({ email, password }: FormData) => password && signInMutation({ email, password });
+  const handleSignIn = async ({ email, password }: FormData) => {
+    if (!password) return;
+
+    const res = await signInMutation(
+      { email, password },
+      {
+        onSuccess({ data }, variables, context) {
+          const { token, ...userData } = data.data;
+
+          signIn(token);
+
+          dispatch(
+            setAuth({
+              isAuth: true,
+              user: {
+                ...userData,
+                isTenant: userData.role === USER_ROLE.admin ? true : false
+              }
+            })
+          );
+          router.replace('/(app)/(tabs)');
+        },
+        onError(error, variables, context) {
+          console.log('🚀 ~ onError ~ error:', JSON.stringify(error, null, 2));
+        }
+      }
+    );
+  };
 
   const dynamicStyles = useMemo(
     () => ({
@@ -239,9 +248,9 @@ export default function SignIn() {
                       />
                     ) : (
                       <TextInput.Icon
-                        color={colors.tertiary}
                         icon={() => (
                           <MaterialCommunityIcons
+                            color={colors.tertiary}
                             name={showPassword ? 'eye-off' : 'eye'}
                             size={24}
                             onPress={() => setShowPassword(!showPassword)}
@@ -260,10 +269,10 @@ export default function SignIn() {
         </Animated.View>
       )}
 
-      {TYPED_EMAIL_ERROR && TYPED_EMAIL_ERROR.message !== 'Validation error' && (
+      {((TYPED_EMAIL_ERROR && TYPED_EMAIL_ERROR.message !== 'Validation error') || TYPED_SIGNIN_ERROR) && (
         <Error.Message
           contStyle={styles.errorCont}
-          msg={TYPED_EMAIL_ERROR?.message}
+          msg={TYPED_EMAIL_ERROR?.message || TYPED_SIGNIN_ERROR?.message}
         />
       )}
 

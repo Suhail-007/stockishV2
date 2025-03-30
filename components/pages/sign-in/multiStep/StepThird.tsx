@@ -31,7 +31,7 @@ const StepThird: FC<StepsProps<SignUpFormStepThree>> = ({ control }) => {
             required: 'Password is required',
             minLength: {
               value: 8,
-              message: 'Password must be at least 8 characters'
+              message: 'Password must be at least 6 characters'
             },
             validate: (value) => {
               if (!value.match(/[a-z]/)) {

@@ -43,7 +43,11 @@ const SignUp = () => {
   const [formData, setFormData] = useState<SignUpFormData | null>(null);
   const dispatch = useAppDispatch();
   const { email: emailParam } = useLocalSearchParams<{ email: string }>();
-  const { control: controlFirstStep, handleSubmit: handleSubmitFirstStep } = useForm<SignUpFormStepOne>({
+  const {
+    control: controlFirstStep,
+    handleSubmit: handleSubmitFirstStep,
+    watch
+  } = useForm<SignUpFormStepOne>({
     defaultValues: {
       email: emailParam,
       phoneNumber: formData?.phoneNumber || '',
@@ -52,6 +56,7 @@ const SignUp = () => {
   });
   const { control: controlSecondStep, handleSubmit: handleSubmitSecondStep } = useForm<SignUpFormStepTwo>();
   const { control: controlThirdStep, handleSubmit: handleSubmitThirdStep } = useForm<SignUpFormStepThree>();
+  const email = watch('email');
 
   const { colors } = useThemeColors();
 
@@ -82,6 +87,8 @@ const SignUp = () => {
     mutationFn: createTenant,
     mutationKey: ['create-tenant', formData]
   });
+
+  const TYPED_CREATE_TENANT_ERROR = createTenantError as unknown as API_BASE_RESPONSE;
 
   const onPrevStep = () => setStep((prevS) => prevS - 1);
 
@@ -133,22 +140,6 @@ const SignUp = () => {
     router.back();
   };
 
-  const assignNextHandler = useCallback(() => {
-    if (step === 0) {
-      handleSubmitFirstStep(onNextStep)();
-      return;
-    }
-
-    if (step === 1) {
-      handleSubmitSecondStep(onNextStep)();
-      return;
-    }
-
-    handleSubmitThirdStep(onSubmit)();
-
-    return;
-  }, []);
-
   const dynamicStyles = {
     container: {
       backgroundColor: colors.background
@@ -176,7 +167,7 @@ const SignUp = () => {
         <Text
           variant='bodyMedium'
           style={[styles.emailHeading, dynamicStyles.emailHeading]}>
-          {formData?.email || emailParam}
+          {email || emailParam}
         </Text>
       </View>
       <ProgressSteps
@@ -215,14 +206,16 @@ const SignUp = () => {
 
       {hideError && (
         <View style={styles.errorContainer}>
-          {(createTenantError as unknown as API_BASE_RESPONSE)?.message === ValidationErrorString ? (
-            <Error.ValidationErrors
-              data={(createTenantError as unknown as API_BASE_RESPONSE)?.error as ValidationError[]}
-            />
+          {TYPED_CREATE_TENANT_ERROR?.message === ValidationErrorString ? (
+            <Error.ValidationErrors data={TYPED_CREATE_TENANT_ERROR?.error as ValidationError[]} />
           ) : (
             <Error.Message
-              statusCode={(createTenantError as unknown as API_BASE_RESPONSE)?.status}
-              msg={(createTenantError as unknown as API_BASE_RESPONSE)?.message}
+              statusCode={TYPED_CREATE_TENANT_ERROR?.status}
+              msg={
+                TYPED_CREATE_TENANT_ERROR.status === STATUS_CODES.conflict
+                  ? 'Tenant already exist, Please try with different number'
+                  : TYPED_CREATE_TENANT_ERROR?.message
+              }
             />
           )}
         </View>
@@ -296,7 +289,8 @@ const styles = StyleSheet.create({
   },
 
   errorContainer: {
-    marginBottom: scale(20)
+    marginBottom: scale(20),
+    paddingInline: 20
   },
 
   actionBtnsCont: {

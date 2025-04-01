@@ -14,13 +14,16 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.suhail007.stockish"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "usesCleartextTraffic": true,
+      "package": "com.suhail007.stockish"
     },
     "web": {
       "bundler": "metro",
@@ -42,7 +45,8 @@
         "expo-build-properties",
         {
           "android": {
-            "usesCleartextTraffic": true
+            "usesCleartextTraffic": true,
+            "minSdkVersion": 24
           }
         }
       ]
@@ -51,7 +55,6 @@
       "typedRoutes": true,
       "baseUrl": "stockishV2"
     },
-
     "extra": {
       "router": {
         "origin": false

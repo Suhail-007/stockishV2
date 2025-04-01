@@ -84,7 +84,7 @@ export default function SignIn() {
   const handleSignIn = async ({ email, password }: FormData) => {
     if (!password) return;
 
-    const res = await signInMutation(
+    await signInMutation(
       { email, password },
       {
         onSuccess({ data }, variables, context) {
@@ -104,7 +104,7 @@ export default function SignIn() {
           router.replace('/(app)/(tabs)');
         },
         onError(error, variables, context) {
-          console.log('🚀 ~ onError ~ error:', JSON.stringify(error, null, 2));
+          console.log(error);
         }
       }
     );
@@ -272,6 +272,7 @@ export default function SignIn() {
       {((TYPED_EMAIL_ERROR && TYPED_EMAIL_ERROR.message !== 'Validation error') || TYPED_SIGNIN_ERROR) && (
         <Error.Message
           contStyle={styles.errorCont}
+          statusCode={TYPED_EMAIL_ERROR?.status || TYPED_SIGNIN_ERROR?.status}
           msg={TYPED_EMAIL_ERROR?.message || TYPED_SIGNIN_ERROR?.message}
         />
       )}

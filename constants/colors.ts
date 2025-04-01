@@ -48,7 +48,10 @@ const Colors = {
     borderDefault: '#CCCCCC',
     borderFocused: '#2969B7',
     borderError: '#D32F2F',
-    borderDisabled: '#E0E0E0'
+    borderDisabled: '#E0E0E0',
+
+    //shades
+    primary100: '#cfc1f2'
   },
 
   dark: {
@@ -91,7 +94,10 @@ const Colors = {
     borderDefault: '#444444',
     borderFocused: '#3671b9',
     borderError: '#FF6B6B',
-    borderDisabled: '#555555'
+    borderDisabled: '#555555',
+
+    //shades
+    primary100: '#cfc1f2'
   }
 };
 

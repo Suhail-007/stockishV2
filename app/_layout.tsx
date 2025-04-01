@@ -8,7 +8,7 @@ import { SessionProvider } from '../ctx';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TanStackQueryProvider from '../query/queryClient';
 import Colors from '../constants/colors';
-import LogRocket from '@logrocket/react-native';
+// import LogRocket from '@logrocket/react-native';
 import { useEffect } from 'react';
 
 export default function Root() {
@@ -26,13 +26,13 @@ export default function Root() {
     }
   };
 
-  useEffect(() => {
-    LogRocket.init('fs81e5/stockish');
-    LogRocket.identify('I2', {
-      name: 'James Morrison',
-      email: 'jamesmorrison@example.com'
-    });
-  }, []);
+  // useEffect(() => {
+  //   LogRocket.init('fs81e5/stockish');
+  //   LogRocket.identify('I2', {
+  //     name: 'James Morrison',
+  //     email: 'jamesmorrison@example.com'
+  //   });
+  // }, []);
 
   const barStyle = Colors[(colorScheme as keyof typeof Colors) || 'light'].statusBarContent;
 

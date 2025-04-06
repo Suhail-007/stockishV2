@@ -51,7 +51,11 @@ const Colors = {
     borderDisabled: '#E0E0E0',
 
     //shades
-    primary100: '#cfc1f2'
+    primary100: '#cfc1f2',
+
+    //Skeleton
+    skeleton: '#dfdddd',
+    skeletonHighlight: '#f3f3f3'
   },
 
   dark: {
@@ -97,7 +101,11 @@ const Colors = {
     borderDisabled: '#555555',
 
     //shades
-    primary100: '#cfc1f2'
+    primary100: '#cfc1f2',
+
+    //Skeleton
+    skeleton: '#555',
+    skeletonHighlight: '#444'
   }
 };
 

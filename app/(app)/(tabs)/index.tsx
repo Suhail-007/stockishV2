@@ -1,19 +1,43 @@
-import { View } from 'react-native';
-import { useSession } from '../../../ctx';
-import { Text } from 'react-native-paper';
+import { ScrollView } from 'react-native';
+import { Fragment, useEffect } from 'react';
 
-export default function Home() {
-  const { signOut } = useSession();
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import SkeletonLoader from '@/components/SkeletonLoader';
+import { StyleSheet } from 'react-native';
+import Error from '@/components/ui/Error';
+import { fetchUserDetails } from '@/features/auth';
+import Home from '../../../components/pages/home/Home';
+
+export default function Index() {
+  const { loading, errorMessage } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserDetails());
+  }, [dispatch]);
 
   return (
-    <View>
-      <Text
-        onPress={() => {
-          // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
-          signOut();
-        }}>
-        Sign Out
-      </Text>
-    </View>
+    <ScrollView style={styles.root}>
+      {errorMessage && <Error.Message msg={errorMessage} />}
+
+      {loading && (
+        <Fragment>
+          <SkeletonLoader
+            visible={loading}
+            noOfChildren={1}
+            render={(SkeletonPlaceholder) => <SkeletonPlaceholder></SkeletonPlaceholder>}></SkeletonLoader>
+        </Fragment>
+      )}
+
+      {!loading && <Home />}
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    padding: 10,
+    paddingTop: 20,
+    flex: 1
+  }
+});

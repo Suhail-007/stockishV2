@@ -22,6 +22,8 @@ import TextInput from '../components/ui/TextInput';
 import { USER_ROLE } from '../enums/User.enum';
 import Error from '../components/ui/Error';
 import { API_BASE_RESPONSE, ValidationError } from '../apis/types/apis.type';
+import { setItemStorageAsync, setSecureAsync } from '../utils/storage';
+import { StorageKeys } from '../constants/variables';
 
 // <a href="https://www.freepik.com/free-vector/online-doctor-concept-illustration_7768657.htm">Image by storyset on Freepik</a>
 const { width } = Dimensions.get('window');
@@ -87,10 +89,22 @@ export default function SignIn() {
     await signInMutation(
       { email, password },
       {
-        onSuccess({ data }, variables, context) {
-          const { token, ...userData } = data.data;
+        onSuccess({ data }) {
+          const { token, refreshToken, ...userData } = data.data;
 
           signIn(token);
+
+          //set user info to get user details from api
+          setItemStorageAsync(
+            StorageKeys.USER_INFO,
+            JSON.stringify({
+              userId: userData.id,
+              userRole: userData.role,
+              tenantId: userData.tenantId
+            })
+          );
+
+          setSecureAsync(StorageKeys.REFRESH_TOKEN, refreshToken);
 
           dispatch(
             setAuth({

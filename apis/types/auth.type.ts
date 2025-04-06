@@ -31,4 +31,5 @@ export type LoginResponseData = {
   updatedAt: string;
   tenantId: number;
   token: string;
+  refreshToken: string;
 };

@@ -40,7 +40,7 @@ export const fetchUserDetails = createAsyncThunk('auth/fetchUserDetails', async 
     const { data } = await getUserDetails(getUserDetailsPayload);
 
     if (data.status === STATUS_CODES.success) {
-      return data.data; // Return user details
+      return data.data;
     } else {
       return rejectWithValue('Failed to fetch user details');
     }

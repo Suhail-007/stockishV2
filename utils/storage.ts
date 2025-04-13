@@ -9,7 +9,7 @@ import { CallbackWithResult } from '@react-native-async-storage/async-storage/li
  * @param value The value to store.
  * @param callback An optional callback invoked with the result of the operation.
  */
-export const setItemAsync = async (key: string, value: string, callback?: CallbackWithResult<string>) => {
+export const setItemStorageAsync = async (key: string, value: string, callback?: CallbackWithResult<string>) => {
   try {
     await AsyncStorage.setItem(key, value, callback);
   } catch (error) {
@@ -24,10 +24,25 @@ export const setItemAsync = async (key: string, value: string, callback?: Callba
  * @param callback An optional callback invoked with the value of the item.
  * @returns The value of the item.
  */
-export const getItemAsync = async (key: string, callback?: CallbackWithResult<string>) => {
+export const getItemStorageAsync = async (key: string, callback?: CallbackWithResult<string>) => {
   try {
     const value = await AsyncStorage.getItem(key, callback);
     return value;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/**
+ * Removes an item from AsyncStorage.
+ *
+ * @param key The key of the item to remove.
+ * @param callback An optional callback invoked with the result of the operation.
+ */
+
+export const removeItemStorageAsync = async (key: string, callback?: CallbackWithResult<string>) => {
+  try {
+    await AsyncStorage.removeItem(key, callback);
   } catch (error) {
     console.error(error);
   }
@@ -40,7 +55,7 @@ export const getItemAsync = async (key: string, callback?: CallbackWithResult<st
  * @param value The value to store.
  * @param options An optional options object.
  */
-export const setTokenSecureAsync = async (key: string, value: string, options?: SecureStore.SecureStoreOptions) => {
+export const setSecureAsync = async (key: string, value: string, options?: SecureStore.SecureStoreOptions) => {
   try {
     await SecureStore.setItemAsync(key, value, options);
   } catch (error) {
@@ -55,7 +70,7 @@ export const setTokenSecureAsync = async (key: string, value: string, options?: 
  * @param options An optional options object.
  * @returns The value of the item.
  */
-export const getTokenSecureAsync = async (
+export const getSecureAsync = async (
   key: string,
   options?: SecureStore.SecureStoreOptions
 ): Promise<string | null | undefined> => {
@@ -73,7 +88,7 @@ export const getTokenSecureAsync = async (
  *
  * @param key The key of the item to delete.
  */
-export const deleteTokenSecureAsync = async (key: string) => {
+export const deleteSecureAsync = async (key: string) => {
   try {
     await SecureStore.deleteItemAsync(key);
   } catch (error) {

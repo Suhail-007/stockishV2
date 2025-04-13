@@ -10,6 +10,7 @@ import TanStackQueryProvider from '../query/queryClient';
 import Colors from '../constants/colors';
 // import LogRocket from '@logrocket/react-native';
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function Root() {
   const colorScheme = useColorScheme();
@@ -34,22 +35,27 @@ export default function Root() {
   //   });
   // }, []);
 
-  const barStyle = Colors[(colorScheme as keyof typeof Colors) || 'light'].statusBarContent;
+  const barStyle = theme.colors.tertiary;
 
   return (
     <Provider store={store}>
-      <PaperProvider theme={theme}>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <StatusBar barStyle={barStyle as StatusBarStyle} />
-          <SessionProvider>
-            <SafeAreaView style={{ flex: 1 }}>
-              <TanStackQueryProvider>
-                <Slot />
-              </TanStackQueryProvider>
-            </SafeAreaView>
-          </SessionProvider>
-        </ThemeProvider>
-      </PaperProvider>
+      <GestureHandlerRootView>
+        <PaperProvider theme={theme}>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <StatusBar
+              barStyle={'light-content'}
+              backgroundColor={barStyle as StatusBarStyle}
+            />
+            <SessionProvider>
+              <SafeAreaView style={{ flex: 1 }}>
+                <TanStackQueryProvider>
+                  <Slot />
+                </TanStackQueryProvider>
+              </SafeAreaView>
+            </SessionProvider>
+          </ThemeProvider>
+        </PaperProvider>
+      </GestureHandlerRootView>
     </Provider>
   );
 }

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import React, { useEffect } from 'react';
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { PlatformPressable } from '@react-navigation/elements';
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
@@ -15,9 +15,9 @@ const icon = {
       color={props.color}
     />
   ),
-  Users: (props: any) => (
-    <AntDesign
-      name='user'
+  Products: (props: any) => (
+    <MaterialCommunityIcons
+      name='table'
       size={24}
       color={props.color}
     />

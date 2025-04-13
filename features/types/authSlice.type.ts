@@ -1,10 +1,12 @@
 import { LoginResponseData } from '../../apis/types/auth.type';
-import { BaseAction, BaseState } from './baseState.type';
+import { BaseAction, BaseState } from './baseSlice.type';
 
 export type AuthInitialState = BaseState & {
   isAuth: boolean;
   user: User | null;
   tenantDetails: User_Tenant | null;
+  loading: boolean;
+  errorMessage: string | null;
 };
 
 export type SetAuthPayload = {
@@ -15,7 +17,14 @@ export type SetAuthPayload = {
 
 export type SetAuthAction = BaseAction<SetAuthPayload>;
 
-export type User = Omit<LoginResponseData, 'token'> & {
+export type SetUserApiPayload = {
+  loading: AuthInitialState['loading'];
+  errorMessage: AuthInitialState['errorMessage'];
+};
+
+export type SetUserApiStateAction = BaseAction<SetUserApiPayload>;
+
+export type User = Omit<LoginResponseData, 'token' | 'refreshToken'> & {
   isTenant: boolean;
 };
 

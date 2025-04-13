@@ -8,8 +8,8 @@ import TextInput from '../../../ui/TextInput';
 import { scale } from 'react-native-size-matters';
 import useThemeColors from '../../../../hooks/useThemeColors';
 import { globalStyles } from '../../../../constants/globalStyles';
-import { SignUpStepOneRadioButtons } from '../helper';
 import RadioButton from '../../../ui/RadioButton';
+import { SignUpStepOneRadioButtons } from '../../sign-in/helper';
 
 const StepOne: FC<StepsProps<SignUpFormStepOne>> = ({ control }) => {
   const { colors } = useThemeColors();

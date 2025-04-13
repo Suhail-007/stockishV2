@@ -33,7 +33,6 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "@logrocket/react-native",
       [
         "expo-secure-store",
         {
@@ -46,7 +45,7 @@
         {
           "android": {
             "usesCleartextTraffic": true,
-            "minSdkVersion": 24
+            "minSdkVersion": 25
           }
         }
       ]

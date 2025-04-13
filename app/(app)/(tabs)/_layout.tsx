@@ -1,23 +1,11 @@
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
-
-import Colors from '@/constants/colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { AntDesign } from '@expo/vector-icons';
-import TabBar from '../../../components/ui/TabBar/TabBar';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['name']; color: string }) {
-  return (
-    <FontAwesome
-      size={28}
-      style={{ marginBottom: -3 }}
-      {...props}
-    />
-  );
-}
+import { useColorScheme } from '@/components/useColorScheme';
+import TabBar from '../../../components/ui/TabBar/TabBar';
+
+import Colors from '@/constants/colors';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -36,9 +24,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='Users'
+        name='Products'
         options={{
-          title: 'Users',
+          title: 'Products',
           headerShown: false
         }}
       />

@@ -1,17 +1,24 @@
-import { StyleSheet, View } from 'react-native';
-import React from 'react';
-import { Text } from 'react-native-paper';
-import { useAppSelector } from '../../../store/store';
-import PageTitle from '../../PageTitle';
+import { View } from 'react-native';
 
-const Home = () => {
+import PageTitle from '../../PageTitle';
+import HomeSkeleton from './Home.Skeleton';
+import { homeStyles } from './home.styles';
+
+const Home = ({ children, isLoading }: { children: React.ReactNode; isLoading: boolean }) => {
   return (
     <View>
-      <PageTitle showGreeting={true} />
+      {isLoading && <HomeSkeleton.Greetings loading={isLoading} />}
+
+      {!isLoading && (
+        <PageTitle
+          containerStyles={homeStyles.pageTitleContStyle}
+          showGreeting={true}
+        />
+      )}
+
+      {children}
     </View>
   );
 };
 
 export default Home;
-
-const styles = StyleSheet.create({});

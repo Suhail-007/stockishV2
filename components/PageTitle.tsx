@@ -2,8 +2,9 @@ import { StyleSheet, View } from 'react-native';
 import { useAppSelector } from '../store/store';
 import { PageTitleProps } from './types/pageTitle.type';
 import { Text } from 'react-native-paper';
-import { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 import useThemeColors from '../hooks/useThemeColors';
+import { getGreeting, getGreetingQuestion } from '../libs';
 
 /**
  * PageTitle component
@@ -20,7 +21,7 @@ import useThemeColors from '../hooks/useThemeColors';
  * @example
  * <PageTitle title="My Page" subtitle="This is my page" icon={<Icon />} />
  */
-const PageTitle = ({
+const _PageTitle = ({
   title,
   subtitle,
   icon,
@@ -31,7 +32,11 @@ const PageTitle = ({
 }: PageTitleProps) => {
   const { colors } = useThemeColors();
   const { user } = useAppSelector((state) => state.auth);
+
   const userTitle = user?.gender === 'M' ? 'Mr.' : 'Ms.';
+
+  const randomGreeting = getGreeting();
+  const randomQuestion = getGreetingQuestion();
 
   const dynamicStyles = {
     title: {
@@ -45,13 +50,18 @@ const PageTitle = ({
   return (
     <View style={[styles.container, containerStyles]}>
       {showGreeting && (
-        <Fragment>
+        <View>
           <Text
             style={[dynamicStyles.title, titleStyles]}
             variant='titleLarge'>
-            Hello, {userTitle} {user?.firstName} {user?.lastName}
+            {randomGreeting}, {userTitle} {user?.firstName} {user?.lastName}
           </Text>
-        </Fragment>
+          <Text
+            variant='titleMedium'
+            style={[styles.randomGreetingQuestionText, dynamicStyles.subtitle, subtitleStyles]}>
+            {randomQuestion}
+          </Text>
+        </View>
       )}
 
       {!showGreeting && (
@@ -73,6 +83,8 @@ const PageTitle = ({
   );
 };
 
+const PageTitle = memo(_PageTitle);
+
 export default PageTitle;
 
 const styles = StyleSheet.create({
@@ -81,5 +93,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginBottom: 10
+  },
+  randomGreetingQuestionText: {
+    textTransform: 'capitalize'
   }
 });

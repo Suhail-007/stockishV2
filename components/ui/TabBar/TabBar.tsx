@@ -1,14 +1,18 @@
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import { useLinkBuilder } from '@react-navigation/native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { useState } from 'react';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { useState, useEffect } from 'react';
+import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 import useThemeColors from '../../../hooks/useThemeColors';
 import TabBarButton from './TabBarButton';
+import { useNavigation } from 'expo-router';
 
 const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
+  const navigationExpo = useNavigation();
   const [dimensions, setDimensions] = useState({ height: 20, width: 100 });
+  const [isVisible, setIsVisible] = useState(true);
+
   const { colors } = useThemeColors();
   const { buildHref } = useLinkBuilder();
 
@@ -22,6 +26,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   };
 
   const tabBarPositionX = useSharedValue(0);
+  const opacity = useSharedValue(1);
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
@@ -33,16 +38,40 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
     };
   });
 
+  const animatedOpacity = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value
+    };
+  });
+
   const dynamicStyles = {
     navCont: {
       backgroundColor: colors.background
     }
   };
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      opacity.value = withSpring(0.4, { duration: 3000 });
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    // Animation on route change
+    opacity.value = 1;
+    const timeout = setTimeout(() => {
+      opacity.value = withSpring(0.5, { duration: 2000 });
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, [state.index]);
+
   return (
-    <View
+    <Animated.View
       onLayout={onTabBarLayout}
-      style={[styles.navCont, dynamicStyles.navCont]}>
+      style={[styles.navCont, dynamicStyles.navCont, animatedOpacity]}>
       <Animated.View
         style={[
           animatedStyles,
@@ -64,6 +93,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
 
         const onPress = () => {
           tabBarPositionX.value = withSpring(buttonWidth * index, { duration: 1700 });
+
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
@@ -97,7 +127,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
           />
         );
       })}
-    </View>
+    </Animated.View>
   );
 };
 
@@ -106,7 +136,7 @@ export default TabBar;
 const styles = StyleSheet.create({
   navCont: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 20,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',

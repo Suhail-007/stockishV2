@@ -1,5 +1,5 @@
 import { LoginResponseData } from '../../apis/types/auth.type';
-import { BaseAction, BaseState } from './baseState.type';
+import { BaseAction, BaseState } from './baseSlice.type';
 
 export type AuthInitialState = BaseState & {
   isAuth: boolean;

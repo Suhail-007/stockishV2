@@ -8,12 +8,16 @@ const Colors = {
   light: {
     // 🎨 Backgrounds
     screenBg: '#F5F5F5',
-    background: '#FFFFFF',
+    background: '#fdfdfd',
     secondaryBg: '#F5F5F5',
     cardBg: '#32A08B',
     backgroundWhite: '#FFFFFF',
     errorBg: '#f2dede',
     successBg: '#e1fbfc',
+    yellow100: '#fff39be1',
+    green100: '#cdfac1ff',
+    red100: '#fbc5c5',
+    grey100: '#f2f2f2',
 
     // 🟦 Buttons
     buttonBg: '#007CBB',
@@ -21,12 +25,16 @@ const Colors = {
 
     //Tertiary
     tertiary: '#2969B7',
+    tertiary100: '#deecfd',
 
     // 🔤 Text
     textPrimary: '#333333',
     textSecondary: '#666666',
     text: '#000000',
     textWhite: '#FFFFFF',
+    yellowText900: '#918104',
+    greenText900: '#056b33',
+    redText900: '#b70000',
 
     // 🌟 Accents & Highlights
     tint: tintColorLight,
@@ -67,16 +75,27 @@ const Colors = {
     backgroundWhite: '#FFFFFF',
     errorBg: '#6c3636',
     successBg: '#1b5e20',
+    yellow100: '#f1ecbc',
+    green100: '#baeebe',
+    red100: '#fbc5c5ff',
+    grey100: '#f2f2f2',
 
     // 🟦 Buttons
     buttonBg: '#005A8E',
     buttonBgSecondary: '#1E4E89',
+
+    //Tertiary
+    tertiary: '#0b2e59',
+    tertiary100: '#deecfd',
 
     // 🔤 Text
     textPrimary: '#FFFFFF',
     textSecondary: '#B0B0B0',
     text: '#FFFFFF',
     textWhite: '#FFFFFF',
+    yellowText900: '#998700',
+    greenText900: '#056b33',
+    redText900: '#b70000',
 
     // 🌟 Accents & Highlights
     tint: tintColorDark,
@@ -89,7 +108,7 @@ const Colors = {
     errorText: '#D32F2F',
 
     // 🎛 Icons & Borders
-    tertiary: '#3671b9',
+
     tabIconDefault: '#888888',
     tabIconSelected: tintColorDark,
     statusBarContent: '#D32F2F',

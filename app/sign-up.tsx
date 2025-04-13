@@ -1,32 +1,33 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Text } from 'react-native-paper';
 import { router } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
+import { useMutation } from '@tanstack/react-query';
 import { scale } from 'react-native-size-matters';
 
+import StepOne from '../components/pages/sign-up/multiStep/StepOne';
 import useThemeColors from '../hooks/useThemeColors';
 import { Fonts } from '../constants/fonts';
-import StepOne from '../components/pages/sign-in/multiStep/StepOne';
 import {
   SignUpFormData,
   SignUpFormStepOne,
   SignUpFormStepThree,
   SignUpFormStepTwo
-} from '../components/pages/sign-in/multiStep/multiStep.type';
+} from '../components/pages/sign-up/multiStep/multiStep.type';
 import Button from '../components/ui/Button';
-import StepTwo from '../components/pages/sign-in/multiStep/StepTwo';
-import StepThird from '../components/pages/sign-in/multiStep/StepThird';
-import { useMutation } from '@tanstack/react-query';
+import StepTwo from '../components/pages/sign-up/multiStep/StepTwo';
+import StepThird from '../components/pages/sign-up/multiStep/StepThird';
+import Error from '../components/ui/Error';
+
 import { createTenant } from '../apis/tenant.api';
 import { STATUS_CODES } from '../constants/statusCodes';
 import { setAuth } from '../features/auth';
 import { useAppDispatch } from '../store/store';
 import { USER_ROLE } from '../enums/User.enum';
-import Error from '../components/ui/Error';
 import { API_BASE_RESPONSE, ValidationError } from '../apis/types/apis.type';
 import { ValidationErrorString } from '../constants/variables';
 import { CreateTenantPayload } from '../apis/types/tenant.type';

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Dimensions, ScrollView } from 'react-native';
+import { Dimensions, ScrollView, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -21,7 +21,7 @@ import { useSession } from '../ctx';
 import { setItemStorageAsync, setSecureAsync } from '../utils/storage';
 import { StorageKeys } from '../constants/variables';
 import { USER_ROLE } from '../enums/User.enum';
-import { signInStyles } from '../components/pages/sign-in/signinStyles';
+import { signInStyles } from '../components/pages/sign-in/signin.styles';
 
 const { width } = Dimensions.get('window');
 
@@ -113,7 +113,10 @@ export default function SignIn() {
       mainHeading: { color: colors.textPrimary },
       title: { color: colors.textSecondary },
       successBg: { backgroundColor: colors.successBg },
-      successText: { color: colors.success }
+      successText: { color: colors.success },
+      subHeading: {
+        color: colors.textSecondary
+      }
     }),
     [colors]
   );
@@ -122,11 +125,18 @@ export default function SignIn() {
     <ScrollView
       contentContainerStyle={[signInStyles.container, dynamicStyles.container]}
       keyboardShouldPersistTaps='handled'>
-      <Text
-        variant='headlineLarge'
-        style={[signInStyles.mainHeading, dynamicStyles.mainHeading]}>
-        Welcome To Stockish
-      </Text>
+      <View>
+        <Text
+          variant='headlineLarge'
+          style={[signInStyles.mainHeading, dynamicStyles.mainHeading]}>
+          Welcome To Stockish
+        </Text>
+        <Text
+          style={[signInStyles.subHeading, dynamicStyles.subHeading]}
+          variant='titleSmall'>
+          Enter your {step === 'email' ? 'email' : 'password'} to continue
+        </Text>
+      </View>
 
       {emailParam && step === 'email' && (
         <Animated.View

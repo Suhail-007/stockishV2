@@ -68,7 +68,7 @@ defaultInstance.interceptors.response.use(
       try {
         const refreshToken = await getSecureAsync(StorageKeys.REFRESH_TOKEN);
         if (!refreshToken) {
-          throw new Error('No refresh token available');
+          throw Error('No refresh token available');
         }
 
         //Get new access token

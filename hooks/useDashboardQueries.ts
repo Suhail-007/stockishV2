@@ -9,7 +9,7 @@ import {
   getProductsCountByTenant,
   getTotalRemainingBalance,
   getUsersCountByTenant
-} from '../apis/dashboard';
+} from '../apis/dashboard.api';
 import { User } from '../features/types/authSlice.type';
 
 const useDashboardQueries = (user: User | null, filters: DashboardFilters) => {

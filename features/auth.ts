@@ -45,7 +45,7 @@ export const fetchUserDetails = createAsyncThunk('auth/fetchUserDetails', async 
       return rejectWithValue('Failed to fetch user details');
     }
   } catch (error) {
-    console.error('Error fetching user details:', error);
+    console.log('Error fetching user details:', error);
     return rejectWithValue('An error occurred while fetching user details');
   }
 });

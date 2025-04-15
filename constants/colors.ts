@@ -85,8 +85,8 @@ const Colors = {
     buttonBgSecondary: '#1E4E89',
 
     //Tertiary
-    tertiary: '#0b2e59',
-    tertiary100: '#deecfd',
+    tertiary: '#2c578b',
+    tertiary100: '#43648b',
 
     // 🔤 Text
     textPrimary: '#FFFFFF',

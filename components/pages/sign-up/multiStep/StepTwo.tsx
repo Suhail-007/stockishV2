@@ -1,6 +1,7 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import React, { FC, Fragment, useMemo } from 'react';
 import { Controller } from 'react-hook-form';
+import { Text } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { SignUpFormStepTwo, StepsProps } from './multiStep.type';

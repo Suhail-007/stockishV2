@@ -1,18 +1,21 @@
-import { Text, View } from 'react-native';
 import React, { FC, Fragment, useMemo } from 'react';
 import { Controller, useWatch } from 'react-hook-form';
+import { Text, View } from 'react-native';
+
 // import Lucide from '@react-native-vector-icons/lucide';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { SignUpFormStepThree, StepsProps } from './multiStep.type';
-import TextInput from '../../../ui/TextInput';
-import useThemeColors from '../../../../hooks/useThemeColors';
 import { globalStyles } from '../../../../constants/globalStyles';
+import useThemeColors from '../../../../hooks/useThemeColors';
+import TextInput from '../../../ui/TextInput';
+
+import { SignUpFormStepThree, StepsProps } from './multiStep.type';
 import { StepperStyles } from './StepOne';
 
 const StepThird: FC<StepsProps<SignUpFormStepThree>> = ({ control }) => {
   const { colors } = useThemeColors();
   const password = useWatch({ control, name: 'password' });
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
   const dynamicStyles = useMemo(() => {
     return {
@@ -83,7 +86,6 @@ const StepThird: FC<StepsProps<SignUpFormStepThree>> = ({ control }) => {
           }}
           control={control}
           render={({ field, fieldState }) => {
-            const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
             const doesPasswordMatch = field.value && field.value === password;
 
             return (

@@ -11,4 +11,5 @@ export type Order = {
   hasAccepted: false;
   createdAt: string;
   updatedAt: string;
+  total: number;
 };

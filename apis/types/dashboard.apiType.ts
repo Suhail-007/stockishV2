@@ -1,5 +1,6 @@
 import { PRODUCT_STATUS } from '../../enums/Product.enum';
 import { USER_ROLE } from '../../enums/User.enum';
+
 import { BASE_RESPONSE } from './apis.type';
 import { Order } from './order.type';
 
@@ -10,6 +11,8 @@ export type getOrdersStatisticsByIdData = {
   totalPendingOrders: Order[];
   totalDeliveredOrders: Order[];
   totalCancelledOrders: Order[];
+  totalAmount: number;
+  totalProfit: number;
 };
 
 export type GetUserCountByTenantRes = BASE_RESPONSE<GetUserCountByTenantData>;

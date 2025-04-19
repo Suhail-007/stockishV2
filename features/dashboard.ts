@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { DashboardInitialState } from './types/dashboardSlice.type';
 
 const initialState: DashboardInitialState = {
@@ -20,3 +21,6 @@ const dashboard = createSlice({
   initialState,
   reducers: {}
 });
+
+export const {} = dashboard.actions;
+export default dashboard.reducer;

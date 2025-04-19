@@ -1,11 +1,14 @@
-import { StyleSheet } from 'react-native';
 import React, { useEffect } from 'react';
-import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { PlatformPressable } from '@react-navigation/elements';
+import { StyleSheet } from 'react-native';
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
+import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { PlatformPressable } from '@react-navigation/elements';
+
+
+import { Fonts } from '../../../constants/fonts';
 import useThemeColors from '../../../hooks/useThemeColors';
-import { TabBarButtonProps } from '../types/buttons';
+import { TabBarButtonProps } from '../types/buttons.type';
 
 const icon = {
   index: (props: any) => (
@@ -82,7 +85,8 @@ const TabBarButton = ({
       style={styles.buttonCont}>
       <Animated.View style={[styles.tabBarItem, animatedIconStyle]}>
         {icon[routeName as keyof typeof icon]({ color: isFocused ? colors.textWhite : colors.text })}
-        <Animated.Text style={[{ color: isFocused ? colors.textWhite : colors.text }, animatedTextStyle]}>
+        <Animated.Text
+          style={[{ color: isFocused ? colors.textWhite : colors.text }, styles.tabBarItemText, animatedTextStyle]}>
           {label}
         </Animated.Text>
       </Animated.View>
@@ -101,5 +105,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     flex: 1
+  },
+  tabBarItemText: {
+    fontFamily: Fonts.quicksandMedium
   }
 });

@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { API_BASE_RESPONSE, ValidationError } from '../apis/types/apis.type';
-import Error from './ui/Error';
+
 import { ErrorMessageProps } from './types/errorMessage.type';
+import Error from './ui/Error';
 
 /**
  * Renders an error message based on the provided error object.

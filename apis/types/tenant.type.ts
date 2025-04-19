@@ -1,4 +1,5 @@
 import { User } from '../../features/types/authSlice.type';
+
 import { BASE_RESPONSE } from './apis.type';
 
 export type CreateTenantPayload = {

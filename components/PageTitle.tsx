@@ -1,10 +1,14 @@
-import { StyleSheet, View } from 'react-native';
-import { useAppSelector } from '../store/store';
-import { PageTitleProps } from './types/pageTitle.type';
-import { Text } from 'react-native-paper';
 import { Fragment, memo } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
+
+
 import useThemeColors from '../hooks/useThemeColors';
 import { getGreeting, getGreetingQuestion } from '../libs';
+import { useAppSelector } from '../store/store';
+
+import { PageTitleProps } from './types/pageTitle.type';
+import CustomText from './ui/CustomText';
 
 /**
  * PageTitle component
@@ -51,32 +55,34 @@ const _PageTitle = ({
     <View style={[styles.container, containerStyles]}>
       {showGreeting && (
         <View>
-          <Text
+          <CustomText
             style={[dynamicStyles.title, titleStyles]}
             variant='titleLarge'>
             {randomGreeting}, {userTitle} {user?.firstName} {user?.lastName}
-          </Text>
-          <Text
+          </CustomText>
+          <CustomText
             variant='titleMedium'
             style={[styles.randomGreetingQuestionText, dynamicStyles.subtitle, subtitleStyles]}>
             {randomQuestion}
-          </Text>
+          </CustomText>
         </View>
       )}
 
       {!showGreeting && (
         <Fragment>
-          {icon}
+          {icon && icon}
           <Text
             style={[dynamicStyles.title, titleStyles]}
             variant='titleLarge'>
             {title}
           </Text>
-          <Text
-            style={[dynamicStyles.subtitle, subtitleStyles]}
-            variant='titleMedium'>
-            {subtitle}
-          </Text>
+          {subtitle && (
+            <Text
+              style={[dynamicStyles.subtitle, subtitleStyles]}
+              variant='titleMedium'>
+              {subtitle}
+            </Text>
+          )}
         </Fragment>
       )}
     </View>

@@ -1,25 +1,17 @@
 import React, { Fragment } from 'react';
-import { Controller } from 'react-hook-form';
-import { Text, ActivityIndicator } from 'react-native-paper';
-import TextInput from '../../ui/TextInput';
-import { globalStyles } from '../../../constants/globalStyles';
-import useThemeColors from '../../../hooks/useThemeColors';
-import { EmailStepProps } from '../../types/signIn.type';
+import { ActivityIndicator } from 'react-native-paper';
 
-/**
- * EmailStep component renders an email input field with validation and loading indicator.
- *
- * @param {Object} props - The component props.
- * @param {Control} props.control - The control object from react-hook-form for managing form state.
- * @param {boolean} props.isEmailPending - Flag indicating if the email validation is in progress.
- *
- */
+
+import useThemeColors from '../../../hooks/useThemeColors';
+import FormController from '../../FormController';
+import { EmailStepProps } from '../../types/signIn.type';
+import TextInput from '../../ui/TextInput';
 
 const EmailStep = ({ control, isEmailPending }: EmailStepProps) => {
   const { colors } = useThemeColors();
 
   return (
-    <Controller
+    <FormController
       control={control}
       name='email'
       rules={{
@@ -47,9 +39,6 @@ const EmailStep = ({ control, isEmailPending }: EmailStepProps) => {
               )
             }
           />
-          {fieldState.error && (
-            <Text style={[globalStyles.errorText, { color: colors.error }]}>{fieldState.error.message}</Text>
-          )}
         </Fragment>
       )}
     />

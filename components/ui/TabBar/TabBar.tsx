@@ -1,17 +1,16 @@
-import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
-import { useLinkBuilder } from '@react-navigation/native';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useState, useEffect } from 'react';
-import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { LayoutChangeEvent, StyleSheet } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { useLinkBuilder } from '@react-navigation/native';
 
 import useThemeColors from '../../../hooks/useThemeColors';
+
 import TabBarButton from './TabBarButton';
-import { useNavigation } from 'expo-router';
 
 const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
-  const navigationExpo = useNavigation();
   const [dimensions, setDimensions] = useState({ height: 20, width: 100 });
-  const [isVisible, setIsVisible] = useState(true);
 
   const { colors } = useThemeColors();
   const { buildHref } = useLinkBuilder();
@@ -56,7 +55,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [opacity]);
 
   useEffect(() => {
     // Animation on route change
@@ -66,7 +65,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
     }, 2000);
 
     return () => clearTimeout(timeout);
-  }, [state.index]);
+  }, [state.index, opacity]);
 
   return (
     <Animated.View

@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import { Fonts } from '../../../constants/fonts';
 
 export const homeStyles = StyleSheet.create({
   pageTitleContStyle: {
@@ -27,14 +26,13 @@ export const homeStyles = StyleSheet.create({
     fontSize: scale(13.5),
     textTransform: 'uppercase',
     letterSpacing: 1.2,
-    fontFamily: Fonts.quicksandBold,
+
     wordWrap: 'break-word'
   },
 
   orderStatisticsContSubHeading: {
     fontSize: scale(21),
-    letterSpacing: 1.2,
-    fontFamily: Fonts.quicksandSemiBold
+    letterSpacing: 1.2
   },
 
   orderBgImage: {
@@ -83,8 +81,7 @@ export const homeSkeletonStyles = StyleSheet.create({
   orderStatisticsCont: {
     borderRadius: 6,
     width: '48%',
-    height: scale(70),
-    overflow: 'hidden'
+    height: scale(70)
   },
 
   usersCont: {

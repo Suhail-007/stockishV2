@@ -1,9 +1,12 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
-import useThemeColors from '../hooks/useThemeColors';
-import { SkeletonLoaderProps } from './types/skeletonLoader';
+
 import { LinearGradient } from 'expo-linear-gradient';
+
+import useThemeColors from '../hooks/useThemeColors';
+
+import { SkeletonLoaderProps } from './types/skeletonLoader';
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
@@ -23,6 +26,7 @@ const SkeletonLoader = ({ noOfChildren = 1, render, ...rest }: SkeletonLoaderPro
               width={rest.width}
               height={rest.height}
               style={[styles.defaultItem, rest.style]}
+              {...rest}
             />
           )}
         </React.Fragment>

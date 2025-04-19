@@ -1,6 +1,7 @@
 import { StyleProp, TextStyle } from 'react-native';
-import { ValidationError } from '../../../apis/types/apis.type';
 import { ViewStyle } from 'react-native';
+
+import { ValidationError } from '../../../apis/types/apis.type';
 
 export type ErrorMessageProps = {
   msg: string;

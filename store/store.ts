@@ -1,5 +1,6 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 //Reducers
 import authReducer from '../features/auth';

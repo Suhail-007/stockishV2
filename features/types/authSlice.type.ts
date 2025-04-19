@@ -1,4 +1,5 @@
 import { LoginResponseData } from '../../apis/types/auth.type';
+
 import { BaseAction, BaseState } from './baseSlice.type';
 
 export type AuthInitialState = BaseState & {
@@ -7,6 +8,7 @@ export type AuthInitialState = BaseState & {
   tenantDetails: User_Tenant | null;
   loading: boolean;
   errorMessage: string | null;
+  isRefreshTokenRotating: boolean;
 };
 
 export type SetAuthPayload = {

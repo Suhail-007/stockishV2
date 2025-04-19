@@ -1,16 +1,21 @@
-import { Slot } from 'expo-router';
-import { Provider } from 'react-redux';
-import { MD3DarkTheme, MD3LightTheme, PaperProvider } from 'react-native-paper';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { StatusBar, StatusBarStyle, useColorScheme } from 'react-native';
-import store from '../store/store';
-import { SessionProvider } from '../ctx';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import TanStackQueryProvider from '../query/queryClient';
-import Colors from '../constants/colors';
-// import LogRocket from '@logrocket/react-native';
-import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { MD3DarkTheme, MD3LightTheme, PaperProvider } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { Slot } from 'expo-router';
+
+
+
+import Colors from '../constants/colors';
+import { SessionProvider } from '../ctx';
+import TanStackQueryProvider from '../query/queryClient';
+import store from '../store/store';
+
+
+// import LogRocket from '@logrocket/react-native';
 
 export default function Root() {
   const colorScheme = useColorScheme();
@@ -26,14 +31,6 @@ export default function Root() {
       ...TYPED_COLORS
     }
   };
-
-  // useEffect(() => {
-  //   LogRocket.init('fs81e5/stockish');
-  //   LogRocket.identify('I2', {
-  //     name: 'James Morrison',
-  //     email: 'jamesmorrison@example.com'
-  //   });
-  // }, []);
 
   const barStyle = theme.colors.tertiary;
 

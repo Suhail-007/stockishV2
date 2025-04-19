@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthInitialState, SetAuthAction, SetUserApiStateAction } from './types/authSlice.type';
+
+import { GetUserPayload } from '../apis/types/userApi.type';
 import { getUserDetails } from '../apis/user.api';
-import { getItemStorageAsync } from '../utils/storage';
+import { STATUS_CODES } from '../constants/statusCodes';
 import { StorageKeys } from '../constants/variables';
 import { USER_ROLE } from '../enums/User.enum';
-import { GetUserPayload } from '../apis/types/userApi.type';
-import { STATUS_CODES } from '../constants/statusCodes';
+import { getItemStorageAsync } from '../utils/storage';
+
+import { AuthInitialState, SetAuthAction, SetUserApiStateAction } from './types/authSlice.type';
+import { BaseAction } from './types/baseSlice.type';
 
 const initialState: AuthInitialState = {
   id: 'authState',
@@ -13,7 +16,8 @@ const initialState: AuthInitialState = {
   user: null,
   tenantDetails: null,
   loading: true,
-  errorMessage: null
+  errorMessage: null,
+  isRefreshTokenRotating: false
 };
 
 // Thunk to fetch user details
@@ -45,7 +49,7 @@ export const fetchUserDetails = createAsyncThunk('auth/fetchUserDetails', async 
       return rejectWithValue('Failed to fetch user details');
     }
   } catch (error) {
-    console.error('Error fetching user details:', error);
+    console.log('Error fetching user details:', error);
     return rejectWithValue('An error occurred while fetching user details');
   }
 });
@@ -61,6 +65,16 @@ const auth = createSlice({
     setUserApiState: (state, action: SetUserApiStateAction) => {
       state.loading = action.payload.loading;
       state.errorMessage = action.payload.errorMessage;
+    },
+
+    /**
+     * Toggles the flag indicating if the refresh token is currently rotating.
+     *
+     * This flag is used to prevent multiple requests to the server for a new access token when the current one expires.
+     * @param {{ payload: boolean }} action - The action object containing the new value for the flag.
+     */
+    toggleRefreshTokenRotating: (state, action: BaseAction<boolean>) => {
+      state.isRefreshTokenRotating = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -83,5 +97,5 @@ const auth = createSlice({
   }
 });
 
-export const { setAuth } = auth.actions;
+export const { setAuth, toggleRefreshTokenRotating } = auth.actions;
 export default auth.reducer;

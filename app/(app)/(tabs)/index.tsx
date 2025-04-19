@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import Error from '@/components/ui/Error';
+import ConditionalRender from '@/components/ConditionalRender';
 import Home from '@/components/pages/home/Home';
-import PageWrapper from '@/components/ui/PageWrapper';
 import HomeSkeleton from '@/components/pages/home/Home.Skeleton';
-import MonthlyOrders from '@/components/pages/home/MonthlyOrders';
 import LastFiveOrders from '@/components/pages/home/LastFiveOrders';
+import MonthlyOrders from '@/components/pages/home/MonthlyOrders';
+import MonthlySellStats from '@/components/pages/home/MonthlySellStats';
+import ProductStatistics from '@/components/pages/home/ProductStatistics';
+import TotalBalance from '@/components/pages/home/TotalBalance';
 import UsersStatistics from '@/components/pages/home/UsersStatistics';
-import ProductStatistics from '../../../components/pages/home/ProductStatistics';
+import Error from '@/components/ui/Error';
+import PageWrapper from '@/components/ui/PageWrapper';
 
-import { useAppDispatch, useAppSelector } from '@/store/store';
-import { fetchUserDetails } from '@/features/auth';
-import { USER_ROLE } from '../../../enums/User.enum';
-import useDashboardQueries from '../../../hooks/useDashboardQueries';
-import ConditionalRender from '../../../components/ConditionalRender';
-import TotalBalance from '../../../components/pages/home/TotalBalance';
+import { USER_ROLE } from '@/enums/User.enum';
+import useDashboardQueries from '@/hooks/useDashboardQueries';
+import { useAppSelector } from '@/store/store';
 
 export default function Index() {
   const { loading, errorMessage, user } = useAppSelector((state) => state.auth);
@@ -36,15 +36,10 @@ export default function Index() {
       year: new Date().getFullYear()
     }
   });
-  const dispatch = useAppDispatch();
   const { lastFiveOrders, orderStatistics, usersCountByTenant, productsCountByTenant, totalRemainingBalance } =
     useDashboardQueries(user, filters);
 
-  console.log(lastFiveOrders.data);
-
-  useEffect(() => {
-    dispatch(fetchUserDetails());
-  }, [dispatch]);
+  const _orderStatistics = orderStatistics?.data?.data?.data;
 
   return (
     <PageWrapper.Scroll scrollEnabled={!loading}>
@@ -55,13 +50,24 @@ export default function Index() {
           <ConditionalRender
             condition={lastFiveOrders.isPending}
             loading={<HomeSkeleton.LastFiveOrders loading={lastFiveOrders.isPending} />}
-            loaded={<LastFiveOrders />}
+            loaded={<LastFiveOrders items={lastFiveOrders.data?.data?.data || []} />}
           />
 
           <ConditionalRender
             condition={totalRemainingBalance.isPending}
-            loaded={<TotalBalance />}
+            loaded={<TotalBalance amount={totalRemainingBalance.data?.data?.data || 0} />}
             loading={<HomeSkeleton.TotalBalance loading={totalRemainingBalance.isPending} />}
+          />
+
+          <ConditionalRender
+            condition={orderStatistics.isPending}
+            loaded={
+              <MonthlySellStats
+                totalAmount={_orderStatistics?.totalAmount || 0}
+                totalProfit={_orderStatistics?.totalProfit || 0}
+              />
+            }
+            loading={<HomeSkeleton.MonthlySellNProfit loading={orderStatistics.isPending} />}
           />
 
           <ConditionalRender

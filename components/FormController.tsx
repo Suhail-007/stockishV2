@@ -1,9 +1,10 @@
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, FieldValues } from 'react-hook-form';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 
 import useThemeColors from '../hooks/useThemeColors';
+
 import { FormControllerProps } from './types/formController.type';
 
 /**
@@ -18,18 +19,18 @@ import { FormControllerProps } from './types/formController.type';
  * @param {any} [props.defaultValue] - The default value for the field.
  *
  */
-const FormController = (props: FormControllerProps) => {
+const FormController = <T extends FieldValues>(props: FormControllerProps<T>) => {
   const { colors } = useThemeColors();
   const { render, ...rest } = props;
 
   return (
-    <Controller
+    <Controller<T>
       {...rest}
-      render={(props) => {
-        const error = props.fieldState.error;
+      render={(renderProps) => {
+        const error = renderProps.fieldState.error;
         return (
           <>
-            {render(props)}
+            {render(renderProps)}
             {error && <Text style={[styles.errorText, { color: colors.error }]}>{error.message}</Text>}
           </>
         );
@@ -43,6 +44,6 @@ export default FormController;
 const styles = StyleSheet.create({
   errorText: {
     fontSize: 12,
-    marginTop: 4
+    marginTop: 0
   }
 });

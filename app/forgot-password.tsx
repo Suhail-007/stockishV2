@@ -1,15 +1,15 @@
 import { Fragment, useMemo } from 'react';
-import { StyleSheet, Dimensions, ScrollView } from 'react-native';
-import { Text, ActivityIndicator } from 'react-native-paper';
 import { Controller, useForm } from 'react-hook-form';
+import { StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { Text } from 'react-native-paper';
 import { moderateScale, scale } from 'react-native-size-matters';
 
-import Button from '../components/ui/Button';
-import { Fonts } from '../constants/fonts';
-import useThemeColors from '../hooks/useThemeColors';
 import { FormData } from '../components/pages/sign-in/type';
-import { globalStyles } from '../constants/globalStyles';
+import Button from '../components/ui/Button';
 import TextInput from '../components/ui/TextInput';
+import { Fonts } from '../constants/fonts';
+import { globalStyles } from '../constants/globalStyles';
+import useThemeColors from '../hooks/useThemeColors';
 
 // <a href="https://www.freepik.com/free-vector/online-doctor-concept-illustration_7768657.htm">Image by storyset on Freepik</a>
 const { width } = Dimensions.get('window');

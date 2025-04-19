@@ -1,4 +1,5 @@
-import { FC, Fragment, memo } from 'react';
+import { Fragment, memo } from 'react';
+
 import { ConditionalRenderProps } from './types/conditionalRender.type';
 
 /**

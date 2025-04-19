@@ -10,19 +10,19 @@ import {
   UseFormStateReturn
 } from 'react-hook-form';
 
-export type FormControllerProps = {
-  control: Control<FieldValues>;
-  name: string;
+export type FormControllerProps<T extends FieldValues> = {
+  control: Control<T>;
+  name: FieldPath<T>;
   rules?:
-    | Omit<RegisterOptions<FieldValues, string>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
+    | Omit<RegisterOptions<T, FieldPath<T>>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
     | undefined;
-  render: (props: FormControllerRenderProps) => React.ReactElement;
+  render: (props: FormControllerRenderProps<T>) => React.ReactElement;
   disabled?: boolean;
-  defaultValue?: PathValue<FieldValues, FieldPath<FieldValues>>;
+  defaultValue?: PathValue<T, FieldPath<T>>;
 };
 
-export type FormControllerRenderProps = {
-  field: ControllerRenderProps<FieldValues, string>;
+export type FormControllerRenderProps<T extends FieldValues> = {
+  field: ControllerRenderProps<T, FieldPath<T>>;
   fieldState: ControllerFieldState;
-  formState: UseFormStateReturn<FieldValues>;
+  formState: UseFormStateReturn<T>;
 };

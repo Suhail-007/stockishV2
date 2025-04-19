@@ -1,5 +1,6 @@
 import { USER_ROLE, USER_STATUS } from '../../enums/User.enum';
 import { Gender } from '../../utils/global.type';
+
 import { BASE_RESPONSE } from './apis.type';
 
 export type CheckEmailResponse = BASE_RESPONSE<CheckEmailResponseData>;
@@ -32,4 +33,11 @@ export type LoginResponseData = {
   tenantId: number;
   token: string;
   refreshToken: string;
+};
+
+export type GetRefreshTokenRes = BASE_RESPONSE<GetRefreshTokenResData>;
+
+export type GetRefreshTokenResData = {
+  accessToken: string;
+  newRefreshToken: string;
 };

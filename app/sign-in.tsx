@@ -1,27 +1,28 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Dimensions, ScrollView, View } from 'react-native';
-import { Text } from 'react-native-paper';
-import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { router, useLocalSearchParams } from 'expo-router';
+import { Dimensions, View } from 'react-native';
 import Animated, { SlideInUp } from 'react-native-reanimated';
 
-import Button from '../components/ui/Button';
-import PasswordStep from '../components/pages/sign-in/Password';
-import ErrorMessage from '../components/ErrorMessage';
-import EmailStep from '../components/pages/sign-in/EmailStep';
+import { useMutation } from '@tanstack/react-query';
+import { router, useLocalSearchParams } from 'expo-router';
 
 import { checkEmailExist, login } from '../apis/auth.api';
-import { STATUS_CODES } from '../constants/statusCodes';
-import useThemeColors from '../hooks/useThemeColors';
-import { FormData } from '../components/pages/sign-in/type';
-import { useAppDispatch } from '../store/store';
-import { setAuth } from '../features/auth';
-import { useSession } from '../ctx';
-import { setItemStorageAsync, setSecureAsync } from '../utils/storage';
-import { StorageKeys } from '../constants/variables';
-import { USER_ROLE } from '../enums/User.enum';
+import ErrorMessage from '../components/ErrorMessage';
+import EmailStep from '../components/pages/sign-in/EmailStep';
+import PasswordStep from '../components/pages/sign-in/Password';
 import { signInStyles } from '../components/pages/sign-in/signin.styles';
+import { FormData } from '../components/pages/sign-in/type';
+import Button from '../components/ui/Button';
+import CustomText from '../components/ui/CustomText';
+import PageWrapper from '../components/ui/PageWrapper';
+import { STATUS_CODES } from '../constants/statusCodes';
+import { CHECK_EMAIL_ERROR_MESSAGE, StorageKeys } from '../constants/variables';
+import { useSession } from '../ctx';
+import { USER_ROLE } from '../enums/User.enum';
+import { setAuth } from '../features/auth';
+import useThemeColors from '../hooks/useThemeColors';
+import { useAppDispatch } from '../store/store';
+import { setItemStorageAsync, setSecureAsync } from '../utils/storage';
 
 const { width } = Dimensions.get('window');
 
@@ -39,25 +40,15 @@ export default function SignIn() {
     if (emailParam) {
       setValue('email', emailParam);
     }
-  }, [emailParam]);
+  }, [emailParam, setValue]);
 
   const {
-    mutate: checkEmailMutation,
+    mutateAsync: checkEmailMutation,
     error: emailError,
     isPending: isEmailPending
   } = useMutation({
     mutationFn: checkEmailExist,
-    mutationKey: ['checkEmail', email],
-    onSuccess: ({ data }) => {
-      if (data.data.emailExist && data.status === STATUS_CODES.success) {
-        setStep('password');
-      } else {
-        router.push('/sign-up');
-      }
-    },
-    onError: () => {
-      router.push(`/sign-up?email=${email}`);
-    }
+    mutationKey: ['checkEmail', email]
   });
 
   const {
@@ -69,7 +60,19 @@ export default function SignIn() {
     mutationKey: ['signIn', email, password]
   });
 
-  const handleSubmitEmail = () => checkEmailMutation(email);
+  const handleSubmitEmail = async () => {
+    try {
+      const { data } = await checkEmailMutation(email);
+      if (data.data.emailExist && data.status === STATUS_CODES.success) {
+        setStep('password');
+      } else {
+        router.push('/sign-up');
+      }
+    } catch (error: any) {
+      if (error?.status === STATUS_CODES.notFound && error?.message === CHECK_EMAIL_ERROR_MESSAGE)
+        router.push(`/sign-up?email=${email}`);
+    }
+  };
   const handleSignIn = async ({ email, password }: FormData) => {
     if (!password) return;
 
@@ -109,7 +112,7 @@ export default function SignIn() {
 
   const dynamicStyles = useMemo(
     () => ({
-      container: { padding: width * 0.05, backgroundColor: colors.background },
+      container: { padding: width * 0.05, backgroundColor: colors.screenBg },
       mainHeading: { color: colors.textPrimary },
       title: { color: colors.textSecondary },
       successBg: { backgroundColor: colors.successBg },
@@ -118,35 +121,40 @@ export default function SignIn() {
         color: colors.textSecondary
       }
     }),
-    [colors]
+    [colors.textPrimary, colors.textSecondary, colors.successBg, colors.success, colors.screenBg]
   );
 
   return (
-    <ScrollView
-      contentContainerStyle={[signInStyles.container, dynamicStyles.container]}
+    <PageWrapper.Scroll
+      style={dynamicStyles.container}
+      contentContainerStyle={[signInStyles.container]}
       keyboardShouldPersistTaps='handled'>
       <View>
-        <Text
+        <CustomText
+          weight='600'
+          fontVariant='quicksandSemiBold'
           variant='headlineLarge'
           style={[signInStyles.mainHeading, dynamicStyles.mainHeading]}>
           Welcome To Stockish
-        </Text>
-        <Text
+        </CustomText>
+        <CustomText
           style={[signInStyles.subHeading, dynamicStyles.subHeading]}
+          fontVariant='quicksandSemiBold'
+          weight={'500'}
           variant='titleSmall'>
           Enter your {step === 'email' ? 'email' : 'password'} to continue
-        </Text>
+        </CustomText>
       </View>
 
       {emailParam && step === 'email' && (
         <Animated.View
           style={[signInStyles.successCont, dynamicStyles.successBg]}
           entering={SlideInUp.delay(100)}>
-          <Text
+          <CustomText
             variant='bodyLarge'
             style={[signInStyles.successText, dynamicStyles.successText]}>
             Check your inbox for the email verification link
-          </Text>
+          </CustomText>
         </Animated.View>
       )}
 
@@ -178,6 +186,6 @@ export default function SignIn() {
         labelStyle={signInStyles.buttonLabel}>
         {step === 'email' ? 'Continue' : 'Sign In'}
       </Button.Primary>
-    </ScrollView>
+    </PageWrapper.Scroll>
   );
 }

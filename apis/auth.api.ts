@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 import configuredAxiosInstance from '../axios/interceptor';
+
 import { CheckEmailResponse, LoginPayload, LoginResponse } from './types/auth.type';
 
 const AUTH_BASE_URL = '/auth';

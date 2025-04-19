@@ -1,9 +1,11 @@
+import { useMemo } from 'react';
 import { ImageBackground, View } from 'react-native';
-import PageWrapper from '../../ui/PageWrapper';
 import { Icon, Text } from 'react-native-paper';
+
 import { globalStyles } from '../../../constants/globalStyles';
 import useThemeColors from '../../../hooks/useThemeColors';
-import { useMemo } from 'react';
+import PageWrapper from '../../ui/PageWrapper';
+
 import { homeStyles } from './home.styles';
 
 const activeUserImg = require('../../../assets/images/home/activeUsers.png');

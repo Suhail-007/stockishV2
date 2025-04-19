@@ -1,20 +1,20 @@
-import { View } from 'react-native';
-import { Icon, Text } from 'react-native-paper';
-import { ImageBackground } from 'react-native';
 import React, { memo, useEffect, useMemo, useState } from 'react';
-
-import PageWrapper from '../../ui/PageWrapper';
+import { View } from 'react-native';
+import { ImageBackground } from 'react-native';
+import { Icon, Text } from 'react-native-paper';
 
 import { getOrdersStatisticsByIdData } from '../../../apis/types/dashboard.apiType';
-import { getOrdersStatisticsForTenantFromStorage } from '../helper';
-import useThemeColors from '../../../hooks/useThemeColors';
-import { homeStyles } from './home.styles';
 import { globalStyles } from '../../../constants/globalStyles';
+import useThemeColors from '../../../hooks/useThemeColors';
+import PageWrapper from '../../ui/PageWrapper';
+import { getOrdersStatisticsForTenantFromStorage } from '../helper';
 
-const totalOrderImage = require('../../../assets/images/home/totalOrderList.png');
-const pendingOrderImage = require('../../../assets/images/home/pendingOrders.png');
-const deliveredOrderImage = require('../../../assets/images/home/delivered.png');
+import { homeStyles } from './home.styles';
+
 const cancelledOrderImage = require('../../../assets/images/home/cancel.png');
+const deliveredOrderImage = require('../../../assets/images/home/delivered.png');
+const pendingOrderImage = require('../../../assets/images/home/pendingOrders.png');
+const totalOrderImage = require('../../../assets/images/home/totalOrderList.png');
 
 const _MonthlyOrders = () => {
   const { colors } = useThemeColors();
@@ -22,7 +22,9 @@ const _MonthlyOrders = () => {
     totalCancelledOrders: [],
     totalOrders: 0,
     totalDeliveredOrders: [],
-    totalPendingOrders: []
+    totalPendingOrders: [],
+    totalAmount: 0,
+    totalProfit: 0
   });
 
   useEffect(() => {

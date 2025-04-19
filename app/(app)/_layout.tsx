@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
+
+import { useFonts } from 'expo-font';
 import { Redirect, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useFonts } from 'expo-font';
 
-import { useSession } from '../../ctx';
+import Header from '../../components/ui/Header';
 import { Fonts } from '../../constants/fonts';
+import { useSession } from '../../ctx';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -40,12 +42,12 @@ export default function AppLayout() {
   }, [error]);
 
   useEffect(() => {
-    if (loaded) {
+    if (loaded || !isLoading) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [loaded, isLoading]);
 
-  if (!loaded) {
+  if (!loaded || isLoading) {
     return null;
   }
 
@@ -61,7 +63,22 @@ export default function AppLayout() {
   return (
     <Stack
       initialRouteName='(tabs)'
-      screenOptions={{ headerShown: false }}
-    />
+      screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          title: 'Add Product',
+          header: (props) => (
+            <Header
+              title='Add Product'
+              showBack
+              onBackPress={props.navigation.goBack}
+              {...props}
+            />
+          )
+        }}
+        name='addProduct'
+      />
+    </Stack>
   );
 }

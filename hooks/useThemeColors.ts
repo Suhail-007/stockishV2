@@ -1,7 +1,8 @@
-import { StyleSheet, useColorScheme } from 'react-native';
-import { useTheme } from 'react-native-paper';
-import Colors from '../constants/colors';
 import { useMemo } from 'react';
+import { useColorScheme } from 'react-native';
+import { useTheme } from 'react-native-paper';
+
+import Colors from '../constants/colors';
 
 const useThemeColors = () => {
   const theme = useTheme();
@@ -23,5 +24,3 @@ const useThemeColors = () => {
 };
 
 export default useThemeColors;
-
-const styles = StyleSheet.create({});

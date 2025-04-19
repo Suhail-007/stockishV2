@@ -1,15 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React, { FC, Fragment, useMemo } from 'react';
 import { Controller } from 'react-hook-form';
+import { StyleSheet, Text, View } from 'react-native';
 import { RadioButton as PaperRadioButton } from 'react-native-paper';
+import { scale } from 'react-native-size-matters';
+
+import { globalStyles } from '../../../../constants/globalStyles';
+import useThemeColors from '../../../../hooks/useThemeColors';
+import RadioButton from '../../../ui/RadioButton';
+import TextInput from '../../../ui/TextInput';
+import { SignUpStepOneRadioButtons } from '../../sign-in/helper';
 
 import { SignUpFormStepOne, StepsProps } from './multiStep.type';
-import TextInput from '../../../ui/TextInput';
-import { scale } from 'react-native-size-matters';
-import useThemeColors from '../../../../hooks/useThemeColors';
-import { globalStyles } from '../../../../constants/globalStyles';
-import RadioButton from '../../../ui/RadioButton';
-import { SignUpStepOneRadioButtons } from '../../sign-in/helper';
 
 const StepOne: FC<StepsProps<SignUpFormStepOne>> = ({ control }) => {
   const { colors } = useThemeColors();

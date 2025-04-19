@@ -1,14 +1,37 @@
-import React from 'react';
-import { Tabs } from 'expo-router';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import React, { useEffect, useMemo } from 'react';
+import { Pressable } from 'react-native';
+import { Icon } from 'react-native-paper';
 
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { router, Tabs } from 'expo-router';
+
+
+import productHeaderStyles from '@/components/pages/Products/productsHeader.styles';
+import Header from '@/components/ui/Header';
+import TabBar from '@/components/ui/TabBar/TabBar';
 import { useColorScheme } from '@/components/useColorScheme';
-import TabBar from '../../../components/ui/TabBar/TabBar';
 
 import Colors from '@/constants/colors';
+import { fetchUserDetails } from '@/features/auth';
+import useThemeColors from '@/hooks/useThemeColors';
+import { useAppDispatch } from '@/store/store';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { colors } = useThemeColors();
+  const dispatch = useAppDispatch();
+
+  const dynamicStyles = useMemo(() => {
+    return {
+      addBtn: {
+        backgroundColor: colors.primary
+      }
+    };
+  }, [colors.primary]);
+
+  useEffect(() => {
+    dispatch(fetchUserDetails());
+  }, [dispatch]);
 
   return (
     <Tabs
@@ -26,8 +49,26 @@ export default function TabLayout() {
       <Tabs.Screen
         name='Products'
         options={{
-          title: 'Products',
-          headerShown: false
+          headerShown: true,
+          header(props) {
+            return (
+              <Header
+                title='Products'
+                onBackPress={props.navigation.goBack}
+                rightActions={
+                  <Pressable
+                    onPress={() => router.push('/addProduct')}
+                    style={[productHeaderStyles.addBtn, dynamicStyles.addBtn]}>
+                    <Icon
+                      color={colors.textWhite}
+                      source={'plus'}
+                      size={20}
+                    />
+                  </Pressable>
+                }
+              />
+            );
+          }
         }}
       />
       <Tabs.Screen

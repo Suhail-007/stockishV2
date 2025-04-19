@@ -1,36 +1,36 @@
-import { ImageBackground, StyleSheet, View } from 'react-native';
 import React, { useEffect } from 'react';
-import { Text } from 'react-native-paper';
-import { router } from 'expo-router';
-import { useForm } from 'react-hook-form';
-import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ImageBackground, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
 import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
-import { useMutation } from '@tanstack/react-query';
 import { scale } from 'react-native-size-matters';
 
-import StepOne from '../components/pages/sign-up/multiStep/StepOne';
-import useThemeColors from '../hooks/useThemeColors';
-import { Fonts } from '../constants/fonts';
+import { useMutation } from '@tanstack/react-query';
+import { router } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
+
+import { createTenant } from '../apis/tenant.api';
+import { API_BASE_RESPONSE, ValidationError } from '../apis/types/apis.type';
+import { CreateTenantPayload } from '../apis/types/tenant.type';
 import {
   SignUpFormData,
   SignUpFormStepOne,
   SignUpFormStepThree,
   SignUpFormStepTwo
 } from '../components/pages/sign-up/multiStep/multiStep.type';
-import Button from '../components/ui/Button';
-import StepTwo from '../components/pages/sign-up/multiStep/StepTwo';
+import StepOne from '../components/pages/sign-up/multiStep/StepOne';
 import StepThird from '../components/pages/sign-up/multiStep/StepThird';
+import StepTwo from '../components/pages/sign-up/multiStep/StepTwo';
+import Button from '../components/ui/Button';
 import Error from '../components/ui/Error';
-
-import { createTenant } from '../apis/tenant.api';
+import { Fonts } from '../constants/fonts';
 import { STATUS_CODES } from '../constants/statusCodes';
-import { setAuth } from '../features/auth';
-import { useAppDispatch } from '../store/store';
-import { USER_ROLE } from '../enums/User.enum';
-import { API_BASE_RESPONSE, ValidationError } from '../apis/types/apis.type';
 import { ValidationErrorString } from '../constants/variables';
-import { CreateTenantPayload } from '../apis/types/tenant.type';
+import { USER_ROLE } from '../enums/User.enum';
+import { setAuth } from '../features/auth';
+import useThemeColors from '../hooks/useThemeColors';
+import { useAppDispatch } from '../store/store';
 
 const signUpBgImage = require('../assets/images/signIn/Online Doctor-rafiki.png');
 
@@ -69,14 +69,14 @@ const SignUp = () => {
     return () => clearTimeout(timeout);
   }, [hideError]);
 
-  const onNextStep = (data: SignUpFormStepOne | SignUpFormStepTwo | SignUpFormStepThree) => {
-    setStep((prevS) => prevS + 1);
-
+  const onNextStep = async (data: SignUpFormStepOne | SignUpFormStepTwo | SignUpFormStepThree) => {
     if (data) {
       setFormData((prev) => {
         if (!prev) return data as SignUpFormData;
-        return { ...prev, ...data } as SignUpFormData;
+        return { ...prev, ...data };
       });
+      // Move this after setting form data
+      setStep((prevS) => prevS + 1);
     }
   };
 
@@ -176,8 +176,8 @@ const SignUp = () => {
         </View>
         <ProgressSteps
           isComplete={isAllStepCompleted}
-          topOffset={scale(20)}
           activeStep={step}
+          topOffset={scale(20)}
           labelColor={colors.textSecondary}
           labelFontFamily={Fonts.quicksandBold}
           activeLabelColor={colors.tertiary}
@@ -189,11 +189,6 @@ const SignUp = () => {
           disabledStepNumColor={colors.tertiary}
           activeStepNumColor={colors.tertiary}>
           <ProgressStep
-            scrollViewProps={{
-              scrollsToTop: true,
-              showsVerticalScrollIndicator: false
-            }}
-            activeStep={1}
             removeBtnRow
             label='User Detail'>
             <StepOne control={controlFirstStep} />
@@ -245,7 +240,7 @@ const SignUp = () => {
                   ? handleSubmitSecondStep(onNextStep)
                   : handleSubmitThirdStep(onSubmit)
             }>
-            {isAllStepCompleted ? 'Submit' : 'Next'}
+            {step === 2 ? 'Submit' : 'Next'}
           </Button.Primary>
         </View>
       </ImageBackground>

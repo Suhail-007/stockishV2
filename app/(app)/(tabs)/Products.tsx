@@ -1,14 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import ProductPage from '@/components/pages/Products/ProductsPage';
 
 const Products = () => {
-  return (
-    <View>
-      <Text>Products</Text>
-    </View>
-  );
+  return <ProductPage />;
 };
 
 export default Products;
-
-const styles = StyleSheet.create({});

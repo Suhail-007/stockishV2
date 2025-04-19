@@ -1,6 +1,6 @@
-import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CallbackWithResult } from '@react-native-async-storage/async-storage/lib/typescript/types';
+import * as SecureStore from 'expo-secure-store';
 
 /**
  * Stores a key-value pair in AsyncStorage.
@@ -57,7 +57,8 @@ export const removeItemStorageAsync = async (key: string, callback?: CallbackWit
  */
 export const setSecureAsync = async (key: string, value: string, options?: SecureStore.SecureStoreOptions) => {
   try {
-    await SecureStore.setItemAsync(key, value, options);
+    const result = await SecureStore.setItemAsync(key, value, options);
+    return result;
   } catch (error) {
     console.log(error);
   }

@@ -1,4 +1,5 @@
 import { MD3Theme } from 'react-native-paper';
+
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 const tintColorLight = '#2f95dc';
@@ -7,8 +8,8 @@ const tintColorDark = '#ffffff';
 const Colors = {
   light: {
     // 🎨 Backgrounds
-    screenBg: '#F5F5F5',
-    background: '#fdfdfd',
+    screenBg: '#fff',
+    background: '#fff',
     secondaryBg: '#F5F5F5',
     cardBg: '#32A08B',
     backgroundWhite: '#FFFFFF',

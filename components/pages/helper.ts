@@ -1,6 +1,7 @@
+import * as BackgroundFetch from 'expo-background-fetch';
+
 import { StorageKeys } from '../../constants/variables';
 import { getItemStorageAsync } from '../../utils/storage';
-import * as BackgroundFetch from 'expo-background-fetch';
 
 /**
  * Retrieves the order statistics for admin from AsyncStorage.

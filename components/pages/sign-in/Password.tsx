@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react';
-import { Controller } from 'react-hook-form';
-import { Text, ActivityIndicator } from 'react-native-paper';
-import TextInput from '../../ui/TextInput';
+import { ActivityIndicator } from 'react-native-paper';
+
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import useThemeColors from '../../../hooks/useThemeColors';
+import FormController from '../../FormController';
 import { PasswordStepProps } from '../../types/signIn.type';
+import TextInput from '../../ui/TextInput';
 
 /**
  * A component that renders a text input for a user's password.
@@ -20,7 +22,7 @@ const PasswordStep = ({ control, showPassword, setShowPassword, signInIsPending 
   const { colors } = useThemeColors();
 
   return (
-    <Controller
+    <FormController
       control={control}
       name='password'
       rules={{ required: 'Password is required' }}
@@ -50,7 +52,6 @@ const PasswordStep = ({ control, showPassword, setShowPassword, signInIsPending 
               )
             }
           />
-          {fieldState.error && <Text style={{ color: colors.error }}>{fieldState.error.message}</Text>}
         </Fragment>
       )}
     />

@@ -1,4 +1,7 @@
 import { AxiosResponse } from 'axios';
+
+import configuredAxiosInstance from '../axios/interceptor';
+
 import {
   getOrdersStatisticsByIdRes,
   GetProductsCountByTenantRes,
@@ -8,7 +11,6 @@ import {
   GetLastFiveOrdersPayload,
   GetLastFiveOrdersRes
 } from './types/dashboard.apiType';
-import configuredAxiosInstance from '../axios/interceptor';
 
 const endpoints = {
   getOrderStatisticsById: ({ id, role, month, year }: StatisticsPayload) =>

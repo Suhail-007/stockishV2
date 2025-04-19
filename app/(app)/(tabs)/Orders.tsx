@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { Text, View } from 'react-native';
 
 const Orders = () => {
   return (
@@ -10,5 +10,3 @@ const Orders = () => {
 };
 
 export default Orders;
-
-const styles = StyleSheet.create({});

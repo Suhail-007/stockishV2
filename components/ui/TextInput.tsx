@@ -1,8 +1,10 @@
-import { TextInput as RNTextInput } from 'react-native-paper';
-import { CustomTextInput } from './interface/textInput.interface';
-import useThemeColors from '../../hooks/useThemeColors';
 import { StyleSheet } from 'react-native';
+import { TextInput as RNTextInput } from 'react-native-paper';
+
 import { Fonts } from '../../constants/fonts';
+import useThemeColors from '../../hooks/useThemeColors';
+
+import { CustomTextInput } from './interface/textInput.interface';
 
 const TextInput: CustomTextInput = ({ ...props }) => {
   const { colors } = useThemeColors();

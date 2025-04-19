@@ -1,12 +1,19 @@
-import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import useThemeColors from '../../hooks/useThemeColors';
-import { AntDesign } from '@expo/vector-icons';
-import { ErrorMessageProps, ErrorValidationProps } from './types/Error.type';
+import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
+import Animated, { FadeIn } from 'react-native-reanimated';
+
+import { AntDesign } from '@expo/vector-icons';
+
 import { Fonts } from '../../constants/fonts';
 import { STATUS_CODES } from '../../constants/statusCodes';
-import Animated, { FadeIn } from 'react-native-reanimated';
+import useThemeColors from '../../hooks/useThemeColors';
+
+
+import { ErrorMessageProps, ErrorValidationProps } from './types/Error.type';
+
+
+
 
 const Error = () => null;
 

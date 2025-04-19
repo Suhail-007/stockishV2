@@ -1,14 +1,18 @@
-import { Dimensions, ScrollView, ScrollViewProps, View, ViewProps } from 'react-native';
-import React, { FC } from 'react';
-import { pageDefaultStyles } from './styles/PageWrapper.styles';
-import useThemeColors from '../../hooks/useThemeColors';
-import { SectionPageProps } from './types/PageWrapper.type';
-import { Text } from 'react-native-paper';
+import React, { FC, memo } from 'react';
+import { ScrollView, ScrollViewProps, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
+
+import useThemeColors from '../../hooks/useThemeColors';
+
+import CustomText from './CustomText';
+import { pageDefaultStyles } from './styles/PageWrapper.styles';
+import { SectionPageProps } from './types/PageWrapper.type';
+
+
 
 const PageWrapper = () => null;
 
-const Scroll: FC<ScrollViewProps> = ({ children, style, ...props }) => {
+const _Scroll: FC<ScrollViewProps> = ({ children, style, ...props }) => {
   const { colors } = useThemeColors();
 
   const dynamicStyles = {
@@ -20,14 +24,14 @@ const Scroll: FC<ScrollViewProps> = ({ children, style, ...props }) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ flexGrow: 1, paddingBottom: scale(100) }}
+      contentContainerStyle={[{ flexGrow: 1, paddingBottom: scale(100) }]}
       style={[pageDefaultStyles.pageWrapper, dynamicStyles.bg, style]}
       {...props}>
       {children}
     </ScrollView>
   );
 };
-const ViewWrapper: FC<ViewProps> = ({ children, style, ...props }) => {
+const _ViewWrapper: FC<ViewProps> = ({ children, style, ...props }) => {
   const { colors } = useThemeColors();
 
   const dynamicStyles = {
@@ -45,31 +49,37 @@ const ViewWrapper: FC<ViewProps> = ({ children, style, ...props }) => {
   );
 };
 
-const SectionPage: FC<SectionPageProps> = ({ children, style, title, titleContStyle, titleProps, icon, ...props }) => {
+const _SectionPage: FC<SectionPageProps> = ({ children, style, title, titleContStyle, titleProps, icon, ...props }) => {
   return (
     <View
       style={style}
       {...props}>
-      <View style={[pageDefaultStyles.heading, titleContStyle]}>
-        {icon && icon}
+      {(icon || title) && (
+        <View style={[pageDefaultStyles.heading, titleContStyle]}>
+          {icon && icon}
 
-        {title && (
-          <Text
-            variant='titleLarge'
-            {...titleProps}>
-            {title}
-          </Text>
-        )}
-      </View>
+          {title && (
+            <CustomText
+              variant='titleLarge'
+              {...titleProps}>
+              {title}
+            </CustomText>
+          )}
+        </View>
+      )}
 
       {children}
     </View>
   );
 };
 
-Scroll.displayName = 'Scroll';
-ViewWrapper.displayName = 'ViewWrapper';
-SectionPage.displayName = 'SectionPage';
+_Scroll.displayName = 'Scroll';
+_ViewWrapper.displayName = 'ViewWrapper';
+_SectionPage.displayName = 'SectionPage';
+
+const Scroll = memo(_Scroll);
+const ViewWrapper = memo(_ViewWrapper);
+const SectionPage = memo(_SectionPage);
 
 PageWrapper.Scroll = Scroll;
 PageWrapper.View = ViewWrapper;

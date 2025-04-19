@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios';
+
 import configuredAxiosInstance from '../axios/interceptor';
+
 import { GetUserPayload, GetUserResponse } from './types/userApi.type';
 
 const BASE_URL = 'user';

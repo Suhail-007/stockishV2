@@ -49,43 +49,43 @@ export default function Index() {
         <Home isLoading={loading}>
           <ConditionalRender
             condition={lastFiveOrders.isPending}
-            loading={<HomeSkeleton.LastFiveOrders loading={lastFiveOrders.isPending} />}
-            loaded={<LastFiveOrders items={lastFiveOrders.data?.data?.data || []} />}
+            isTrueComponent={<HomeSkeleton.LastFiveOrders loading={lastFiveOrders.isPending} />}
+            isFalseComponent={<LastFiveOrders items={lastFiveOrders.data?.data?.data || []} />}
           />
 
           <ConditionalRender
             condition={totalRemainingBalance.isPending}
-            loaded={<TotalBalance amount={totalRemainingBalance.data?.data?.data || 0} />}
-            loading={<HomeSkeleton.TotalBalance loading={totalRemainingBalance.isPending} />}
+            isFalseComponent={<TotalBalance amount={totalRemainingBalance.data?.data?.data || 0} />}
+            isTrueComponent={<HomeSkeleton.TotalBalance loading={totalRemainingBalance.isPending} />}
           />
 
           <ConditionalRender
             condition={orderStatistics.isPending}
-            loaded={
+            isFalseComponent={
               <MonthlySellStats
                 totalAmount={_orderStatistics?.totalAmount || 0}
                 totalProfit={_orderStatistics?.totalProfit || 0}
               />
             }
-            loading={<HomeSkeleton.MonthlySellNProfit loading={orderStatistics.isPending} />}
+            isTrueComponent={<HomeSkeleton.MonthlySellNProfit loading={orderStatistics.isPending} />}
           />
 
           <ConditionalRender
             condition={orderStatistics.isPending}
-            loading={<HomeSkeleton.MonthlyOrders loading={orderStatistics.isPending} />}
-            loaded={<MonthlyOrders />}
+            isTrueComponent={<HomeSkeleton.MonthlyOrders loading={orderStatistics.isPending} />}
+            isFalseComponent={<MonthlyOrders />}
           />
 
           <ConditionalRender
             condition={usersCountByTenant.isPending}
-            loading={<HomeSkeleton.UsersStatistics loading={usersCountByTenant.isPending} />}
-            loaded={<UsersStatistics />}
+            isTrueComponent={<HomeSkeleton.UsersStatistics loading={usersCountByTenant.isPending} />}
+            isFalseComponent={<UsersStatistics />}
           />
 
           <ConditionalRender
             condition={productsCountByTenant.isPending}
-            loading={<HomeSkeleton.ProductStatistics loading={productsCountByTenant.isPending} />}
-            loaded={<ProductStatistics />}
+            isTrueComponent={<HomeSkeleton.ProductStatistics loading={productsCountByTenant.isPending} />}
+            isFalseComponent={<ProductStatistics />}
           />
         </Home>
       )}

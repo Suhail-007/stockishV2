@@ -9,11 +9,7 @@ import { Fonts } from '../../constants/fonts';
 import { STATUS_CODES } from '../../constants/statusCodes';
 import useThemeColors from '../../hooks/useThemeColors';
 
-
 import { ErrorMessageProps, ErrorValidationProps } from './types/Error.type';
-
-
-
 
 const Error = () => null;
 

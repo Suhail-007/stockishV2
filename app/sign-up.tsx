@@ -11,7 +11,7 @@ import { router } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
 
 import { createTenant } from '../apis/tenant.api';
-import { API_BASE_RESPONSE, ValidationError } from '../apis/types/apis.type';
+import { BASE_RESPONSE, ValidationError } from '../apis/types/apis.type';
 import { CreateTenantPayload } from '../apis/types/tenant.type';
 import {
   SignUpFormData,
@@ -89,7 +89,7 @@ const SignUp = () => {
     mutationKey: ['create-tenant', formData]
   });
 
-  const TYPED_CREATE_TENANT_ERROR = createTenantError as unknown as API_BASE_RESPONSE;
+  const TYPED_CREATE_TENANT_ERROR = createTenantError as unknown as BASE_RESPONSE;
 
   const onPrevStep = () => setStep((prevS) => prevS - 1);
 
@@ -129,7 +129,7 @@ const SignUp = () => {
         }
       },
       onError(error) {
-        const apiError = error as unknown as API_BASE_RESPONSE;
+        const apiError = error as unknown as BASE_RESPONSE;
         setIsAllStepCompleted(false);
         setHideError(true);
         console.log('🚀 ~ onError ~ error:', JSON.stringify(apiError, null, 2));
@@ -142,10 +142,6 @@ const SignUp = () => {
   };
 
   const dynamicStyles = {
-    container: {
-      // backgroundColor: colors.background
-    },
-
     heading: {
       color: colors.text
     },
@@ -155,7 +151,7 @@ const SignUp = () => {
   };
 
   return (
-    <View style={[styles.container, dynamicStyles.container]}>
+    <View style={[styles.container]}>
       <ImageBackground
         source={signUpBgImage}
         fadeDuration={1000}

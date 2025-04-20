@@ -1,5 +1,5 @@
 export type ProductAddForm = {
-  productName: string;
+  name: string;
   quantity: string;
   buyPrice: string;
   sellPrice: string;

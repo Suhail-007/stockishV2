@@ -23,8 +23,6 @@ SplashScreen.preventAutoHideAsync();
 
 export default function AppLayout() {
   const { session, isLoading } = useSession();
-  console.log('🚀 ~ AppLayout ~ isLoading:', isLoading);
-  console.log('🚀 ~ AppLayout ~ session:', session);
 
   // Set up the auth context and render our layout inside of it.
 

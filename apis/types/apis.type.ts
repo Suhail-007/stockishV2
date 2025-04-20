@@ -1,6 +1,12 @@
-export type BASE_RESPONSE<T> = API_BASE_RESPONSE & {
+export type API_BASE_RESPONSE<T> = BASE_RESPONSE & {
   data: T;
- 
+};
+
+export type API_BASE_RESPONSE_WITH_PAGINATION<T> = BASE_RESPONSE & {
+  currentPage: number;
+  totalItems: number;
+  totalPages: number;
+  data: T;
 };
 
 export type ValidationError = {
@@ -11,9 +17,14 @@ export type ValidationError = {
   location: string;
 };
 
-export type API_BASE_RESPONSE = {
+export type BASE_RESPONSE = {
   message: string;
   error?: string | ValidationError[];
   status: number;
   success: boolean;
+};
+
+export type PAGINATION_PAYLOAD = {
+  page: number;
+  pageSize: number;
 };

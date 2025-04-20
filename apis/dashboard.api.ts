@@ -14,7 +14,7 @@ import {
 
 const endpoints = {
   getOrderStatisticsById: ({ id, role, month, year }: StatisticsPayload) =>
-    `order/statistics?id=${id}}&role=${role}&month=${month}&year=${year}`,
+    `order/statistics?id=${id}&role=${role}&month=${month}&year=${year}`,
   getLastFiveOrders: ({ id, role }: GetLastFiveOrdersPayload) => `order/getLastFiveOrders?id=${id}&role=${role}`,
   getUsersCountByTenant: '/user/getUsersCountByTenant',
   getTotalRemainingBalance: ({ id, role, month, year }: StatisticsPayload) =>

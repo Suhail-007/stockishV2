@@ -22,14 +22,14 @@ const Home = ({ children, isLoading }: { children: React.ReactNode; isLoading: b
   return (
     <View>
       <ConditionalRender
-        loaded={
+        isFalseComponent={
           <PageTitle
             containerStyles={homeStyles.pageTitleContStyle}
             showGreeting={true}
           />
         }
         condition={isLoading}
-        loading={<HomeSkeleton.Greetings loading={isLoading} />}
+        isTrueComponent={<HomeSkeleton.Greetings loading={isLoading} />}
       />
 
       {children}

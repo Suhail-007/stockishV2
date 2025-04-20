@@ -1,3 +1,5 @@
+import { QUERY_KEYS } from './queries';
+
 export const StorageKeys = {
   SESSION: 'session',
   REFRESH_TOKEN: 'refresh_token',
@@ -11,5 +13,5 @@ export const BACKGROUND_TASKS = {
 };
 
 export const CHECK_EMAIL_ERROR_MESSAGE = 'User not found';
-export const ValidationErrorString = 'Validation failed';
+export const ValidationErrorString = 'Validation errors';
 export const AccessTokenExpiredString = 'Access Token Expired';

@@ -1,3 +1,5 @@
+import { Filters } from '../utils/global.type';
+
 const greetings = ['Hello', 'Hi', 'Hey', 'Welcome back'];
 const greetingQuestions = [
   'how are you today?',
@@ -41,4 +43,21 @@ export const getGreeting = (): string => {
 
 export const getGreetingQuestion = (): string => {
   return greetingQuestions[Math.floor(Math.random() * greetingQuestions.length)];
+};
+
+export const createFiltersQuery = <T extends Filters>(filters: Partial<T>) => {
+  let query = '';
+
+  if (filters) {
+    const filterKeys = Object.keys(filters) as Array<keyof typeof filters>;
+
+    filterKeys.forEach((key) => {
+      const value = filters[key];
+      if (value) {
+        query += `&${String(key)}=${value}`;
+      }
+    });
+  }
+
+  return query;
 };

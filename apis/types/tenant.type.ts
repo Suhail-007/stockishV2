@@ -1,6 +1,6 @@
 import { User } from '../../features/types/authSlice.type';
 
-import { BASE_RESPONSE } from './apis.type';
+import { API_BASE_RESPONSE } from './apis.type';
 
 export type CreateTenantPayload = {
   phoneNumber: string;
@@ -12,7 +12,7 @@ export type CreateTenantPayload = {
   gender: string;
 };
 
-export type CreateTenantResponse = BASE_RESPONSE<CreateTenantData>;
+export type CreateTenantResponse = API_BASE_RESPONSE<CreateTenantData>;
 
 export type CreateTenantData = User & {
   orgName: string;

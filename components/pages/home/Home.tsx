@@ -29,7 +29,7 @@ const Home = ({ children, isLoading }: { children: React.ReactNode; isLoading: b
           />
         }
         condition={isLoading}
-        isTrueComponent={<HomeSkeleton.Greetings loading={isLoading} />}
+        isTrueComponent={<HomeSkeleton.Greetings />}
       />
 
       {children}

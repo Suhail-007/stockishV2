@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { BASE_RESPONSE, ValidationError } from '../apis/types/apis.type';
+import { ValidationErrorString } from '../constants/variables';
 
 import { ErrorMessageProps } from './types/errorMessage.type';
 import Error from './ui/Error';
-import { ValidationErrorString } from '../constants/variables';
 
 /**
  * Renders an error message based on the provided error object.

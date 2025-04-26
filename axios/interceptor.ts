@@ -5,13 +5,7 @@ import { router } from 'expo-router';
 import { GetRefreshTokenRes } from '../apis/types/auth.type';
 import { STATUS_CODES } from '../constants/statusCodes';
 import { StorageKeys } from '../constants/variables';
-import {
-  deleteSecureAsync,
-  getSecureAsync,
-  removeItemStorageAsync,
-  setItemStorageAsync,
-  setSecureAsync
-} from '../utils/storage';
+import { deleteSecureAsync, getSecureAsync, setSecureAsync } from '../utils/storage';
 
 import defaultInstance from './instance';
 
@@ -38,6 +32,7 @@ const processQueue = (error: any, token: string | null = null) => {
           Authorization: `Bearer ${token}`
         }
       };
+
       resolve(axios(newRequest));
     }
   });
@@ -122,12 +117,13 @@ defaultInstance.interceptors.response.use(
           refreshTokenPromise = await refreshToken();
         }
         const newAccessToken = refreshTokenPromise;
+
+        defaultInstance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
         processQueue(null, newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-        console.log('Token updated');
-
-        return axios(originalRequest);
+        refreshTokenPromise = null;
+        return defaultInstance(originalRequest);
       } catch (err) {
         processQueue(err, null);
         router.replace('/sign-in');

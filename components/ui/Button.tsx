@@ -9,7 +9,6 @@ import { CustomButtonProps } from './types/buttons.type';
 
 const _ButtonSecondary: FC<CustomButtonProps> = ({ ...props }) => {
   const { colors } = useThemeColors();
-  const { labelStyle, weight, fontFamily } = props;
 
   const memoizedLabelStyle = useMemo(() => {
     return StyleSheet.compose(
@@ -22,7 +21,7 @@ const _ButtonSecondary: FC<CustomButtonProps> = ({ ...props }) => {
         }
       ]
     ) as TextStyle;
-  }, [labelStyle, weight, fontFamily]);
+  }, [props.labelStyle, props.weight, props.fontFamily]);
 
   return (
     <RNButton
@@ -38,7 +37,6 @@ const _ButtonSecondary: FC<CustomButtonProps> = ({ ...props }) => {
 };
 const _ButtonOutline: FC<CustomButtonProps> = ({ ...props }) => {
   const { colors } = useThemeColors();
-  const { labelStyle, weight, fontFamily } = props;
 
   const memoizedLabelStyle = useMemo(() => {
     return StyleSheet.compose(
@@ -51,12 +49,13 @@ const _ButtonOutline: FC<CustomButtonProps> = ({ ...props }) => {
         }
       ]
     ) as TextStyle;
-  }, [labelStyle, weight, fontFamily]);
+  }, [props.labelStyle, props.weight, props.fontFamily]);
 
   return (
     <RNButton
-      textColor={colors.secondaryBg}
+      textColor={colors.primary}
       mode='outlined'
+      style={{ borderRadius: 12, borderColor: colors.primary }}
       labelStyle={memoizedLabelStyle}
       {...props}></RNButton>
   );
@@ -64,7 +63,6 @@ const _ButtonOutline: FC<CustomButtonProps> = ({ ...props }) => {
 
 const _ButtonContained: FC<CustomButtonProps> = ({ ...props }) => {
   const { colors } = useThemeColors();
-  const { labelStyle, weight, fontFamily } = props;
 
   const memoizedLabelStyle = useMemo(() => {
     return StyleSheet.compose(
@@ -77,7 +75,7 @@ const _ButtonContained: FC<CustomButtonProps> = ({ ...props }) => {
         }
       ]
     ) as TextStyle;
-  }, [labelStyle, weight, fontFamily]);
+  }, [props.labelStyle, props.weight, props.fontFamily]);
 
   return (
     <RNButton

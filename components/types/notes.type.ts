@@ -1,5 +1,7 @@
 import { StyleProp, ViewStyle } from 'react-native';
+
 import { CustomTextProps } from '../ui/types/CustomTextProps.type';
+
 import { PageTitleProps } from './pageTitle.type';
 
 export interface NotesProps {

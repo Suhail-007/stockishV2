@@ -49,7 +49,7 @@ export const createFiltersQuery = <T extends Filters>(filters: Partial<T>) => {
   let query = '';
 
   if (filters) {
-    const filterKeys = Object.keys(filters) as Array<keyof typeof filters>;
+    const filterKeys = Object.keys(filters) as (keyof typeof filters)[];
 
     filterKeys.forEach((key) => {
       const value = filters[key];

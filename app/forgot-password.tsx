@@ -16,8 +16,7 @@ const { width } = Dimensions.get('window');
 
 export default function ForgotPassword() {
   const { colors } = useThemeColors();
-  const { control, handleSubmit, watch } = useForm<FormData>();
-  const email = watch('email');
+  const { control } = useForm<FormData>();
 
   const dynamicStyles = useMemo(
     () => ({

@@ -8,15 +8,19 @@ import {
   getProductsCountByTenant,
   getTotalRemainingBalance,
   getUsersCountByTenant
-} from '../apis/dashboard.api';
-import { DashboardFilters } from '../components/pages/home/home.type';
-import { QUERY_KEYS } from '../constants/queries';
-import { User } from '../features/types/authSlice.type';
-import { useAppSelector } from '../store/store';
+} from '../../apis/dashboard.api';
+import { DashboardFilters } from '../../components/pages/home/home.type';
+import { QUERY_KEYS } from '../../constants/queries';
+import { PRODUCT_STATUS } from '../../enums/Product.enum';
+import { addActiveInActiveProducts } from '../../features/product';
+import { User } from '../../features/types/authSlice.type';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 const useDashboardQueries = (user: User | null, filters: DashboardFilters) => {
   const refetchInterval = useRef(1000 * 60 * 5);
   const { isRefreshTokenRotating } = useAppSelector((state) => state.auth);
+  const { products } = useAppSelector((state) => state.products);
+  const dispatch = useAppDispatch();
 
   const dashboardQueries = useQueries({
     queries: [
@@ -29,8 +33,20 @@ const useDashboardQueries = (user: User | null, filters: DashboardFilters) => {
         enabled: !!user?.id
       },
       {
-        queryKey: [QUERY_KEYS.GET_PRODUCTS_COUNT_BY_TENANT],
-        queryFn: getProductsCountByTenant,
+        queryKey: [QUERY_KEYS.GET_PRODUCTS_COUNT_BY_TENANT, products?.length],
+        queryFn: async () => {
+          const res = await getProductsCountByTenant();
+          const data = res?.data?.data;
+
+          dispatch(
+            addActiveInActiveProducts({
+              active: data[PRODUCT_STATUS.active],
+              inactive: data[PRODUCT_STATUS.inactive]
+            })
+          );
+
+          return res;
+        },
         retry: isRefreshTokenRotating ? false : 2,
         refetchIntervalInBackground: !isRefreshTokenRotating,
         refetchInterval: isRefreshTokenRotating ? false : refetchInterval.current, //5 minutes

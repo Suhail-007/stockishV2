@@ -1,5 +1,3 @@
-import { QUERY_KEYS } from './queries';
-
 export const StorageKeys = {
   SESSION: 'session',
   REFRESH_TOKEN: 'refresh_token',

@@ -1,17 +1,20 @@
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { ImageBackground, View } from 'react-native';
-import { Icon, Text } from 'react-native-paper';
+import { Icon } from 'react-native-paper';
 
 import { globalStyles } from '../../../constants/globalStyles';
+import { PRODUCT_STATUS } from '../../../enums/Product.enum';
 import useThemeColors from '../../../hooks/useThemeColors';
+import CustomText from '../../ui/CustomText';
 import PageWrapper from '../../ui/PageWrapper';
 
 import { homeStyles } from './home.styles';
 
+
 const activeUserImg = require('../../../assets/images/home/activeUsers.png');
 const inActiveUserImg = require('../../../assets/images/home/inActiveUsers.png');
 
-const ProductStatistics = () => {
+const ProductStatistics: FC<{ data: Record<PRODUCT_STATUS, number> }> = (props) => {
   const { colors } = useThemeColors();
 
   const dynamicStyles = useMemo(() => {
@@ -42,8 +45,12 @@ const ProductStatistics = () => {
       <View style={homeStyles.ordersStatisticsCont}>
         <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.productStatisticsCont]}>
           <View>
-            <Text style={[homeStyles.orderStatisticsContHeading, dynamicStyles.activeUsersText]}>Active Products </Text>
-            <Text style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.activeUsersText]}>{0}</Text>
+            <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.activeUsersText]}>
+              Active Products{' '}
+            </CustomText>
+            <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.activeUsersText]}>
+              {props?.data[PRODUCT_STATUS.active] || 0}
+            </CustomText>
           </View>
 
           <ImageBackground
@@ -56,10 +63,12 @@ const ProductStatistics = () => {
 
         <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.productStatisticsCont]}>
           <View>
-            <Text style={[homeStyles.orderStatisticsContHeading, dynamicStyles.inActiveUserText]}>
+            <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.inActiveUserText]}>
               InActive Products
-            </Text>
-            <Text style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.inActiveUserText]}>{0}</Text>
+            </CustomText>
+            <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.inActiveUserText]}>
+              {props?.data[PRODUCT_STATUS.inactive] || 0}
+            </CustomText>
           </View>
 
           <ImageBackground

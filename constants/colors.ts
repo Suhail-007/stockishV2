@@ -61,6 +61,7 @@ const Colors = {
     green100: '#cdfac1ff',
     red100: '#fbc5c5',
     grey100: '#f2f2f2',
+    grey200: '#e0e0e0',
 
     //Skeleton
     skeleton: '#dfdddd',
@@ -123,6 +124,7 @@ const Colors = {
     green100: '#baeebe',
     red100: '#fbc5c5ff',
     grey100: '#f2f2f2',
+    grey200: '#e1dddd',
 
     //Skeleton
     skeleton: '#555',

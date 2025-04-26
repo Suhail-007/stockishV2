@@ -2,10 +2,11 @@ import React, { useMemo } from 'react';
 import { View } from 'react-native';
 
 import useThemeColors from '../../hooks/useThemeColors';
-import { NotesProps } from '../types/notes.type';
 import PageTitle from '../PageTitle';
-import notesStyles from './notes.styles';
+import { NotesProps } from '../types/notes.type';
 import CustomText from '../ui/CustomText';
+
+import notesStyles from './notes.styles';
 
 const Notes = ({ notes, wrapperStyles, render, noteContStyles, noteTextProps, headingProps }: NotesProps) => {
   const { colors } = useThemeColors();
@@ -27,7 +28,7 @@ const Notes = ({ notes, wrapperStyles, render, noteContStyles, noteTextProps, he
         ))}
       </>
     );
-  }, [notes]);
+  }, [notes, noteContStyles, noteTextProps, render]);
 
   const dynamicStyles = useMemo(() => {
     return {
@@ -37,7 +38,7 @@ const Notes = ({ notes, wrapperStyles, render, noteContStyles, noteTextProps, he
         borderWidth: 1
       }
     };
-  }, []);
+  }, [colors.primary, colors.primary50]);
 
   return (
     <View style={[notesStyles.container, dynamicStyles.container, wrapperStyles]}>

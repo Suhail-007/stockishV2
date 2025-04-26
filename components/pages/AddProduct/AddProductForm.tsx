@@ -1,18 +1,22 @@
 import { useForm } from 'react-hook-form';
 
+import { useMutation } from '@tanstack/react-query';
+import { router } from 'expo-router';
+
+import { addProduct } from '../../../apis/product.api';
+import { AddProductNotesAdmin } from '../../../constants/notes';
+import { STATUS_CODES } from '../../../constants/statusCodes';
+import { addProduct as addProductAction } from '../../../features/product';
+import { useAppDispatch } from '../../../store/store';
+import ErrorMessage from '../../ErrorMessage';
 import FormController from '../../FormController';
+import Notes from '../../Notes/Notes';
+import Button from '../../ui/Button';
 import PageWrapper from '../../ui/PageWrapper';
 import TextInput from '../../ui/TextInput';
-import Button from '../../ui/Button';
+
 import { ProductAddForm } from './addProduct.type';
-import Notes from '../../Notes/Notes';
-import { AddProductNotesAdmin } from '../../../constants/notes';
-import { useAppSelector } from '../../../store/store';
-import { useMutation } from '@tanstack/react-query';
-import { addProduct } from '../../../apis/product.api';
-import ErrorMessage from '../../ErrorMessage';
-import { STATUS_CODES } from '../../../constants/statusCodes';
-import { router } from 'expo-router';
+
 /**
  * A form for adding a product.
  *
@@ -29,7 +33,7 @@ import { router } from 'expo-router';
  * The form is submitted when the "Add Product" button is pressed.
  */
 const AddProductForm = () => {
-  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
   const {
     mutateAsync: addProductMutation,
     isPending: addProductIsPending,
@@ -40,7 +44,6 @@ const AddProductForm = () => {
       return addProduct(data);
     }
   });
-  const isTenant = user?.isTenant;
   const { control, handleSubmit, resetField } = useForm<ProductAddForm>({
     defaultValues: {
       name: '',
@@ -55,8 +58,9 @@ const AddProductForm = () => {
   const onSubmit = async (data: ProductAddForm) => {
     const res = await addProductMutation(data);
 
-    if (res.status === STATUS_CODES.success) {
+    if (res.data.status === STATUS_CODES.success) {
       //Update the product list in redux
+      dispatch(addProductAction(res.data.data));
 
       //reset the form
       resetField('name');
@@ -71,8 +75,6 @@ const AddProductForm = () => {
           newlyAddedProduct: res.data.data.id
         }
       });
-
-      console.log('🚀 ~ onSubmit ~ data:', JSON.stringify(res.data.data, null, 2));
     }
   };
 

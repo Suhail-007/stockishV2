@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Pressable } from 'react-native';
 import { Icon } from 'react-native-paper';
 
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { router, Tabs } from 'expo-router';
-
 
 import productHeaderStyles from '@/components/pages/Products/productsHeader.styles';
 import Header from '@/components/ui/Header';
@@ -12,14 +11,11 @@ import TabBar from '@/components/ui/TabBar/TabBar';
 import { useColorScheme } from '@/components/useColorScheme';
 
 import Colors from '@/constants/colors';
-import { fetchUserDetails } from '@/features/auth';
 import useThemeColors from '@/hooks/useThemeColors';
-import { useAppDispatch } from '@/store/store';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const { colors } = useThemeColors();
-  const dispatch = useAppDispatch();
 
   const dynamicStyles = useMemo(() => {
     return {
@@ -28,10 +24,6 @@ export default function TabLayout() {
       }
     };
   }, [colors.primary]);
-
-  useEffect(() => {
-    dispatch(fetchUserDetails());
-  }, [dispatch]);
 
   return (
     <Tabs

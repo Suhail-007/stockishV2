@@ -3,10 +3,11 @@ export type API_BASE_RESPONSE<T> = BASE_RESPONSE & {
 };
 
 export type API_BASE_RESPONSE_WITH_PAGINATION<T> = BASE_RESPONSE & {
-  currentPage: number;
-  totalItems: number;
-  totalPages: number;
-  data: T;
+  data: T & {
+    currentPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
 };
 
 export type ValidationError = {

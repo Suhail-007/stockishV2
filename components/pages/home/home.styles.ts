@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { scale } from 'react-native-size-matters';
+import { moderateScale, scale } from 'react-native-size-matters';
 
 export const homeStyles = StyleSheet.create({
   pageTitleContStyle: {
@@ -70,6 +70,15 @@ export const homeStyles = StyleSheet.create({
 export const homeSkeletonStyles = StyleSheet.create({
   heading: {
     gap: 4
+  },
+
+  skeletonBoxHeading: {
+    height: moderateScale(30)
+  },
+
+  skeletonBox: {
+    height: scale(70),
+    width: '100%'
   },
 
   ordersStatisticsCont: {

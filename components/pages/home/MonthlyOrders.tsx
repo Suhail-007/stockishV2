@@ -1,11 +1,12 @@
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { ImageBackground } from 'react-native';
-import { Icon, Text } from 'react-native-paper';
+import { Icon } from 'react-native-paper';
 
 import { getOrdersStatisticsByIdData } from '../../../apis/types/dashboard.apiType';
 import { globalStyles } from '../../../constants/globalStyles';
 import useThemeColors from '../../../hooks/useThemeColors';
+import CustomText from '../../ui/CustomText';
 import PageWrapper from '../../ui/PageWrapper';
 import { getOrdersStatisticsForTenantFromStorage } from '../helper';
 
@@ -79,10 +80,12 @@ const _MonthlyOrders = () => {
       <View style={[homeStyles.ordersStatisticsCont]}>
         <View style={[globalStyles.card, homeStyles.orderStatisticsCont, dynamicStyles.cardBg]}>
           <View>
-            <Text style={[homeStyles.orderStatisticsContHeading, dynamicStyles.totalOrdersText]}>Total Orders </Text>
-            <Text style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.totalOrdersText]}>
+            <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.totalOrdersText]}>
+              Total Orders{' '}
+            </CustomText>
+            <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.totalOrdersText]}>
               {ordersStatisticsAdmin?.totalOrders}
-            </Text>
+            </CustomText>
           </View>
 
           <ImageBackground
@@ -95,10 +98,12 @@ const _MonthlyOrders = () => {
 
         <View style={[globalStyles.card, homeStyles.orderStatisticsCont, dynamicStyles.cardBg]}>
           <View>
-            <Text style={[homeStyles.orderStatisticsContHeading, dynamicStyles.pendingOrdersText]}>Pending </Text>
-            <Text style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.pendingOrdersText]}>
+            <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.pendingOrdersText]}>
+              Pending{' '}
+            </CustomText>
+            <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.pendingOrdersText]}>
               {ordersStatisticsAdmin?.totalPendingOrders.length}
-            </Text>
+            </CustomText>
           </View>
 
           <ImageBackground
@@ -111,10 +116,12 @@ const _MonthlyOrders = () => {
 
         <View style={[globalStyles.card, homeStyles.orderStatisticsCont, dynamicStyles.cardBg]}>
           <View>
-            <Text style={[homeStyles.orderStatisticsContHeading, dynamicStyles.deliveredOrdersText]}>Delivered</Text>
-            <Text style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.deliveredOrdersText]}>
+            <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.deliveredOrdersText]}>
+              Delivered
+            </CustomText>
+            <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.deliveredOrdersText]}>
               {ordersStatisticsAdmin?.totalDeliveredOrders.length}
-            </Text>
+            </CustomText>
           </View>
 
           <ImageBackground
@@ -127,10 +134,12 @@ const _MonthlyOrders = () => {
 
         <View style={[globalStyles.card, homeStyles.orderStatisticsCont, dynamicStyles.cardBg]}>
           <View>
-            <Text style={[homeStyles.orderStatisticsContHeading, dynamicStyles.cancelledOrdersText]}>Cancelled </Text>
-            <Text style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.cancelledOrdersText]}>
+            <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.cancelledOrdersText]}>
+              Cancelled{' '}
+            </CustomText>
+            <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.cancelledOrdersText]}>
               {ordersStatisticsAdmin?.totalOrders}
-            </Text>
+            </CustomText>
           </View>
 
           <ImageBackground

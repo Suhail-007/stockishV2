@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { ImageBackground, View } from 'react-native';
-import { Icon, Text } from 'react-native-paper';
+import { Icon } from 'react-native-paper';
 
 import { globalStyles } from '../../../constants/globalStyles';
 import useThemeColors from '../../../hooks/useThemeColors';
+import CustomText from '../../ui/CustomText';
 import PageWrapper from '../../ui/PageWrapper';
 
 import { homeStyles } from './home.styles';
@@ -42,8 +43,12 @@ const UsersStatistics = () => {
       <View style={homeStyles.ordersStatisticsCont}>
         <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.orderStatisticsCont]}>
           <View>
-            <Text style={[homeStyles.orderStatisticsContHeading, dynamicStyles.activeUsersText]}>Active Users </Text>
-            <Text style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.activeUsersText]}>{0}</Text>
+            <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.activeUsersText]}>
+              Active Users{' '}
+            </CustomText>
+            <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.activeUsersText]}>
+              {0}
+            </CustomText>
           </View>
 
           <ImageBackground
@@ -56,8 +61,12 @@ const UsersStatistics = () => {
 
         <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.orderStatisticsCont]}>
           <View>
-            <Text style={[homeStyles.orderStatisticsContHeading, dynamicStyles.inActiveUserText]}>InActive Users</Text>
-            <Text style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.inActiveUserText]}>{0}</Text>
+            <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.inActiveUserText]}>
+              InActive Users
+            </CustomText>
+            <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.inActiveUserText]}>
+              {0}
+            </CustomText>
           </View>
 
           <ImageBackground

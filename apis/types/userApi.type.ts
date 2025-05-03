@@ -1,7 +1,7 @@
 import { USER_ROLE } from '../../enums/User.enum';
 import { User } from '../../features/types/authSlice.type';
 
-import { BASE_RESPONSE } from './apis.type';
+import { API_BASE_RESPONSE } from './apis.type';
 
 export type GetUserPayload = {
   userId: number;
@@ -9,4 +9,4 @@ export type GetUserPayload = {
   userRole: USER_ROLE;
 };
 
-export type GetUserResponse = BASE_RESPONSE<User>;
+export type GetUserResponse = API_BASE_RESPONSE<User>;

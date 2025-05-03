@@ -1,44 +1,33 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import Animated from 'react-native-reanimated';
 
-import { LinearGradient } from 'expo-linear-gradient';
-
+import { useSkeletonAnimation } from '../hooks/useSkeletonAnimation';
 import useThemeColors from '../hooks/useThemeColors';
 
-import { SkeletonLoaderProps } from './types/skeletonLoader';
+import type { SkeletonLoaderProps } from './types/skeletonLoader';
 
-const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
-
-const SkeletonLoader = ({ noOfChildren = 1, render, ...rest }: SkeletonLoaderProps) => {
+const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({ isLoading = true, containerStyle, speed = 1400 }) => {
   const { colors } = useThemeColors();
-  const children = Array.from({ length: noOfChildren });
+  const animatedStyle = useSkeletonAnimation(speed);
+
+  if (!isLoading) {
+    return null;
+  }
 
   return (
-    <>
-      {children.map((_, index) => (
-        <React.Fragment key={index}>
-          {render ? (
-            render(ShimmerPlaceholder, [colors.skeleton, colors.skeletonHighlight])
-          ) : (
-            <ShimmerPlaceholder
-              shimmerColors={[colors.skeleton, colors.skeletonHighlight]}
-              width={rest.width}
-              height={rest.height}
-              style={[styles.defaultItem, rest.style]}
-              {...rest}
-            />
-          )}
-        </React.Fragment>
-      ))}
-    </>
+    <Animated.View
+      style={[
+        {
+          borderRadius: 4,
+          overflow: 'hidden',
+          minHeight: 20,
+          backgroundColor: colors.skeleton
+        },
+        containerStyle,
+        animatedStyle
+      ]}
+    />
   );
 };
 
 export default SkeletonLoader;
-
-const styles = StyleSheet.create({
-  defaultItem: {
-    borderRadius: 4
-  }
-});

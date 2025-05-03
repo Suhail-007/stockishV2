@@ -15,10 +15,6 @@ const Colors = {
     backgroundWhite: '#FFFFFF',
     errorBg: '#f2dede',
     successBg: '#e1fbfc',
-    yellow100: '#fff39be1',
-    green100: '#cdfac1ff',
-    red100: '#fbc5c5',
-    grey100: '#f2f2f2',
 
     // 🟦 Buttons
     buttonBg: '#007CBB',
@@ -48,7 +44,6 @@ const Colors = {
     errorText: '#D32F2F',
 
     // 🎛 Icons & Borders
-
     tabIconDefault: '#CCCCCC',
     tabIconSelected: tintColorLight,
     statusBarContent: '#D32F2F',
@@ -60,7 +55,13 @@ const Colors = {
     borderDisabled: '#E0E0E0',
 
     //shades
+    primary50: '#f3eeff',
     primary100: '#cfc1f2',
+    yellow100: '#fff39be1',
+    green100: '#cdfac1ff',
+    red100: '#fbc5c5',
+    grey100: '#f2f2f2',
+    grey200: '#e0e0e0',
 
     //Skeleton
     skeleton: '#dfdddd',
@@ -76,10 +77,6 @@ const Colors = {
     backgroundWhite: '#FFFFFF',
     errorBg: '#6c3636',
     successBg: '#1b5e20',
-    yellow100: '#f1ecbc',
-    green100: '#baeebe',
-    red100: '#fbc5c5ff',
-    grey100: '#f2f2f2',
 
     // 🟦 Buttons
     buttonBg: '#005A8E',
@@ -121,7 +118,13 @@ const Colors = {
     borderDisabled: '#555555',
 
     //shades
+    primary50: '#f3eeff',
     primary100: '#cfc1f2',
+    yellow100: '#f1ecbc',
+    green100: '#baeebe',
+    red100: '#fbc5c5ff',
+    grey100: '#f2f2f2',
+    grey200: '#e1dddd',
 
     //Skeleton
     skeleton: '#555',

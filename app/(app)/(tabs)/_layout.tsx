@@ -1,37 +1,45 @@
-import React, { useEffect, useMemo } from 'react';
-import { Pressable } from 'react-native';
+import React, { useMemo } from 'react';
+import { Pressable, StyleProp, ViewStyle } from 'react-native';
 import { Icon } from 'react-native-paper';
 
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import Constants from 'expo-constants';
 import { router, Tabs } from 'expo-router';
 
-
-import productHeaderStyles from '@/components/pages/Products/productsHeader.styles';
 import Header from '@/components/ui/Header';
 import TabBar from '@/components/ui/TabBar/TabBar';
 import { useColorScheme } from '@/components/useColorScheme';
 
 import Colors from '@/constants/colors';
-import { fetchUserDetails } from '@/features/auth';
 import useThemeColors from '@/hooks/useThemeColors';
-import { useAppDispatch } from '@/store/store';
+
+// Get the appropriate URL based on where the app is running
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const { colors } = useThemeColors();
-  const dispatch = useAppDispatch();
+
+  // const getBaseUrl = () => {
+  //   const debuggerHost = Constants.expoConfig?.hostUri;
+  //   const localhost = debuggerHost?.split(':')[0] || '192.168.1.X'; // Replace with your IP
+  //   return `http://${localhost}:3000`; // Your database service port
+  // };
+
+  // const API_URL = getBaseUrl();
 
   const dynamicStyles = useMemo(() => {
     return {
       addBtn: {
-        backgroundColor: colors.primary
-      }
+        backgroundColor: colors.primary,
+        width: 40,
+        height: 40,
+        borderRadius: 40 / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10
+      } as StyleProp<ViewStyle>
     };
   }, [colors.primary]);
-
-  useEffect(() => {
-    dispatch(fetchUserDetails());
-  }, [dispatch]);
 
   return (
     <Tabs
@@ -47,8 +55,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='Products'
+        name='products'
         options={{
+          title: 'Products',
           headerShown: true,
           header(props) {
             return (
@@ -57,8 +66,8 @@ export default function TabLayout() {
                 onBackPress={props.navigation.goBack}
                 rightActions={
                   <Pressable
-                    onPress={() => router.push('/addProduct')}
-                    style={[productHeaderStyles.addBtn, dynamicStyles.addBtn]}>
+                    onPress={() => router.push('/productForm')}
+                    style={[dynamicStyles.addBtn]}>
                     <Icon
                       color={colors.textWhite}
                       source={'plus'}
@@ -72,7 +81,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='Orders'
+        name='orders'
         options={{
           title: 'Orders',
           headerShown: false

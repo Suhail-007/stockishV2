@@ -1,5 +1,5 @@
 export type ConditionalRenderProps = {
   condition: boolean;
-  loading: JSX.Element;
-  loaded: JSX.Element;
+  isTrueComponent: JSX.Element;
+  isFalseComponent: JSX.Element;
 };

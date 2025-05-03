@@ -1,19 +1,25 @@
-import { ProductAddForm } from '../../components/pages/AddProduct/addProduct.type';
-import { PRODUCT_STATUS } from '../../enums/Product.enum';
-import { BASE_RESPONSE } from './apis.type';
+import { ProductAddForm } from '../../components/pages/ProductForm/productForm.type';
+import { Product, ProductUser } from '../../features/types/product.type';
+import { Filters } from '../../utils/global.type';
+
+import { API_BASE_RESPONSE, API_BASE_RESPONSE_WITH_PAGINATION, PAGINATION_PAYLOAD } from './apis.type';
 
 export type AddProductPayload = ProductAddForm;
 
-export type AddProductRes = BASE_RESPONSE<AddProductData>;
+export type AddProductRes = API_BASE_RESPONSE<AddProductData>;
 
-export type AddProductData = {
-  id: number;
-  itemName: number;
-  quantity: number;
-  buyPrice: number;
-  sellPrice: number;
-  status: PRODUCT_STATUS;
-  tenantId: number;
-  updatedAt: string;
-  createdAt: string;
+export type EditProductRes = API_BASE_RESPONSE<Product>;
+
+export type AddProductData = Product | ProductUser;
+
+export type GetAllProductsPayload = PAGINATION_PAYLOAD & Filters;
+
+export type GetAllProductsRes = API_BASE_RESPONSE_WITH_PAGINATION<GetAllProductsData>;
+
+export type GetAllProductsData = {
+  products: Product[];
 };
+
+export type GetProductDetailsByIdRes = API_BASE_RESPONSE<Product>;
+
+export type DeleteProductByIdRes = API_BASE_RESPONSE<string>;

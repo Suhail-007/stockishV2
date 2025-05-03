@@ -7,15 +7,15 @@ import { ConditionalRenderProps } from './types/conditionalRender.type';
  *
  * @param {ConditionalRenderProps} props - The properties for the component.
  * @param {boolean} props.condition - The condition to determine which content to render.
- * @param {ReactNode} props.loaded - The content to render when the condition is true.
- * @param {ReactNode} props.loading - The content to render when the condition is false.
+ * @param {ReactNode} props.isFalseComponent - The content to render when the condition is false.
+ * @param {ReactNode} props.isTrueComponent - The content to render when the condition is true.
  */
-const _ConditionalRender = ({ condition, loaded, loading }: ConditionalRenderProps) => {
+const _ConditionalRender = ({ condition, isFalseComponent, isTrueComponent }: ConditionalRenderProps) => {
   return (
     <Fragment>
-      {condition && loading}
+      {condition && isTrueComponent}
 
-      {!condition && loaded}
+      {!condition && isFalseComponent}
     </Fragment>
   );
 };

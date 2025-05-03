@@ -1,24 +1,18 @@
 import { createAction } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { router } from 'expo-router';
 
 import { GetRefreshTokenRes } from '../apis/types/auth.type';
 import { STATUS_CODES } from '../constants/statusCodes';
 import { StorageKeys } from '../constants/variables';
-import {
-  deleteSecureAsync,
-  getSecureAsync,
-  removeItemStorageAsync,
-  setItemStorageAsync,
-  setSecureAsync
-} from '../utils/storage';
+import { deleteSecureAsync, getSecureAsync, setSecureAsync } from '../utils/storage';
 
 import defaultInstance from './instance';
 
 interface QueueItem {
   resolve: (value?: any) => void;
   reject: (error?: any) => void;
-  request: any; // Add request configuration
+  request: AxiosRequestConfig; // Add request configuration
 }
 
 let isRefreshing = false;
@@ -38,6 +32,7 @@ const processQueue = (error: any, token: string | null = null) => {
           Authorization: `Bearer ${token}`
         }
       };
+
       resolve(axios(newRequest));
     }
   });
@@ -47,7 +42,6 @@ const processQueue = (error: any, token: string | null = null) => {
 const refreshAuthToken = async (): Promise<{ accessToken: string }> => {
   try {
     const refreshToken = await getSecureAsync(StorageKeys.REFRESH_TOKEN);
-    console.log('🚀 ~ refreshAuthToken ~ refreshToken:', refreshToken);
 
     if (!refreshToken) throw new Error('No refresh token');
 
@@ -61,18 +55,13 @@ const refreshAuthToken = async (): Promise<{ accessToken: string }> => {
 
     Promise.allSettled([
       setSecureAsync(StorageKeys.SESSION, accessToken),
-      setSecureAsync(StorageKeys.REFRESH_TOKEN, newRefreshToken),
-      setItemStorageAsync(StorageKeys.NEW_ACCESS_TOKEN, 'true')
+      setSecureAsync(StorageKeys.REFRESH_TOKEN, newRefreshToken)
     ]);
 
     return { accessToken };
   } catch (error) {
     console.log('🚀 ~ refreshAuthToken ~ error:', JSON.stringify(error, null, 2));
-    await Promise.allSettled([
-      deleteSecureAsync(StorageKeys.SESSION),
-      deleteSecureAsync(StorageKeys.REFRESH_TOKEN),
-      removeItemStorageAsync(StorageKeys.NEW_ACCESS_TOKEN)
-    ]);
+    await Promise.allSettled([deleteSecureAsync(StorageKeys.SESSION), deleteSecureAsync(StorageKeys.REFRESH_TOKEN)]);
     throw error;
   }
 };
@@ -128,12 +117,13 @@ defaultInstance.interceptors.response.use(
           refreshTokenPromise = await refreshToken();
         }
         const newAccessToken = refreshTokenPromise;
+
+        defaultInstance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
         processQueue(null, newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-        console.log('Token updated');
-
-        return axios(originalRequest);
+        refreshTokenPromise = null;
+        return defaultInstance(originalRequest);
       } catch (err) {
         processQueue(err, null);
         router.replace('/sign-in');

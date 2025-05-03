@@ -49,23 +49,38 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
     }
   };
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      opacity.value = withSpring(0.4, { duration: 3000 });
-    }, 500);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     opacity.value = withSpring(0.4, { duration: 3000 });
+  //   }, 500);
 
-    return () => clearTimeout(timeout);
-  }, [opacity]);
+  //   return () => clearTimeout(timeout);
+  // }, [opacity]);
 
   useEffect(() => {
     // Animation on route change
     opacity.value = 1;
-    const timeout = setTimeout(() => {
+    const timeoutOne = setTimeout(() => {
       opacity.value = withSpring(0.5, { duration: 2000 });
     }, 2000);
 
-    return () => clearTimeout(timeout);
-  }, [state.index, opacity]);
+    const timeoutTwo = setTimeout(() => {
+      opacity.value = withSpring(0.4, { duration: 3000 });
+    }, 500);
+
+    tabBarPositionX.value = withSpring(buttonWidth * state.index, { duration: 1700 });
+
+    return () => {
+      clearTimeout(timeoutOne);
+      clearTimeout(timeoutTwo);
+    };
+  }, [state.index, opacity, buttonWidth, tabBarPositionX]);
+
+  // Add this useEffect to handle programmatic navigation
+  // useEffect(() => {
+  //   // Update the indicator position whenever the active route index changes
+  //   tabBarPositionX.value = withSpring(buttonWidth * state.index, { duration: 1700 });
+  // }, [state.index]);
 
   return (
     <Animated.View

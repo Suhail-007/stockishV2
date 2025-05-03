@@ -1,47 +1,113 @@
-import { Fragment, useMemo } from 'react';
-import { Pressable } from 'react-native-gesture-handler';
-import { Appbar, Icon } from 'react-native-paper';
-
-import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
-import { router } from 'expo-router';
+import { memo, useMemo, useState } from 'react';
+import { Pressable, View } from 'react-native';
+import { Icon, Searchbar } from 'react-native-paper';
 
 import useThemeColors from '../../../hooks/useThemeColors';
-import PageTitle from '../../PageTitle';
+import CustomText from '../../ui/CustomText';
 
 import productHeaderStyles from './productsHeader.styles';
+import { ProductHeaderProps } from './productsTable.type';
 
-const ProductsHeader = (props: BottomTabHeaderProps) => {
+let timeout: any;
+
+const _ProductsHeader = ({
+  onChangeSearch,
+  onPressFilter,
+  clearNewlyAddedProduct,
+  isNewlyAddedProduct,
+  hideHelperText,
+  clearFilters,
+  hasAppliedFilters
+}: ProductHeaderProps) => {
+  //For UI update only
+  const [searchQuery, setSearchQuery] = useState('');
+
   const { colors } = useThemeColors();
 
   const dynamicStyles = useMemo(() => {
     return {
-      header: {
-        backgroundColor: colors.background
+      bg: {
+        backgroundColor: colors.grey100
       },
-      addBtn: {
-        backgroundColor: colors.primary
+      primaryColor: {
+        color: colors.primary
       }
     };
-  }, [colors.background, colors.primary]);
+  }, [colors.grey100, colors.primary]);
+
+  const onChangeSearchHandler = (query: string) => {
+    setSearchQuery(query);
+
+    timeout && clearTimeout(timeout);
+
+    //delay the API calls
+    timeout = setTimeout(() => {
+      onChangeSearch({ searchKey: query });
+    }, 500);
+  };
+
+  const clearFilterHandler = () => {
+    setSearchQuery('');
+    clearFilters();
+  };
 
   return (
-    <Fragment>
-      <Appbar.Header
-        elevated
-        style={[dynamicStyles.header]}>
-        <PageTitle title={'Products'} />
+    <View style={productHeaderStyles.cont}>
+      <View style={{ flex: 1 }}>
+        <Searchbar
+          inputMode='search'
+          inputStyle={productHeaderStyles.input}
+          style={[productHeaderStyles.inputCont, dynamicStyles.bg]}
+          onChangeText={onChangeSearchHandler}
+          placeholder='For a quick lookup, search here...'
+          placeholderTextColor={colors.text}
+          value={searchQuery ? searchQuery : ''}
+        />
+
+        {!hideHelperText && (
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 4 }}>
+            <CustomText variant='labelSmall'>
+              Clear {isNewlyAddedProduct ? 'newly added' : 'updated'} product
+            </CustomText>
+            <Pressable onPress={clearNewlyAddedProduct}>
+              <CustomText
+                variant='labelSmall'
+                style={dynamicStyles.primaryColor}>
+                Clear?
+              </CustomText>
+            </Pressable>
+          </View>
+        )}
+
+        {hasAppliedFilters && hideHelperText && (
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 4 }}>
+            <CustomText variant='labelSmall'>Applied filters</CustomText>
+            <Pressable onPress={clearFilterHandler}>
+              <CustomText
+                variant='labelSmall'
+                style={dynamicStyles.primaryColor}>
+                Clear filters?
+              </CustomText>
+            </Pressable>
+          </View>
+        )}
+      </View>
+
+      <View style={productHeaderStyles.filterCont}>
         <Pressable
-          onPress={() => router.push('/addProduct')}
-          style={[productHeaderStyles.addBtn, dynamicStyles.addBtn]}>
+          onPress={onPressFilter}
+          android_ripple={{ color: colors.grey200 }}
+          style={[productHeaderStyles.filterBtn, dynamicStyles.bg]}>
           <Icon
-            color={colors.textWhite}
-            source={'plus'}
-            size={20}
+            source='filter'
+            size={24}
           />
         </Pressable>
-      </Appbar.Header>
-    </Fragment>
+      </View>
+    </View>
   );
 };
+
+const ProductsHeader = memo(_ProductsHeader);
 
 export default ProductsHeader;

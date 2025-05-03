@@ -4,9 +4,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 //Reducers
 import authReducer from '../features/auth';
+import productReducer from '../features/product';
 
 const combinedReducers = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  products: productReducer
 });
 
 const store = configureStore({

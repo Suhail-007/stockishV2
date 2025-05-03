@@ -5,9 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { defaultConfig } from '@tamagui/config/v4';
 import { Slot } from 'expo-router';
-
-
+import { createTamagui, TamaguiProvider } from 'tamagui';
 
 import Colors from '../constants/colors';
 import { SessionProvider } from '../ctx';
@@ -15,7 +15,8 @@ import TanStackQueryProvider from '../query/queryClient';
 import store from '../store/store';
 
 
-// import LogRocket from '@logrocket/react-native';
+// you usually export this from a tamagui.config.ts file
+const config = createTamagui(defaultConfig);
 
 export default function Root() {
   const colorScheme = useColorScheme();
@@ -38,19 +39,21 @@ export default function Root() {
     <Provider store={store}>
       <GestureHandlerRootView>
         <PaperProvider theme={theme}>
-          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <StatusBar
-              barStyle={'light-content'}
-              backgroundColor={barStyle as StatusBarStyle}
-            />
-            <SessionProvider>
-              <SafeAreaView style={{ flex: 1 }}>
-                <TanStackQueryProvider>
-                  <Slot />
-                </TanStackQueryProvider>
-              </SafeAreaView>
-            </SessionProvider>
-          </ThemeProvider>
+          <TamaguiProvider config={config}>
+            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+              <StatusBar
+                barStyle={'light-content'}
+                backgroundColor={barStyle as StatusBarStyle}
+              />
+              <SessionProvider>
+                <SafeAreaView style={{ flex: 1 }}>
+                  <TanStackQueryProvider>
+                    <Slot />
+                  </TanStackQueryProvider>
+                </SafeAreaView>
+              </SessionProvider>
+            </ThemeProvider>
+          </TamaguiProvider>
         </PaperProvider>
       </GestureHandlerRootView>
     </Provider>

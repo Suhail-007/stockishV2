@@ -1,9 +1,7 @@
-import React, { FC } from 'react';
-import { useWindowDimensions, View } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
+import { View } from 'react-native';
+import { moderateScale, scale } from 'react-native-size-matters';
 
 import SkeletonLoader from '../../SkeletonLoader';
-
 
 import { homeSkeletonStyles } from './home.styles';
 
@@ -14,101 +12,49 @@ import { homeSkeletonStyles } from './home.styles';
  * @param {boolean} props.loading Whether the component should be in a loading state.
  *
  */
-const HomeSkeleton = ({ loading }: { loading: boolean }) => null;
+const HomeSkeleton = () => null;
 
-const Greetings: FC<{ loading: boolean }> = ({ loading }) => {
-  const { width: dWidth } = useWindowDimensions();
-  return (
-    <View style={homeSkeletonStyles.heading}>
-      <SkeletonLoader
-        visible={loading}
-        location={[0, 1]}
-        width={dWidth - 70}
-        height={moderateScale(25)}
-        noOfChildren={1}></SkeletonLoader>
+const Heading = () => <SkeletonLoader containerStyle={homeSkeletonStyles.skeletonBoxHeading} />;
 
-      <SkeletonLoader
-        visible={loading}
-        noOfChildren={1}
-        location={[0, 1]}
-        width={dWidth - 100}
-        height={moderateScale(20)}></SkeletonLoader>
-    </View>
-  );
-};
+const Greetings = () => (
+  <View style={homeSkeletonStyles.heading}>
+    <SkeletonLoader
+      containerStyle={{
+        height: moderateScale(30)
+      }}
+    />
+    <SkeletonLoader containerStyle={{ height: moderateScale(20) }} />
+  </View>
+);
+const LastFiveOrders = () => (
+  <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
+    <Heading />
 
-const MonthlyOrders: FC<{ loading: boolean }> = ({ loading }) => {
-  const { width: dWidth } = useWindowDimensions();
-  return (
-    <View style={homeSkeletonStyles.sectionCont}>
-      <SkeletonLoader
-        visible={loading}
-        noOfChildren={1}
-        width={dWidth - 100}
-        location={[0, 1]}
-        height={moderateScale(30)}></SkeletonLoader>
+    <SkeletonLoader containerStyle={[homeSkeletonStyles.skeletonBox, { height: scale(200) }]} />
+  </View>
+);
 
-      <View style={[homeSkeletonStyles.ordersStatisticsCont, homeSkeletonStyles.sectionCont]}>
+const MonthlyOrders = () => (
+  <View style={homeSkeletonStyles.sectionCont}>
+    <Heading />
+
+    <View style={[homeSkeletonStyles.ordersStatisticsCont]}>
+      {Array.from({ length: 4 }).map((_, index) => (
         <SkeletonLoader
-          visible={loading}
-          noOfChildren={4}
-          render={(ShimmerItem, colors) => (
-            <ShimmerItem
-              shimmerColors={colors}
-              location={[0, 1]}
-              style={[homeSkeletonStyles.orderStatisticsCont]}></ShimmerItem>
-          )}></SkeletonLoader>
-      </View>
+          key={index}
+          containerStyle={[homeSkeletonStyles.skeletonBox]}
+        />
+      ))}
     </View>
-  );
-};
+  </View>
+);
 
-const LastFiveOrders: FC<{ loading: boolean }> = ({ loading }) => {
-  const { width: dWidth } = useWindowDimensions();
-
-  return (
-    <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
-      <SkeletonLoader
-        visible={loading}
-        noOfChildren={1}
-        location={[0, 1]}
-        width={dWidth - 100}
-        height={moderateScale(30)}></SkeletonLoader>
-
-      <SkeletonLoader
-        visible={loading}
-        noOfChildren={1}
-        location={[0, 1]}
-        style={{
-          width: '100%'
-        }}
-        height={moderateScale(180)}></SkeletonLoader>
-    </View>
-  );
-};
-
-const TotalBalance: FC<{ loading: boolean }> = ({ loading }) => {
-  const { width: dWidth } = useWindowDimensions();
-
-  return (
-    <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
-      <SkeletonLoader
-        visible={loading}
-        noOfChildren={1}
-        width={dWidth - 100}
-        location={[0.3, 0.7]}
-        height={moderateScale(30)}></SkeletonLoader>
-      <SkeletonLoader
-        visible={loading}
-        noOfChildren={1}
-        style={{
-          width: '100%'
-        }}
-        location={[0.3, 0.7]}
-        height={moderateScale(100)}></SkeletonLoader>
-    </View>
-  );
-};
+const TotalBalance = () => (
+  <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
+    <Heading />
+    <SkeletonLoader containerStyle={homeSkeletonStyles.skeletonBox} />
+  </View>
+);
 
 /**
  * A skeleton component for monthly sell and profit.
@@ -116,100 +62,40 @@ const TotalBalance: FC<{ loading: boolean }> = ({ loading }) => {
  * @param {boolean} loading if true, show skeleton loader.
  * @returns {JSX.Element} a skeleton component for monthly sell and profit.
  */
-const MonthlySellNProfit: FC<{ loading: boolean }> = ({ loading }) => {
-  const { width: dWidth } = useWindowDimensions();
+const MonthlySellNProfit = () => (
+  <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
+    <Heading />
 
-  return (
-    <>
-      <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
-        <SkeletonLoader
-          visible={loading}
-          noOfChildren={1}
-          width={dWidth - 100}
-          location={[0.3, 0.7]}
-          height={moderateScale(30)}></SkeletonLoader>
-
-        <SkeletonLoader
-          visible={loading}
-          noOfChildren={1}
-          style={{
-            width: '100%'
-          }}
-          location={[0.3, 0.7]}
-          height={moderateScale(100)}></SkeletonLoader>
-        <SkeletonLoader
-          visible={loading}
-          noOfChildren={1}
-          style={{
-            width: '100%'
-          }}
-          location={[0.3, 0.7]}
-          height={moderateScale(100)}></SkeletonLoader>
-      </View>
-    </>
-  );
-};
-
-const UsersStatistics: FC<{ loading: boolean }> = ({ loading }) => {
-  const { width: dWidth } = useWindowDimensions();
-
-  return (
-    <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
+    {Array.from({ length: 2 }).map((_, index) => (
       <SkeletonLoader
-        visible={loading}
-        noOfChildren={1}
-        width={dWidth - 100}
-        location={[0.3, 0.7]}
-        height={moderateScale(30)}></SkeletonLoader>
+        key={index}
+        containerStyle={[homeSkeletonStyles.skeletonBox]}
+      />
+    ))}
+  </View>
+);
 
-      <View style={homeSkeletonStyles.usersStatisticsCont}>
-        <SkeletonLoader
-          visible={loading}
-          location={[0.3, 0.7]}
-          noOfChildren={2}
-          style={{
-            width: '100%'
-          }}
-          render={(ShimmerItem, colors) => (
-            <ShimmerItem
-              location={[0.3, 0.7]}
-              shimmerColors={colors}
-              style={homeSkeletonStyles.userStatisticsCont}></ShimmerItem>
-          )}></SkeletonLoader>
-      </View>
+const UsersStatistics = () => (
+  <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
+    <Heading />
+
+    <View style={homeSkeletonStyles.usersStatisticsCont}>
+      <SkeletonLoader containerStyle={[homeSkeletonStyles.orderStatisticsCont]} />
+      <SkeletonLoader containerStyle={[homeSkeletonStyles.orderStatisticsCont]} />
     </View>
-  );
-};
-const ProductStatistics: FC<{ loading: boolean }> = ({ loading }) => {
-  const { width: dWidth } = useWindowDimensions();
+  </View>
+);
 
-  return (
-    <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
-      <SkeletonLoader
-        visible={loading}
-        noOfChildren={1}
-        width={dWidth - 100}
-        location={[0.3, 0.7]}
-        height={moderateScale(30)}></SkeletonLoader>
+const ProductStatistics = () => (
+  <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
+    <Heading />
 
-      <View style={homeSkeletonStyles.usersStatisticsCont}>
-        <SkeletonLoader
-          visible={loading}
-          noOfChildren={2}
-          style={{
-            width: '100%'
-          }}
-          location={[0.3, 0.7]}
-          render={(ShimmerItem, colors) => (
-            <ShimmerItem
-              shimmerColors={colors}
-              location={[0.3, 0.7]}
-              style={homeSkeletonStyles.userStatisticsCont}></ShimmerItem>
-          )}></SkeletonLoader>
-      </View>
+    <View style={homeSkeletonStyles.usersStatisticsCont}>
+      <SkeletonLoader containerStyle={[homeSkeletonStyles.orderStatisticsCont]} />
+      <SkeletonLoader containerStyle={[homeSkeletonStyles.orderStatisticsCont]} />
     </View>
-  );
-};
+  </View>
+);
 
 Greetings.displayName = 'Greetings';
 LastFiveOrders.displayName = 'LastFiveOrders';

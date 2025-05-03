@@ -33,4 +33,6 @@ export type UserPrices = {
   price: number;
 };
 
-export type AddProductPayload = PayloadAction<Product>;
+export type AddProductPayload = PayloadAction<Product[]>;
+
+export type EditProductPayload = PayloadAction<Product>;

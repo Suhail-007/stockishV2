@@ -29,6 +29,28 @@ const modalStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     gap: 8
+  },
+
+  // Confirmation model
+  container: {
+    backgroundColor: 'white',
+    padding: 20,
+    margin: 20,
+    borderRadius: 8
+  },
+  title: {
+    marginBottom: 16
+  },
+  message: {
+    marginBottom: 24
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 12
+  },
+  actionBtn: {
+    width: '30%'
   }
 });
 

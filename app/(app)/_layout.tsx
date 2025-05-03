@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import { useFonts } from 'expo-font';
 import { Redirect, Stack } from 'expo-router';
@@ -59,24 +59,33 @@ export default function AppLayout() {
 
   // This layout can be deferred because it's not the root layout.
   return (
-    <Stack
-      initialRouteName='(tabs)'
-      screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          title: 'Add Product',
-          header: (props) => (
-            <Header
-              title='Add Product'
-              showBack
-              onBackPress={props.navigation.goBack}
-              {...props}
-            />
-          )
-        }}
-        name='addProduct'
-      />
-    </Stack>
+    <Fragment>
+      <Stack
+        initialRouteName='(tabs)'
+        screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            title: 'Add Product',
+            header: (props) => (
+              <Header
+                title='Add Product'
+                showBack
+                onBackPress={props.navigation.goBack}
+                {...props}
+              />
+            )
+          }}
+          name='productForm'
+        />
+
+        <Stack.Screen
+          name='filter'
+          options={{
+            animation: 'slide_from_right'
+          }}
+        />
+      </Stack>
+    </Fragment>
   );
 }

@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { AddActiveInActiveProducts, AddProductPayload, Product, ProductSliceInitialState } from './types/product.type';
+import {
+  AddActiveInActiveProducts,
+  AddProductPayload,
+  EditProductPayload,
+  ProductSliceInitialState
+} from './types/product.type';
 
 const initialState: ProductSliceInitialState = {
   id: 'productsSlice',
@@ -19,23 +24,47 @@ const productsSlice = createSlice({
      * If the list of products does not exist, it will be created with the new product as the first element.
      * @param {AddProductPayload} action - The payload containing the product to be added.
      */
-    addProduct: (state, action: AddProductPayload) => {
-      console.log('🚀 ~ action:', action);
-      if (state.products) {
-        state.products = [...(state.products as Product[]), action.payload];
+    addProducts: (state, action: AddProductPayload) => {
+      state.products = action.payload;
+    },
 
-        state.activeProduct += 1;
+    updateProducts: (state, action: EditProductPayload) => {
+      //every time we add a product we increment active product
+      state.activeProduct += 1;
 
-        console.log('🚀 ~ addProduct ~ state.products:', state.products);
+      if (state.products && state.products?.length > 0) {
+        //when adding new product only one product will be added
+        state.products = [...state.products, action.payload];
       } else {
         state.products = [action.payload];
-        state.activeProduct += 1;
       }
     },
 
-    setProducts: (state, action: PayloadAction<Product[]>) => {
-      state.products = action.payload;
+    editProducts: (state, action: EditProductPayload) => {
+      //NOTE - No of active product stays the same
+      if (state.products) {
+        const updatedProducts = state.products.map((product) => {
+          if (product.id === action.payload.id) {
+            return action.payload;
+          }
+          return product;
+        });
+        state.products = updatedProducts;
+      } else {
+        //else is not possible because we are editing the product
+        state.products = [action.payload];
+      }
     },
+
+    // incrementActiveProduct: (state, action: PayloadAction<Product>) => {
+    //   state.activeProduct += 1;
+
+    //   if (state.products && state.products?.length > 0) {
+    //     state.products = [...(state.products || []), action.payload];
+    //   } else {
+    //     state.products = [action.payload];
+    //   }
+    // },
 
     addActiveInActiveProducts: (state, action: PayloadAction<AddActiveInActiveProducts>) => {
       state.activeProduct = action.payload.active;
@@ -44,5 +73,5 @@ const productsSlice = createSlice({
   }
 });
 
-export const { addProduct, addActiveInActiveProducts, setProducts } = productsSlice.actions;
+export const { addProducts, addActiveInActiveProducts, editProducts, updateProducts } = productsSlice.actions;
 export default productsSlice.reducer;

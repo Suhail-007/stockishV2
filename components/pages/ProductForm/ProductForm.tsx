@@ -1,21 +1,25 @@
+import { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 
-import { addProduct } from '../../../apis/product.api';
+import { addProduct, editProductDetails } from '../../../apis/product.api';
 import { AddProductNotesAdmin } from '../../../constants/notes';
 import { STATUS_CODES } from '../../../constants/statusCodes';
-import { addProduct as addProductAction } from '../../../features/product';
+import { updateProducts, editProducts } from '../../../features/product';
+import { Product } from '../../../features/types/product.type';
 import { useAppDispatch } from '../../../store/store';
 import ErrorMessage from '../../ErrorMessage';
 import FormController from '../../FormController';
 import Notes from '../../Notes/Notes';
 import Button from '../../ui/Button';
+import Header from '../../ui/Header';
 import PageWrapper from '../../ui/PageWrapper';
 import TextInput from '../../ui/TextInput';
 
-import { ProductAddForm } from './addProduct.type';
+import { ProductAddForm } from './productForm.type';
 
 /**
  * A form for adding a product.
@@ -32,8 +36,11 @@ import { ProductAddForm } from './addProduct.type';
  *
  * The form is submitted when the "Add Product" button is pressed.
  */
-const AddProductForm = () => {
+const ProductFormPage = () => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+  const params = useLocalSearchParams<Record<keyof Product, string> & { isEdit: string }>();
+  const isEdit = params?.isEdit === 'true' ? true : false;
   const {
     mutateAsync: addProductMutation,
     isPending: addProductIsPending,
@@ -44,38 +51,117 @@ const AddProductForm = () => {
       return addProduct(data);
     }
   });
-  const { control, handleSubmit, resetField } = useForm<ProductAddForm>({
+  const {
+    mutateAsync: editProductMutation,
+    isPending: editProductIsPending,
+    isError: editProductIsError,
+    error: editProductError
+  } = useMutation({
+    mutationFn: (data: Partial<ProductAddForm> & { id: string }) => {
+      return editProductDetails(data);
+    }
+  });
+
+  const { control, handleSubmit, reset } = useForm<ProductAddForm>({
     defaultValues: {
-      name: '',
-      quantity: '',
-      buyPrice: '',
-      sellPrice: ''
+      name: params?.name || '',
+      quantity: params?.quantity || '',
+      buyPrice: params?.buyPrice || '',
+      sellPrice: params?.sellPrice || ''
     },
     mode: 'onChange',
     reValidateMode: 'onChange'
   });
 
-  const onSubmit = async (data: ProductAddForm) => {
-    const res = await addProductMutation(data);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: (props: NativeStackHeaderProps) => (
+        <Header
+          title={isEdit ? 'Edit Product' : 'Add Product'}
+          showBack
+          onBackPress={props.navigation.goBack}
+          {...props}
+        />
+      )
+    });
+  }, [isEdit, navigation]);
 
-    if (res.data.status === STATUS_CODES.success) {
-      //Update the product list in redux
-      dispatch(addProductAction(res.data.data));
+  const onAddSubmit = async (data: ProductAddForm) => {
+    try {
+      const res = await addProductMutation(data);
+      debugger;
+      if (res.data.status === STATUS_CODES.success) {
+        const newlyAddedProduct = res.data.data;
 
-      //reset the form
-      resetField('name');
-      resetField('quantity');
-      resetField('buyPrice');
-      resetField('sellPrice');
+        //increment the active product count
+        dispatch(updateProducts(newlyAddedProduct));
 
-      // navigate to the product page with the newly added product
-      router.navigate({
-        pathname: '/(app)/(tabs)/Products',
-        params: {
-          newlyAddedProduct: res.data.data.id
-        }
-      });
+        //reset the form
+        reset(control._formValues);
+
+        // navigate to the product page with the newly added product
+        router.navigate({
+          pathname: '/(app)/(tabs)/products',
+          params: {
+            ...(newlyAddedProduct as Product),
+            isUpdate: 'false'
+          }
+        });
+      }
+    } catch (error) {
+      console.log('🚀 ~ onAddSubmit ~ error:', error);
     }
+  };
+
+  const setActionButtonLabel = () => {
+    if (isEdit && !editProductIsPending) {
+      return 'Edit Product';
+    }
+
+    if (isEdit && editProductIsPending) {
+      return 'Editing Product...';
+    }
+
+    if (!isEdit && addProductIsPending) {
+      return 'Adding Product...';
+    }
+
+    return 'Add Product';
+  };
+
+  const onEditSubmit = async (data: ProductAddForm) => {
+    try {
+      const res = await editProductMutation({ ...data, id: params.id });
+
+      if (res.data.status === STATUS_CODES.success) {
+        const updatedProducts = res.data.data;
+
+        //increment the active product count
+        dispatch(editProducts(updatedProducts));
+
+        //reset the form
+        reset(control._formValues);
+
+        // navigate to the product page with the newly added product
+        router.navigate({
+          pathname: '/(app)/(tabs)/products',
+          params: {
+            ...(updatedProducts as Product),
+            isUpdate: 'true'
+          }
+        });
+      }
+    } catch (error) {
+      console.log('🚀 ~ onEditSubmit ~ error:', error);
+    }
+  };
+
+  const setActionButtonPressHandler = (data: ProductAddForm) => {
+    if (isEdit) {
+      return onEditSubmit(data);
+    }
+
+    return onAddSubmit(data);
   };
 
   return (
@@ -175,15 +261,16 @@ const AddProductForm = () => {
 
       {/* Fill the  styling for validation errors */}
       {addProductIsError && addProductError && <ErrorMessage error={addProductError} />}
+      {editProductIsError && editProductError && <ErrorMessage error={editProductError} />}
 
       <Button.Primary
-        loading={addProductIsPending}
-        disabled={addProductIsPending}
-        onPress={handleSubmit(onSubmit)}>
-        {addProductIsPending ? 'Adding Product...' : 'Add Product'}
+        loading={editProductIsPending || addProductIsPending}
+        disabled={editProductIsPending || addProductIsPending}
+        onPress={handleSubmit(setActionButtonPressHandler)}>
+        {setActionButtonLabel()}
       </Button.Primary>
     </PageWrapper.Section>
   );
 };
 
-export default AddProductForm;
+export default ProductFormPage;

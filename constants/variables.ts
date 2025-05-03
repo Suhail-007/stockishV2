@@ -1,3 +1,5 @@
+import { Filters } from '../utils/global.type';
+
 export const StorageKeys = {
   SESSION: 'session',
   REFRESH_TOKEN: 'refresh_token',
@@ -13,3 +15,13 @@ export const BACKGROUND_TASKS = {
 export const CHECK_EMAIL_ERROR_MESSAGE = 'User not found';
 export const ValidationErrorString = 'Validation errors';
 export const AccessTokenExpiredString = 'Access Token Expired';
+
+export const defaultValues: Filters = {
+  sortBy: 'ASC',
+  searchKey: '',
+  isActive: true,
+  minPriceFilter: 0,
+  maxPriceFilter: 0,
+  groupBy: '',
+  userId: 0
+};

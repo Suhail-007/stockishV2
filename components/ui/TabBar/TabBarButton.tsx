@@ -5,7 +5,6 @@ import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } f
 import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { PlatformPressable } from '@react-navigation/elements';
 
-
 import { Fonts } from '../../../constants/fonts';
 import useThemeColors from '../../../hooks/useThemeColors';
 import { TabBarButtonProps } from '../types/buttons.type';
@@ -18,14 +17,14 @@ const icon = {
       color={props.color}
     />
   ),
-  Products: (props: any) => (
+  products: (props: any) => (
     <MaterialCommunityIcons
       name='table'
       size={24}
       color={props.color}
     />
   ),
-  Orders: (props: any) => (
+  orders: (props: any) => (
     <Ionicons
       name='list'
       size={24}

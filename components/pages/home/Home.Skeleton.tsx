@@ -38,7 +38,7 @@ const MonthlyOrders = () => (
   <View style={homeSkeletonStyles.sectionCont}>
     <Heading />
 
-    <View style={[homeSkeletonStyles.ordersStatisticsCont, homeSkeletonStyles.sectionCont]}>
+    <View style={[homeSkeletonStyles.ordersStatisticsCont]}>
       {Array.from({ length: 4 }).map((_, index) => (
         <SkeletonLoader
           key={index}

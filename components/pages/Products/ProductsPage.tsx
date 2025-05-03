@@ -1,62 +1,134 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
-import { useLocalSearchParams } from 'expo-router';
+import { useQueryClient } from '@tanstack/react-query';
+import { Route, router, useLocalSearchParams } from 'expo-router';
 
-import { getAllProductsGlobal } from '../../../apis/product.api';
 import { GetAllProductsPayload } from '../../../apis/types/product.type';
 import { QUERY_KEYS } from '../../../constants/queries';
+import { defaultValues } from '../../../constants/variables';
 import { Product } from '../../../features/types/product.type';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
-import ConditionalRender from '../../ConditionalRender';
+import useProductPageQuery from '../../../hooks/queries/useProductPageQuery';
+import useFilters from '../../../hooks/useFilters';
+import { useAppSelector } from '../../../store/store';
+import ErrorMessage from '../../ErrorMessage';
 import PageWrapper from '../../ui/PageWrapper';
 
-import ProductsSkeleton from './Products.Skeleton';
+import ProductsHeader from './ProductsHeader';
 import ProductsTable from './ProductsTable';
-import ErrorMessage from '../../ErrorMessage';
 
 const ProductPage = () => {
-  const { isRefreshTokenRotating, user } = useAppSelector((state) => state.auth);
+  const queryClient = useQueryClient();
+  const [newlyAddedProduct, setNewlyAddedProduct] = useState<Product[] | null>(null);
+
   const { products } = useAppSelector((state) => state.products);
-  const newlyAddedProduct = useState<Product | null>(null);
-  const params = useLocalSearchParams<{ newlyAddedProduct: string } | {}>();
-
-  const dispatch = useAppDispatch();
-
-  const [filters, setFilters] = useState<GetAllProductsPayload>({
-    searchKey: '',
-    isActive: true,
-    minPriceFilter: 0,
-    sortBy: 'ASC',
-    groupBy: '',
+  const { filters, setFilters } = useFilters<GetAllProductsPayload>({
     page: 1,
     pageSize: 20
   });
 
-  const { data, isPending, isError, error } = useQuery({
-    queryKey: [QUERY_KEYS.GET_PRODUCTS, ...Object.values(filters), products?.length],
-    enabled: !!user?.id && !isRefreshTokenRotating,
-    queryFn: () => getAllProductsGlobal(filters)
-  });
+  const { data, isPending, error, isError, isRefetchError, isRefetching } = useProductPageQuery(filters);
+
+  const params = useLocalSearchParams();
+
+  useEffect(() => {
+    if (params?.id) {
+      const product = params as unknown as Product;
+      showNewlyAddedProduct(product);
+    }
+  }, [params?.id]);
+
+  useEffect(() => {
+    if (params?.stringifiedData) {
+      const filters = JSON.parse(params.stringifiedData as string) as unknown as Partial<GetAllProductsPayload>;
+      changeFilters(filters);
+    }
+  }, [params?.stringifiedData]);
+
+  const changeFilters = async (modifiedFilters: Partial<GetAllProductsPayload>) => {
+    setFilters((prev) => {
+      return {
+        ...prev,
+        ...modifiedFilters
+      };
+    });
+
+    // Invalidate the query when filters change
+    await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_PRODUCTS], stale: false });
+  };
+
+  const showNewlyAddedProduct = (product: Product) => {
+    const newProduct: Product = {
+      id: Number(product.id),
+      name: product.name,
+      quantity: Number(product.quantity),
+      status: product.status,
+      sellPrice: Number(product.sellPrice),
+      buyPrice: Number(product.buyPrice),
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
+      tenantId: Number(product.tenantId)
+    };
+
+    setNewlyAddedProduct([newProduct]);
+  };
+
+  const filterHandler = () => {
+    router.push({
+      pathname: '/filter',
+      params: {
+        stringifiedData: JSON.stringify(filters),
+        goToRoute: '/(app)/(tabs)/products' as Route
+      }
+    });
+  };
+
+  const clearNewlyAddedProduct = () => {
+    setNewlyAddedProduct(null);
+    router.navigate({
+      pathname: '/(app)/(tabs)/products',
+      params: {}
+    });
+  };
+
+  const clearFilters = () => {
+    setFilters({ ...defaultValues, page: 1, pageSize: 20 });
+  };
+
+  const hasAppliedFilters = function () {
+    const { page, pageSize, ...restFilters } = filters;
+
+    return JSON.stringify(restFilters) !== JSON.stringify(defaultValues);
+  };
 
   return (
     <PageWrapper.Scroll>
-      {!isError && (
-        <ConditionalRender
-          condition={isPending}
-          isFalseComponent={
-            <ProductsTable
-              products={data?.data.data.products || []}
-              totalItems={data?.data?.data?.totalItems || 0}
-              totalPages={data?.data?.data?.totalPages || 0}
-              currentPage={data?.data?.data?.currentPage || 0}
-            />
+      <ProductsHeader
+        clearFilters={clearFilters}
+        clearNewlyAddedProduct={clearNewlyAddedProduct}
+        onPressFilter={filterHandler}
+        onChangeSearch={changeFilters}
+        isNewlyAddedProduct={params?.isUpdate === 'true' ? false : true}
+        hideHelperText={newlyAddedProduct && newlyAddedProduct.length > 0 ? false : true}
+        hasAppliedFilters={hasAppliedFilters()}
+      />
+
+      {(!isError || !isRefetchError) && (
+        <ProductsTable
+          filters={filters}
+          onPageChange={changeFilters}
+          isLoading={isPending || isRefetching}
+          products={newlyAddedProduct && newlyAddedProduct?.length > 0 ? newlyAddedProduct : products || []}
+          totalItems={
+            newlyAddedProduct && newlyAddedProduct.length > 0
+              ? newlyAddedProduct.length
+              : data?.data?.data?.totalItems || 0
           }
-          isTrueComponent={<ProductsSkeleton isLoading={isPending} />}
+          totalPages={newlyAddedProduct && newlyAddedProduct.length > 0 ? 1 : data?.data?.data?.totalPages || 0}
+          currentPage={newlyAddedProduct && newlyAddedProduct.length > 0 ? 1 : data?.data?.data?.currentPage || 0}
         />
       )}
 
-      {isError && <ErrorMessage error={error} />}
+      {(isError || isRefetchError) && <ErrorMessage error={error} />}
     </PageWrapper.Scroll>
   );
 };

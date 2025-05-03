@@ -53,6 +53,12 @@ export const createFiltersQuery = <T extends Filters>(filters: Partial<T>) => {
 
     filterKeys.forEach((key) => {
       const value = filters[key];
+
+      if (key === 'page' || key === 'isActive') {
+        query += `&${String(key)}=${value}`;
+        return;
+      }
+
       if (value) {
         query += `&${String(key)}=${value}`;
       }

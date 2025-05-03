@@ -21,17 +21,51 @@ import productsTableStyles from './productsTable.styles';
  * If the "View Details" button is pressed, it triggers the `openDetailsModal` function to display the product details.
  * The "Delete" button has a distinct red color styling.
  */
-const _ProductBottomSheet = ({ openDetailsModal }: { openDetailsModal: (modalState: boolean) => void }) => {
+const _ProductBottomSheet = ({
+  openDetailsModal,
+  deleteProduct,
+  editProductDetails,
+  productName
+}: {
+  openDetailsModal: (modalState: boolean) => void;
+  deleteProduct: () => void;
+  editProductDetails: () => void;
+  productName: string;
+}) => {
   const { colors } = useThemeColors();
 
   const assignOnPressHandler = (title: string) => {
     if (title === 'View Details') {
       return openDetailsModal(true);
     }
+
+    if (title === 'Edit') {
+      return editProductDetails();
+    }
+
+    if (title === 'Delete') {
+      return deleteProduct();
+    }
   };
 
   return (
     <View>
+      <View
+        style={{
+          padding: 8,
+          marginBottom: 8,
+          backgroundColor: colors.secondaryBg,
+          borderRadius: 8
+        }}>
+        <CustomText
+          variant='labelSmall'
+          weight={'600'}
+          fontVariant={'quicksandSemiBold'}
+          color={colors.textSecondary}>
+          Selected Product: {productName}
+        </CustomText>
+      </View>
+
       {productBottomSheetMenu?.map((item) => (
         <Button.Transparent
           style={productsTableStyles.menuItem}

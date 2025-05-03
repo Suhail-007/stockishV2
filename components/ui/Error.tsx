@@ -36,6 +36,7 @@ const Message = ({ msg, statusCode, contStyle, messageStyle }: ErrorMessageProps
 
   const isServiceUnavailable =
     statusCode === STATUS_CODES.serviceUnavailable || statusCode === STATUS_CODES.internalServerError;
+  const notFoundError = statusCode === STATUS_CODES.notFound;
 
   //Add info and success styles
 
@@ -48,6 +49,13 @@ const Message = ({ msg, statusCode, contStyle, messageStyle }: ErrorMessageProps
         size={18}
         color={colors.error}
       />
+      {notFoundError && (
+        <Text
+          variant='bodySmall'
+          style={[styles.errorText, dynamicStyles.errorText, messageStyle]}>
+          {msg} {statusCode ? `(${statusCode})` : ''}
+        </Text>
+      )}
       {isServiceUnavailable && (
         <Text
           variant='bodySmall'

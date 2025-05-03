@@ -2,12 +2,12 @@ import React from 'react';
 
 import PageWrapper from '../../ui/PageWrapper';
 
-import AddProductForm from './AddProductForm';
+import ProductForm from './ProductForm';
 
 const AddProductPage = () => {
   return (
     <PageWrapper.Scroll>
-      <AddProductForm />
+      <ProductForm />
     </PageWrapper.Scroll>
   );
 };

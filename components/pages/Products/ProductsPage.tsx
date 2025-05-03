@@ -5,7 +5,7 @@ import { Route, router, useLocalSearchParams } from 'expo-router';
 
 import { GetAllProductsPayload } from '../../../apis/types/product.type';
 import { QUERY_KEYS } from '../../../constants/queries';
-import { defaultValues } from '../../../constants/variables';
+import { defaultFilters } from '../../../constants/variables';
 import { Product } from '../../../features/types/product.type';
 import useProductPageQuery from '../../../hooks/queries/useProductPageQuery';
 import useFilters from '../../../hooks/useFilters';
@@ -91,13 +91,13 @@ const ProductPage = () => {
   };
 
   const clearFilters = () => {
-    setFilters({ ...defaultValues, page: 1, pageSize: 20 });
+    setFilters({ ...defaultFilters, page: 1, pageSize: 20 });
   };
 
   const hasAppliedFilters = function () {
     const { page, pageSize, ...restFilters } = filters;
 
-    return JSON.stringify(restFilters) !== JSON.stringify(defaultValues);
+    return JSON.stringify(restFilters) !== JSON.stringify(defaultFilters);
   };
 
   return (

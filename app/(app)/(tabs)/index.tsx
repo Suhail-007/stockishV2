@@ -101,27 +101,28 @@ export default function Index() {
               />
             }>
             <ConditionalRender
-              condition={totalRemainingBalance.isPending}
+              condition={orderStatistics?.isPending}
               isFalseComponent={
-                <TotalBalance
-                  amount={totalRemainingBalance.data?.data?.data || 0}
-                  selectedMonth={filters.getTotalRemainingBalance.month}
-                  selectedYear={filters.getTotalRemainingBalance.year}
+                <MonthlySellStats
+                  selectedMonth={filters.getOrderStatisticsById.month}
+                  selectedYear={filters.getOrderStatisticsById.year}
+                  totalAmount={_orderStatistics?.totalAmount || 0}
+                  totalProfit={_orderStatistics?.totalProfit || 0}
                   onMonthChange={(month) =>
                     setFilters((prev) => ({
                       ...prev,
-                      getTotalRemainingBalance: { ...prev.getTotalRemainingBalance, month }
+                      getOrderStatisticsById: { ...prev.getOrderStatisticsById, month }
                     }))
                   }
                   onYearChange={(year) =>
                     setFilters((prev) => ({
                       ...prev,
-                      getTotalRemainingBalance: { ...prev.getTotalRemainingBalance, year }
+                      getOrderStatisticsById: { ...prev.getOrderStatisticsById, year }
                     }))
                   }
                 />
               }
-              isTrueComponent={<HomeSkeleton.TotalBalance />}
+              isTrueComponent={<HomeSkeleton.MonthlySellNProfit />}
             />
           </PageWrapper.Section>
 

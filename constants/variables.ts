@@ -16,7 +16,7 @@ export const CHECK_EMAIL_ERROR_MESSAGE = 'User not found';
 export const ValidationErrorString = 'Validation errors';
 export const AccessTokenExpiredString = 'Access Token Expired';
 
-export const defaultValues: Filters = {
+export const defaultFilters: Filters = {
   sortBy: 'ASC',
   searchKey: '',
   isActive: true,

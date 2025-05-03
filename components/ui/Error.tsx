@@ -1,10 +1,15 @@
-import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import useThemeColors from '../../hooks/useThemeColors';
-import { AntDesign } from '@expo/vector-icons';
-import { ErrorMessageProps, ErrorValidationProps } from './types/Error.type';
+import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
+import Animated, { FadeIn } from 'react-native-reanimated';
+
+import { AntDesign } from '@expo/vector-icons';
+
 import { Fonts } from '../../constants/fonts';
+import { STATUS_CODES } from '../../constants/statusCodes';
+import useThemeColors from '../../hooks/useThemeColors';
+
+import { ErrorMessageProps, ErrorValidationProps } from './types/Error.type';
 
 const Error = () => null;
 
@@ -29,21 +34,43 @@ const Message = ({ msg, statusCode, contStyle, messageStyle }: ErrorMessageProps
     }
   };
 
+  const isServiceUnavailable =
+    statusCode === STATUS_CODES.serviceUnavailable || statusCode === STATUS_CODES.internalServerError;
+  const notFoundError = statusCode === STATUS_CODES.notFound;
+
   //Add info and success styles
 
   return (
-    <View style={[styles.errorContainer, dynamicStyles.errorContainer, contStyle]}>
+    <Animated.View
+      entering={FadeIn.duration(250)}
+      style={[styles.errorContainer, dynamicStyles.errorContainer, contStyle]}>
       <AntDesign
         name='warning'
         size={18}
         color={colors.error}
       />
-      <Text
-        variant='bodySmall'
-        style={[styles.errorText, dynamicStyles.errorText, messageStyle]}>
-        {msg} {statusCode ? `(${statusCode})` : ''}
-      </Text>
-    </View>
+      {notFoundError && (
+        <Text
+          variant='bodySmall'
+          style={[styles.errorText, dynamicStyles.errorText, messageStyle]}>
+          {msg} {statusCode ? `(${statusCode})` : ''}
+        </Text>
+      )}
+      {isServiceUnavailable && (
+        <Text
+          variant='bodySmall'
+          style={[styles.errorText, dynamicStyles.errorText, messageStyle]}>
+          Service Unavailable {statusCode ? `(${statusCode})` : ''}
+        </Text>
+      )}
+      {!isServiceUnavailable && (
+        <Text
+          variant='bodySmall'
+          style={[styles.errorText, dynamicStyles.errorText, messageStyle]}>
+          {msg} {statusCode ? `(${statusCode})` : ''}
+        </Text>
+      )}
+    </Animated.View>
   );
 };
 
@@ -101,8 +128,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     // marginInline: 20,
     marginTop: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     gap: 10,
     flexDirection: 'row'
   },
@@ -123,6 +150,7 @@ const styles = StyleSheet.create({
 
   errorText: {
     fontFamily: Fonts.quicksandMedium,
-    fontWeight: '400'
+    fontWeight: '400',
+    width: '90%'
   }
 });

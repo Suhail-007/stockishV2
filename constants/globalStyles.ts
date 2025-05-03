@@ -5,5 +5,11 @@ export const globalStyles = {
     fontSize: scale(12),
     marginHorizontal: scale(4),
     marginTop: scale(4)
+  },
+
+  card: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 6
   }
 };

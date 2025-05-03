@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { RadioButton as PaperRadioButton } from 'react-native-paper';
 
 import { RadioButtonProps } from './types/radioButton';
-import { scale } from 'react-native-size-matters';
 
 const RadioButton: React.FC<RadioButtonProps> = ({ data, onPress, containerStyles, render, value }) => {
   return (

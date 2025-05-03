@@ -1,10 +1,16 @@
+import { PayloadAction } from '@reduxjs/toolkit';
+
 import { LoginResponseData } from '../../apis/types/auth.type';
-import { BaseAction, BaseState } from './baseState.type';
+
+import { BaseState } from './baseSlice.type';
 
 export type AuthInitialState = BaseState & {
   isAuth: boolean;
   user: User | null;
   tenantDetails: User_Tenant | null;
+  loading: boolean;
+  errorMessage: string | null;
+  isRefreshTokenRotating: boolean;
 };
 
 export type SetAuthPayload = {
@@ -13,9 +19,16 @@ export type SetAuthPayload = {
   tenantDetails?: AuthInitialState['tenantDetails'];
 };
 
-export type SetAuthAction = BaseAction<SetAuthPayload>;
+export type SetAuthAction = PayloadAction<SetAuthPayload>;
 
-export type User = Omit<LoginResponseData, 'token'> & {
+export type SetUserApiPayload = {
+  loading: AuthInitialState['loading'];
+  errorMessage: AuthInitialState['errorMessage'];
+};
+
+export type SetUserApiStateAction = PayloadAction<SetUserApiPayload>;
+
+export type User = Omit<LoginResponseData, 'token' | 'refreshToken'> & {
   isTenant: boolean;
 };
 

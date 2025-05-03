@@ -1,6 +1,7 @@
 import { useEffect, useCallback, useReducer } from 'react';
-import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
+
+import * as SecureStore from 'expo-secure-store';
 
 type UseStateHook<T> = [[boolean, T | null], (value: T | null) => void];
 
@@ -80,7 +81,7 @@ export function useStorageState(key: string): UseStateHook<string> {
         setState(value);
       });
     }
-  }, [key]);
+  }, [key, setState]);
 
   // Set
   const setValue = useCallback(
@@ -88,7 +89,7 @@ export function useStorageState(key: string): UseStateHook<string> {
       setState(value);
       setStorageItemAsync(key, value);
     },
-    [key]
+    [key, setState]
   );
 
   return [state, setValue];

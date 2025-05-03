@@ -1,4 +1,5 @@
-import { Control, FieldValues, UseControllerProps } from 'react-hook-form';
+import { Control, FieldValues } from 'react-hook-form';
+
 import { Gender } from '../../../../utils/global.type';
 
 export type SignUpFormData = SignUpFormStepOne & SignUpFormStepTwo & SignUpFormStepThree;

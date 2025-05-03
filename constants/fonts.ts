@@ -1,7 +1,7 @@
 export const Fonts = {
-  quicksandLight: 'Quicksand-light',
-  quicksandRegular: 'Quicksand-regular',
-  quicksandMedium: 'Quicksand-medium',
-  quicksandSemiBold: 'Quicksand-semibold',
-  quicksandBold: 'Quicksand-bold',
+  quicksandLight: 'Quicksand_light',
+  quicksandRegular: 'Quicksand_regular',
+  quicksandMedium: 'Quicksand_medium',
+  quicksandSemiBold: 'Quicksand_semibold',
+  quicksandBold: 'Quicksand_bold'
 };

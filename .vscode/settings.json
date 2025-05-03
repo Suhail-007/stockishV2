@@ -1,9 +1,10 @@
 {
   "gitConfigUser.selectedProfile": "Personal",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "false"
+    "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["typescript", "typescriptreact"],
   "eslint.useFlatConfig": true,
-  "cSpell.words": ["rafiki"]
+  "cSpell.words": ["rafiki"],
+  "editor.formatOnSave": true
 }

@@ -1,12 +1,15 @@
-import { Text, View } from 'react-native';
-import React, { FC, Fragment, useMemo } from 'react';
+import { FC, Fragment, useMemo } from 'react';
 import { Controller } from 'react-hook-form';
+import { View } from 'react-native';
+import { Text } from 'react-native-paper';
+
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { SignUpFormStepTwo, StepsProps } from './multiStep.type';
-import TextInput from '../../../ui/TextInput';
-import useThemeColors from '../../../../hooks/useThemeColors';
 import { globalStyles } from '../../../../constants/globalStyles';
+import useThemeColors from '../../../../hooks/useThemeColors';
+import TextInput from '../../../ui/TextInput';
+
+import { SignUpFormStepTwo, StepsProps } from './multiStep.type';
 import { StepperStyles } from './StepOne';
 
 const StepTwo: FC<StepsProps<SignUpFormStepTwo>> = ({ control }) => {
@@ -22,7 +25,7 @@ const StepTwo: FC<StepsProps<SignUpFormStepTwo>> = ({ control }) => {
 
   return (
     <View>
-      <View style={styles.inputCont}>
+      <View style={StepperStyles.inputCont}>
         <Controller
           name='orgName'
           rules={{
@@ -38,7 +41,7 @@ const StepTwo: FC<StepsProps<SignUpFormStepTwo>> = ({ control }) => {
                 value={field.value}
                 onChangeText={field.onChange}
                 error={!!fieldState.error}
-                style={styles.input}
+                style={StepperStyles.input}
                 theme={{
                   colors: {
                     primary: colors.primary,
@@ -65,7 +68,7 @@ const StepTwo: FC<StepsProps<SignUpFormStepTwo>> = ({ control }) => {
           )}></Controller>
       </View>
 
-      <View style={styles.inputCont}>
+      <View style={StepperStyles.inputCont}>
         <Controller
           name='licenseNo'
           rules={{
@@ -81,7 +84,7 @@ const StepTwo: FC<StepsProps<SignUpFormStepTwo>> = ({ control }) => {
                 value={field.value}
                 onChangeText={field.onChange}
                 error={!!fieldState.error}
-                style={styles.input}
+                style={StepperStyles.input}
                 theme={{
                   colors: {
                     primary: colors.primary,
@@ -108,7 +111,7 @@ const StepTwo: FC<StepsProps<SignUpFormStepTwo>> = ({ control }) => {
           )}></Controller>
       </View>
 
-      <View style={styles.inputCont}>
+      <View style={StepperStyles.inputCont}>
         <Controller
           name='GST'
           rules={{
@@ -124,7 +127,7 @@ const StepTwo: FC<StepsProps<SignUpFormStepTwo>> = ({ control }) => {
                 value={field.value}
                 onChangeText={field.onChange}
                 error={!!fieldState.error}
-                style={styles.input}
+                style={StepperStyles.input}
                 theme={{
                   colors: {
                     primary: colors.primary,
@@ -155,5 +158,3 @@ const StepTwo: FC<StepsProps<SignUpFormStepTwo>> = ({ control }) => {
 };
 
 export default StepTwo;
-
-const styles = StepperStyles;

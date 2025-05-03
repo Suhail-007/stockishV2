@@ -1,15 +1,18 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+
 //Reducers
-import AuthReducer from '../features/auth';
+import authReducer from '../features/auth';
+import productReducer from '../features/product';
 
 const combinedReducers = combineReducers({
-  auth: AuthReducer,
+  auth: authReducer,
+  products: productReducer
 });
 
 const store = configureStore({
-  reducer: combinedReducers,
+  reducer: combinedReducers
 });
 
 export type RootState = ReturnType<typeof store.getState>;

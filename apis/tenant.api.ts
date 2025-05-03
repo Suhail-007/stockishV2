@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios';
+
 import configuredAxiosInstance from '../axios/interceptor';
+
 import { CreateTenantPayload, CreateTenantResponse } from './types/tenant.type';
 
 const endpoints = {

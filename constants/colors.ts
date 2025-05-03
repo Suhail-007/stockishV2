@@ -1,4 +1,5 @@
 import { MD3Theme } from 'react-native-paper';
+
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 const tintColorLight = '#2f95dc';
@@ -7,8 +8,8 @@ const tintColorDark = '#ffffff';
 const Colors = {
   light: {
     // 🎨 Backgrounds
-    screenBg: '#F5F5F5',
-    background: '#FFFFFF',
+    screenBg: '#fff',
+    background: '#fff',
     secondaryBg: '#F5F5F5',
     cardBg: '#32A08B',
     backgroundWhite: '#FFFFFF',
@@ -21,12 +22,16 @@ const Colors = {
 
     //Tertiary
     tertiary: '#2969B7',
+    tertiary100: '#deecfd',
 
     // 🔤 Text
     textPrimary: '#333333',
     textSecondary: '#666666',
     text: '#000000',
     textWhite: '#FFFFFF',
+    yellowText900: '#918104',
+    greenText900: '#056b33',
+    redText900: '#b70000',
 
     // 🌟 Accents & Highlights
     tint: tintColorLight,
@@ -39,7 +44,6 @@ const Colors = {
     errorText: '#D32F2F',
 
     // 🎛 Icons & Borders
-
     tabIconDefault: '#CCCCCC',
     tabIconSelected: tintColorLight,
     statusBarContent: '#D32F2F',
@@ -48,7 +52,20 @@ const Colors = {
     borderDefault: '#CCCCCC',
     borderFocused: '#2969B7',
     borderError: '#D32F2F',
-    borderDisabled: '#E0E0E0'
+    borderDisabled: '#E0E0E0',
+
+    //shades
+    primary50: '#f3eeff',
+    primary100: '#cfc1f2',
+    yellow100: '#fff39be1',
+    green100: '#cdfac1ff',
+    red100: '#fbc5c5',
+    grey100: '#f2f2f2',
+    grey200: '#e0e0e0',
+
+    //Skeleton
+    skeleton: '#dfdddd',
+    skeletonHighlight: '#f3f3f3'
   },
 
   dark: {
@@ -65,11 +82,18 @@ const Colors = {
     buttonBg: '#005A8E',
     buttonBgSecondary: '#1E4E89',
 
+    //Tertiary
+    tertiary: '#2c578b',
+    tertiary100: '#43648b',
+
     // 🔤 Text
     textPrimary: '#FFFFFF',
     textSecondary: '#B0B0B0',
     text: '#FFFFFF',
     textWhite: '#FFFFFF',
+    yellowText900: '#998700',
+    greenText900: '#056b33',
+    redText900: '#b70000',
 
     // 🌟 Accents & Highlights
     tint: tintColorDark,
@@ -82,7 +106,7 @@ const Colors = {
     errorText: '#D32F2F',
 
     // 🎛 Icons & Borders
-    tertiary: '#3671b9',
+
     tabIconDefault: '#888888',
     tabIconSelected: tintColorDark,
     statusBarContent: '#D32F2F',
@@ -91,7 +115,20 @@ const Colors = {
     borderDefault: '#444444',
     borderFocused: '#3671b9',
     borderError: '#FF6B6B',
-    borderDisabled: '#555555'
+    borderDisabled: '#555555',
+
+    //shades
+    primary50: '#f3eeff',
+    primary100: '#cfc1f2',
+    yellow100: '#f1ecbc',
+    green100: '#baeebe',
+    red100: '#fbc5c5ff',
+    grey100: '#f2f2f2',
+    grey200: '#e1dddd',
+
+    //Skeleton
+    skeleton: '#555',
+    skeletonHighlight: '#444'
   }
 };
 

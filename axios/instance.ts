@@ -9,15 +9,14 @@ export type AxiosInstanceParameter = CreateAxiosDefaults;
  */
 const createAxiosInstance = function ({ ...props }: AxiosInstanceParameter): AxiosInstance {
   return axios.create({
-    ...props,
+    ...props
   });
 };
 
 const defaultInstance = createAxiosInstance({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
-  timeoutErrorMessage: 'Request Timeout',
   timeout: 0,
-  headers: { 'Content-Type': 'application/json' },
+  headers: { 'Content-Type': 'application/json' }
 });
 
 export default defaultInstance;

@@ -14,8 +14,6 @@ import { homeSkeletonStyles } from './home.styles';
  */
 const HomeSkeleton = () => null;
 
-const Heading = () => <SkeletonLoader containerStyle={homeSkeletonStyles.skeletonBoxHeading} />;
-
 const Greetings = () => (
   <View style={homeSkeletonStyles.heading}>
     <SkeletonLoader
@@ -28,16 +26,12 @@ const Greetings = () => (
 );
 const LastFiveOrders = () => (
   <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
-    <Heading />
-
     <SkeletonLoader containerStyle={[homeSkeletonStyles.skeletonBox, { height: scale(200) }]} />
   </View>
 );
 
 const MonthlyOrders = () => (
   <View style={homeSkeletonStyles.sectionCont}>
-    <Heading />
-
     <View style={[homeSkeletonStyles.ordersStatisticsCont]}>
       {Array.from({ length: 4 }).map((_, index) => (
         <SkeletonLoader
@@ -51,7 +45,6 @@ const MonthlyOrders = () => (
 
 const TotalBalance = () => (
   <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
-    <Heading />
     <SkeletonLoader containerStyle={homeSkeletonStyles.skeletonBox} />
   </View>
 );
@@ -64,8 +57,6 @@ const TotalBalance = () => (
  */
 const MonthlySellNProfit = () => (
   <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
-    <Heading />
-
     {Array.from({ length: 2 }).map((_, index) => (
       <SkeletonLoader
         key={index}
@@ -77,8 +68,6 @@ const MonthlySellNProfit = () => (
 
 const UsersStatistics = () => (
   <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
-    <Heading />
-
     <View style={homeSkeletonStyles.usersStatisticsCont}>
       <SkeletonLoader containerStyle={[homeSkeletonStyles.orderStatisticsCont]} />
       <SkeletonLoader containerStyle={[homeSkeletonStyles.orderStatisticsCont]} />
@@ -88,8 +77,6 @@ const UsersStatistics = () => (
 
 const ProductStatistics = () => (
   <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
-    <Heading />
-
     <View style={homeSkeletonStyles.usersStatisticsCont}>
       <SkeletonLoader containerStyle={[homeSkeletonStyles.orderStatisticsCont]} />
       <SkeletonLoader containerStyle={[homeSkeletonStyles.orderStatisticsCont]} />

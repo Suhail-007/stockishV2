@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { ImageBackground, View } from 'react-native';
 import { Icon } from 'react-native-paper';
 
@@ -32,14 +32,7 @@ const UsersStatistics = () => {
   }, [colors]);
 
   return (
-    <PageWrapper.Section
-      icon={
-        <Icon
-          size={24}
-          source={'account-group'}
-        />
-      }
-      title={'Users Statistics'}>
+    <Fragment>
       <View style={homeStyles.ordersStatisticsCont}>
         <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.orderStatisticsCont]}>
           <View>
@@ -77,7 +70,7 @@ const UsersStatistics = () => {
           />
         </View>
       </View>
-    </PageWrapper.Section>
+    </Fragment>
   );
 };
 

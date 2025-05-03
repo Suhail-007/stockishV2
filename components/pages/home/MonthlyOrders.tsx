@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import React, { Fragment, memo, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { Icon } from 'react-native-paper';
@@ -17,31 +17,12 @@ const deliveredOrderImage = require('../../../assets/images/home/delivered.png')
 const pendingOrderImage = require('../../../assets/images/home/pendingOrders.png');
 const totalOrderImage = require('../../../assets/images/home/totalOrderList.png');
 
-const _MonthlyOrders = () => {
+const _MonthlyOrders = ({
+  ordersStatistics
+}: {
+  ordersStatistics: Omit<getOrdersStatisticsByIdData, 'totalAmount' | 'totalProfit'>;
+}) => {
   const { colors } = useThemeColors();
-  const [ordersStatisticsAdmin, setOrderStatisticsAdmin] = useState<getOrdersStatisticsByIdData>({
-    totalCancelledOrders: [],
-    totalOrders: 0,
-    totalDeliveredOrders: [],
-    totalPendingOrders: [],
-    totalAmount: 0,
-    totalProfit: 0
-  });
-
-  useEffect(() => {
-    const interval = setInterval(
-      () => {
-        getOrdersStatisticsForTenantFromStorage().then((response) => {
-          setOrderStatisticsAdmin(response);
-        });
-      },
-      60 * 60 * 2000
-    ); // 60 seconds * 60 minutes * 2000 milliseconds = 1 hour
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [ordersStatisticsAdmin]);
 
   const dynamicStyles = useMemo(() => {
     return {
@@ -68,15 +49,7 @@ const _MonthlyOrders = () => {
   }, [colors]);
 
   return (
-    <PageWrapper.Section
-      title={'Monthly Orders'}
-      icon={
-        <Icon
-          size={24}
-          source={'calendar'}
-        />
-      }
-      style={homeStyles.monthlyOrdersCont}>
+    <Fragment>
       <View style={[homeStyles.ordersStatisticsCont]}>
         <View style={[globalStyles.card, homeStyles.orderStatisticsCont, dynamicStyles.cardBg]}>
           <View>
@@ -84,7 +57,7 @@ const _MonthlyOrders = () => {
               Total Orders{' '}
             </CustomText>
             <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.totalOrdersText]}>
-              {ordersStatisticsAdmin?.totalOrders}
+              {ordersStatistics?.totalOrders || 0}
             </CustomText>
           </View>
 
@@ -102,7 +75,7 @@ const _MonthlyOrders = () => {
               Pending{' '}
             </CustomText>
             <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.pendingOrdersText]}>
-              {ordersStatisticsAdmin?.totalPendingOrders.length}
+              {ordersStatistics?.totalPendingOrders?.length || 0}
             </CustomText>
           </View>
 
@@ -120,7 +93,7 @@ const _MonthlyOrders = () => {
               Delivered
             </CustomText>
             <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.deliveredOrdersText]}>
-              {ordersStatisticsAdmin?.totalDeliveredOrders.length}
+              {ordersStatistics?.totalDeliveredOrders?.length || 0}
             </CustomText>
           </View>
 
@@ -138,7 +111,7 @@ const _MonthlyOrders = () => {
               Cancelled{' '}
             </CustomText>
             <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.cancelledOrdersText]}>
-              {ordersStatisticsAdmin?.totalOrders}
+              {ordersStatistics?.totalOrders || 0}
             </CustomText>
           </View>
 
@@ -150,7 +123,7 @@ const _MonthlyOrders = () => {
           />
         </View>
       </View>
-    </PageWrapper.Section>
+    </Fragment>
   );
 };
 

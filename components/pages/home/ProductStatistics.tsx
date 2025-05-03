@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, Fragment, useMemo } from 'react';
 import { ImageBackground, View } from 'react-native';
 import { Icon } from 'react-native-paper';
 
@@ -9,7 +9,6 @@ import CustomText from '../../ui/CustomText';
 import PageWrapper from '../../ui/PageWrapper';
 
 import { homeStyles } from './home.styles';
-
 
 const activeUserImg = require('../../../assets/images/home/activeUsers.png');
 const inActiveUserImg = require('../../../assets/images/home/inActiveUsers.png');
@@ -34,14 +33,7 @@ const ProductStatistics: FC<{ data: Record<PRODUCT_STATUS, number> }> = (props) 
   }, [colors]);
 
   return (
-    <PageWrapper.Section
-      icon={
-        <Icon
-          size={24}
-          source={'account-group'}
-        />
-      }
-      title={'Products Statistics'}>
+    <Fragment>
       <View style={homeStyles.ordersStatisticsCont}>
         <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.productStatisticsCont]}>
           <View>
@@ -79,7 +71,7 @@ const ProductStatistics: FC<{ data: Record<PRODUCT_STATUS, number> }> = (props) 
           />
         </View>
       </View>
-    </PageWrapper.Section>
+    </Fragment>
   );
 };
 

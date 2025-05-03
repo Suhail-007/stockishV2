@@ -61,7 +61,7 @@ const useDashboardQueries = (user: User | null, filters: DashboardFilters) => {
         enabled: !!user?.id
       },
       {
-        queryKey: [QUERY_KEYS.GEt_ORDERS_STATISTICS, Object.values(filters.getOrderStatisticsById)],
+        queryKey: [QUERY_KEYS.GET_ORDERS_STATISTICS, Object.values(filters.getOrderStatisticsById)],
         queryFn: () => getOrdersStatisticsById(filters.getOrderStatisticsById),
         retry: isRefreshTokenRotating ? false : 2,
         refetchIntervalInBackground: !isRefreshTokenRotating,

@@ -5,3 +5,19 @@ export type DashboardFilters = {
   getLastFiveOrders: GetLastFiveOrdersPayload;
   getTotalRemainingBalance: StatisticsPayload;
 };
+
+export type CalendarFilterProps = {
+  selectedMonth: number;
+  selectedYear: number;
+  onMonthChange: (month: number) => void;
+  onYearChange: (year: number) => void;
+};
+
+export type MonthlySellStatsProps = {
+  totalAmount: number;
+  totalProfit: number;
+} & CalendarFilterProps;
+
+export type TotalBalanceProps = {
+  amount: number;
+} & CalendarFilterProps;

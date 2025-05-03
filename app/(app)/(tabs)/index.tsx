@@ -17,6 +17,8 @@ import { useAppSelector } from '@/store/store';
 import ErrorMessage from '../../../components/ErrorMessage';
 import useDashboardQueries from '../../../hooks/queries/useDashboardQueries';
 import { useUserDetails } from '../../../hooks/queries/useUserDetails';
+import { Icon } from 'react-native-paper';
+import { homeStyles } from '../../../components/pages/home/home.styles';
 
 export default function Index() {
   const { isLoading, error } = useUserDetails();
@@ -57,40 +59,117 @@ export default function Index() {
             isFalseComponent={<LastFiveOrders items={lastFiveOrders.data?.data?.data || []} />}
           />
 
-          <ConditionalRender
-            condition={totalRemainingBalance.isPending}
-            isFalseComponent={<TotalBalance amount={totalRemainingBalance.data?.data?.data || 0} />}
-            isTrueComponent={<HomeSkeleton.TotalBalance />}
-          />
+          <PageWrapper.Section
+            title='Total Balance'
+            icon={
+              <Icon
+                size={24}
+                source={'account-cash'}
+              />
+            }>
+            <ConditionalRender
+              condition={totalRemainingBalance.isPending}
+              isFalseComponent={
+                <TotalBalance
+                  amount={totalRemainingBalance.data?.data?.data || 0}
+                  selectedMonth={filters.getTotalRemainingBalance.month}
+                  selectedYear={filters.getTotalRemainingBalance.year}
+                  onMonthChange={(month) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      getTotalRemainingBalance: { ...prev.getTotalRemainingBalance, month }
+                    }))
+                  }
+                  onYearChange={(year) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      getTotalRemainingBalance: { ...prev.getTotalRemainingBalance, year }
+                    }))
+                  }
+                />
+              }
+              isTrueComponent={<HomeSkeleton.TotalBalance />}
+            />
+          </PageWrapper.Section>
 
-          <ConditionalRender
-            condition={orderStatistics.isPending}
-            isFalseComponent={
-              <MonthlySellStats
-                totalAmount={_orderStatistics?.totalAmount || 0}
-                totalProfit={_orderStatistics?.totalProfit || 0}
+          <PageWrapper.Section
+            title='Monthly Sell/Profit'
+            icon={
+              <Icon
+                size={24}
+                source={'account-cash'}
+              />
+            }>
+            <ConditionalRender
+              condition={totalRemainingBalance.isPending}
+              isFalseComponent={
+                <TotalBalance
+                  amount={totalRemainingBalance.data?.data?.data || 0}
+                  selectedMonth={filters.getTotalRemainingBalance.month}
+                  selectedYear={filters.getTotalRemainingBalance.year}
+                  onMonthChange={(month) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      getTotalRemainingBalance: { ...prev.getTotalRemainingBalance, month }
+                    }))
+                  }
+                  onYearChange={(year) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      getTotalRemainingBalance: { ...prev.getTotalRemainingBalance, year }
+                    }))
+                  }
+                />
+              }
+              isTrueComponent={<HomeSkeleton.TotalBalance />}
+            />
+          </PageWrapper.Section>
+
+          <PageWrapper.Section
+            title={'Monthly Orders'}
+            icon={
+              <Icon
+                size={24}
+                source={'calendar'}
               />
             }
-            isTrueComponent={<HomeSkeleton.MonthlySellNProfit />}
-          />
+            style={homeStyles.monthlyOrdersCont}>
+            <ConditionalRender
+              condition={orderStatistics.isPending}
+              isTrueComponent={<HomeSkeleton.MonthlyOrders />}
+              isFalseComponent={<MonthlyOrders ordersStatistics={_orderStatistics!} />}
+            />
+          </PageWrapper.Section>
 
-          <ConditionalRender
-            condition={orderStatistics.isPending}
-            isTrueComponent={<HomeSkeleton.MonthlyOrders />}
-            isFalseComponent={<MonthlyOrders />}
-          />
+          <PageWrapper.Section
+            icon={
+              <Icon
+                size={24}
+                source={'account-group'}
+              />
+            }
+            title={'Users Statistics'}>
+            <ConditionalRender
+              condition={usersCountByTenant.isPending}
+              isTrueComponent={<HomeSkeleton.UsersStatistics />}
+              isFalseComponent={<UsersStatistics />}
+            />
+          </PageWrapper.Section>
 
-          <ConditionalRender
-            condition={usersCountByTenant.isPending}
-            isTrueComponent={<HomeSkeleton.UsersStatistics />}
-            isFalseComponent={<UsersStatistics />}
-          />
-
-          <ConditionalRender
-            condition={productsCountByTenant.isPending}
-            isTrueComponent={<HomeSkeleton.ProductStatistics />}
-            isFalseComponent={<ProductStatistics data={{ 0: inActiveProduct, 1: activeProduct }} />}
-          />
+          <PageWrapper.Section
+            icon={
+              <Icon
+                size={24}
+                source={'account-group'}
+              />
+            }
+            title={'Products Statistics'}>
+            <ConditionalRender
+              condition={productsCountByTenant.isPending}
+              isTrueComponent={<HomeSkeleton.ProductStatistics />}
+              isFalseComponent={<ProductStatistics data={{ 0: inActiveProduct, 1: activeProduct }} />}
+            />
+          </PageWrapper.Section>
         </Home>
       )}
     </PageWrapper.Scroll>

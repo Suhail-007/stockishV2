@@ -1,7 +1,8 @@
-import { memo, useMemo } from 'react';
+import { Fragment, memo, useMemo } from 'react';
 import { View } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { Icon } from 'react-native-paper';
+import CalendarFilter from './CalendarFilter';
 
 import { globalStyles } from '../../../constants/globalStyles';
 import useThemeColors from '../../../hooks/useThemeColors';
@@ -12,7 +13,21 @@ import { homeStyles } from './home.styles';
 
 const totalBalanceImage = require('../../../assets/images/home/balanceAmount.png');
 
-const _MonthlySellStats = ({ totalAmount, totalProfit }: { totalAmount: number; totalProfit: number }) => {
+const _MonthlySellStats = ({
+  totalAmount,
+  totalProfit,
+  selectedMonth = new Date().getMonth() + 1,
+  selectedYear = new Date().getFullYear(),
+  onMonthChange,
+  onYearChange
+}: {
+  totalAmount: number;
+  totalProfit: number;
+  selectedMonth?: number;
+  selectedYear?: number;
+  onMonthChange?: (month: number) => void;
+  onYearChange?: (year: number) => void;
+}) => {
   const { colors } = useThemeColors();
 
   const dynamicStyles = useMemo(() => {
@@ -27,14 +42,14 @@ const _MonthlySellStats = ({ totalAmount, totalProfit }: { totalAmount: number; 
   }, [colors.tertiary100, colors.tertiary]);
 
   return (
-    <PageWrapper.Section
-      title='Monthly Sell/Profit'
-      icon={
-        <Icon
-          size={24}
-          source={'account-cash'}
-        />
-      }>
+    <Fragment>
+      <CalendarFilter
+        selectedMonth={selectedMonth}
+        selectedYear={selectedYear}
+        onMonthChange={onMonthChange!}
+        onYearChange={onYearChange!}
+      />
+
       <View style={[globalStyles.card, homeStyles.totalBalanceCont, dynamicStyles.cont]}>
         <View style={{ width: '83%' }}>
           <View>
@@ -60,6 +75,7 @@ const _MonthlySellStats = ({ totalAmount, totalProfit }: { totalAmount: number; 
           imageStyle={homeStyles.totalBalanceBgImage}
           source={totalBalanceImage}></ImageBackground>
       </View>
+
       <View style={[globalStyles.card, homeStyles.totalBalanceCont, dynamicStyles.cont, { marginTop: 20 }]}>
         <View style={{ width: '83%' }}>
           <View>
@@ -89,7 +105,7 @@ const _MonthlySellStats = ({ totalAmount, totalProfit }: { totalAmount: number; 
           />
         </View>
       </View>
-    </PageWrapper.Section>
+    </Fragment>
   );
 };
 

@@ -83,7 +83,9 @@ const TabBarButton = ({
       onLongPress={onLongPress}
       style={styles.buttonCont}>
       <Animated.View style={[styles.tabBarItem, animatedIconStyle]}>
-        {icon[routeName as keyof typeof icon]({ color: isFocused ? colors.textWhite : colors.text })}
+        {icon[routeName as keyof typeof icon]
+          ? icon[routeName as keyof typeof icon]({ color: isFocused ? colors.textWhite : colors.text })
+          : null}
         <Animated.Text
           style={[{ color: isFocused ? colors.textWhite : colors.text }, styles.tabBarItemText, animatedTextStyle]}>
           {label}

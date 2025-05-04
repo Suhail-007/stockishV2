@@ -16,23 +16,57 @@ export const homeStyles = StyleSheet.create({
     flexWrap: 'wrap'
   },
 
+  heroGradient: {
+    padding: 20,
+    paddingTop: 0,
+    borderRadius: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3
+  },
+  statsSection: {
+    marginVertical: 16
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 16,
+    marginTop: 16
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 16
+  },
+
   orderStatisticsCont: {
     width: '48%',
-    height: scale(70),
-    overflow: 'hidden'
+    height: scale(80), // Increased height
+    overflow: 'hidden',
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+    transform: [{ scale: 1 }] // For animation
   },
 
   orderStatisticsContHeading: {
-    fontSize: scale(13.5),
-    textTransform: 'uppercase',
-    letterSpacing: 1.2,
-
-    wordWrap: 'break-word'
+    fontSize: scale(14),
+    textTransform: 'capitalize',
+    letterSpacing: 0.5,
+    marginBottom: 8,
+    opacity: 0.8
   },
 
   orderStatisticsContSubHeading: {
-    fontSize: scale(21),
-    letterSpacing: 1.2
+    fontSize: scale(24),
+    letterSpacing: 0.5,
+    fontWeight: '600'
   },
 
   orderBgImage: {
@@ -46,7 +80,9 @@ export const homeStyles = StyleSheet.create({
   },
 
   totalBalanceCont: {
-    height: scale(70),
+    height: scale(90),
+    padding: 20,
+    borderRadius: 20,
     overflow: 'hidden',
     flexDirection: 'row'
   },
@@ -57,14 +93,16 @@ export const homeStyles = StyleSheet.create({
     height: 50,
     position: 'absolute',
     right: 0,
-    top: 10,
+    top: 26,
     bottom: 10
   },
 
   productStatisticsCont: {
     width: '48%',
     overflow: 'hidden'
-  }
+  },
+
+  typographyCont: { width: '83%', justifyContent: 'space-between', padding: 7 }
 });
 
 export const homeSkeletonStyles = StyleSheet.create({

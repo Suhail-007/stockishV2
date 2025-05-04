@@ -3,12 +3,12 @@ import { View } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import useThemeColors from '../../../hooks/useThemeColors';
-import { productBottomSheetMenu } from '../../../utils/bottomSheetsMenu';
-import Button from '../../ui/Button';
-import CustomText from '../../ui/CustomText';
+import useThemeColors from '@/hooks/useThemeColors';
+import { productBottomSheetMenu } from '@/utils/bottomSheetsMenu';
 
-import productsTableStyles from './productsTable.styles';
+import Button from '../../../ui/Button';
+import CustomText from '../../../ui/CustomText';
+import productsTableStyles from '../productsTable.styles';
 
 /**
  * ProductBottomSheet component renders a list of action buttons for a product.
@@ -53,6 +53,7 @@ const _ProductBottomSheet = ({
       <View
         style={{
           padding: 8,
+          marginInline: 8,
           marginBottom: 8,
           backgroundColor: colors.secondaryBg,
           borderRadius: 8

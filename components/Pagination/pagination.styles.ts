@@ -8,9 +8,13 @@ const paginationStyles = StyleSheet.create({
     paddingVertical: 8
   },
   contentContainer: {
+    flexWrap: 'wrap',
     flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '90%',
     alignItems: 'center',
-    gap: 24
+    columnGap: 24,
+    paddingRight: 15
   },
   rowsPerPage: {
     flexDirection: 'row',

@@ -3,13 +3,13 @@ import { View } from 'react-native';
 
 import { format } from 'date-fns';
 
-import useThemeColors from '../../../hooks/useThemeColors';
-import CustomModal from '../../Modal/Modal';
-import ModalProvider from '../../Modal/ModalProvider';
-import CustomText from '../../ui/CustomText';
+import useThemeColors from '../../../../hooks/useThemeColors';
+import CustomModal from '../../../Modal/Modal';
+import ModalProvider from '../../../Modal/ModalProvider';
+import CustomText from '../../../ui/CustomText';
+import { ProductDetailsModalProps } from '../productDetailsModal.type';
 
 import styles from './productDetailsModal.styles';
-import { ProductDetailsModalProps } from './productDetailsModal.type';
 
 const _ProductDetailsModal = ({ product, toggleShowProductDetailsModal, showModal }: ProductDetailsModalProps) => {
   const { colors } = useThemeColors();

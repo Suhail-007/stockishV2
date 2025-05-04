@@ -5,7 +5,7 @@ import { VariantProp } from 'react-native-paper/lib/typescript/components/Typogr
 
 export type SectionPageProps = ViewProps & {
   title?: string;
-  titleProps?: TextProps<VariantProp<never>>;
+  titleProps?: Omit<TextProps<VariantProp<never>>, 'children'>;
   icon?: JSX.Element;
   titleContStyle?: StyleProp<ViewStyle>;
 };

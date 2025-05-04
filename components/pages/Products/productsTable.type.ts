@@ -6,7 +6,6 @@ export type ProductsTableProps = {
   totalPages: number;
   totalItems: number;
   currentPage: number;
-  isLoading: boolean;
   onPageChange: (filters: Partial<GetAllProductsPayload>) => void;
   filters: Partial<GetAllProductsPayload>;
 };

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { Filters } from '../utils/global.type';
 import { defaultFilters } from '../constants/variables';
+import { Filters } from '../utils/global.type';
 
 /**
  * A custom React hook that manages filter state.

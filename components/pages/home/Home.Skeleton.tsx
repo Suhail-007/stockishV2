@@ -31,7 +31,7 @@ const LastFiveOrders = () => (
 );
 
 const MonthlyOrders = () => (
-  <View style={homeSkeletonStyles.sectionCont}>
+  <View>
     <View style={[homeSkeletonStyles.ordersStatisticsCont]}>
       {Array.from({ length: 4 }).map((_, index) => (
         <SkeletonLoader

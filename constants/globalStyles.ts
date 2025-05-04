@@ -11,5 +11,9 @@ export const globalStyles = {
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 6
+  },
+
+  borderRadius: {
+    borderRadius: 6
   }
 };

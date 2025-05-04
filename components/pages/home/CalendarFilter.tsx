@@ -1,6 +1,8 @@
-import { View, StyleSheet } from 'react-native';
 import { memo, useMemo, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+
 import { isThisYear } from 'date-fns';
+
 import CustomDropdown from '../../ui/CustomDropdown';
 
 interface CalendarFilterProps {
@@ -13,8 +15,6 @@ interface CalendarFilterProps {
 const CalendarFilter = memo(({ selectedMonth, selectedYear, onMonthChange, onYearChange }: CalendarFilterProps) => {
   const [showMonthMenu, setShowMonthMenu] = useState(false);
   const [showYearMenu, setShowYearMenu] = useState(false);
-
-  console.log('🚀 ~ CalendarFilter ~ selectedMonth:', selectedMonth);
 
   const months = useMemo(() => {
     const currentDate = new Date();
@@ -67,5 +67,7 @@ const styles = StyleSheet.create({
     marginBottom: 8
   }
 });
+
+CalendarFilter.displayName = 'CalendarFilter';
 
 export default CalendarFilter;

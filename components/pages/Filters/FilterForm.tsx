@@ -1,12 +1,12 @@
-import React, { useMemo, useState } from 'react';
+import React, { Fragment, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
-import { IconButton, Menu, ToggleButton } from 'react-native-paper';
+import { IconButton, ToggleButton } from 'react-native-paper';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { Route, router, useLocalSearchParams } from 'expo-router';
 
-import { defaultValues } from '../../../constants/variables';
+import { defaultFilters } from '../../../constants/variables';
 import useThemeColors from '../../../hooks/useThemeColors';
 import { Filters } from '../../../utils/global.type';
 import FormController from '../../FormController';
@@ -20,7 +20,6 @@ import filterStyles from './filters.styles';
 export const FilterForm: React.FC = () => {
   const { colors } = useThemeColors();
   const params = useLocalSearchParams<{ stringifiedData: string; goToRoute: string }>();
-  const [menuVisible, setMenuVisible] = useState(false);
   const [hasAppliedFilters, setHasAppliedFilters] = useState(false);
 
   // Parse initial values from params
@@ -30,7 +29,7 @@ export const FilterForm: React.FC = () => {
         const parsedValues = JSON.parse(params.stringifiedData);
         // Check if any filters are different from default
         const hasFilters = Object.keys(parsedValues).some(
-          (key) => JSON.stringify(parsedValues[key]) !== JSON.stringify(defaultValues[key as keyof Filters])
+          (key) => JSON.stringify(parsedValues[key]) !== JSON.stringify(defaultFilters[key as keyof Filters])
         );
         setHasAppliedFilters(hasFilters);
         return parsedValues;
@@ -38,12 +37,14 @@ export const FilterForm: React.FC = () => {
         console.error('Failed to parse filter data:', e);
       }
     }
-    return defaultValues;
+    return defaultFilters;
   }, [params?.stringifiedData]);
 
-  const { control, handleSubmit, reset } = useForm<Filters>({
+  const { control, handleSubmit, reset, watch } = useForm<Filters>({
     defaultValues: initialValues
   });
+
+  const formValues = watch();
 
   const onSubmitHandler = (data: Filters) => {
     if (params?.goToRoute) {
@@ -64,7 +65,7 @@ export const FilterForm: React.FC = () => {
   };
 
   const clearFilters = () => {
-    reset(defaultValues);
+    reset(defaultFilters);
     goBack();
   };
 
@@ -75,12 +76,9 @@ export const FilterForm: React.FC = () => {
       },
       background: {
         backgroundColor: colors.background
-      },
-      menuItem: {
-        background: colors.grey100
       }
     }),
-    [colors.borderDefault, colors.grey100, colors.background]
+    [colors.borderDefault, colors.background]
   );
 
   return (
@@ -97,52 +95,52 @@ export const FilterForm: React.FC = () => {
       </View>
 
       <View style={filterStyles.filterCol}>
-        <CustomText>Sort By</CustomText>
+        <CustomText>Sort By ({formValues.sortBy === 'ASC' ? 'Ascending' : 'Descending'})</CustomText>
         <FormController<Filters>
           control={control}
           name='sortBy'
           render={({ field }) => (
-            <Menu
-              visible={menuVisible}
-              elevation={4}
-              contentStyle={[dynamicStyles.borderColor, filterStyles.menuContent]}
-              style={filterStyles.sortMenu}
-              onDismiss={() => setMenuVisible(false)}
-              anchor={
-                <Button.Tertiary
-                  style={[filterStyles.defaultRadius, dynamicStyles.borderColor]}
-                  onPress={() => setMenuVisible(true)}
-                  icon='menu-down'>
-                  <CustomText>{field.value}</CustomText>
-                </Button.Tertiary>
-              }>
-              {['ASC', 'DESC'].map((item) => (
-                <Menu.Item
+            <Fragment>
+              <ToggleButton.Row
+                style={[dynamicStyles.borderColor]}
+                value={field.value as Filters['sortBy']}
+                onValueChange={field.onChange}>
+                <ToggleButton
                   style={{
-                    backgroundColor: item === field.value ? colors.grey100 : colors.background,
-                    maxWidth: 'auto'
+                    flex: 1,
+                    backgroundColor: field.value === 'ASC' ? colors.tertiary100 : colors.background
                   }}
-                  leadingIcon={() => (
+                  value={'ASC'}
+                  icon={() => (
                     <MaterialIcons
-                      size={24}
-                      name={item === 'ASC' ? 'arrow-upward' : 'arrow-downward'}
+                      name='arrow-upward'
+                      size={20}
+                      color={colors.tertiary}
                     />
                   )}
-                  key={item}
-                  onPress={() => {
-                    field.onChange(item);
-                    setMenuVisible(false);
-                  }}
-                  title={item}
                 />
-              ))}
-            </Menu>
+                <ToggleButton
+                  style={{
+                    flex: 1,
+                    backgroundColor: field.value === 'DESC' ? colors.tertiary100 : colors.background
+                  }}
+                  value={'DESC'}
+                  icon={() => (
+                    <MaterialIcons
+                      name='arrow-downward'
+                      size={20}
+                      color={colors.tertiary}
+                    />
+                  )}
+                />
+              </ToggleButton.Row>
+            </Fragment>
           )}
         />
       </View>
 
       <View style={filterStyles.filterCol}>
-        <CustomText>Active Products</CustomText>
+        <CustomText>Products Status ({formValues.isActive === true ? 'Active' : 'Inactive'})</CustomText>
         <FormController<Filters>
           control={control}
           name='isActive'
@@ -152,11 +150,21 @@ export const FilterForm: React.FC = () => {
               value={field.value ? '1' : '0'}
               onValueChange={(value) => field.onChange(value === '1')}>
               <ToggleButton
+                style={{
+                  flex: 1,
+                  backgroundColor: field.value ? colors.tertiary100 : colors.background
+                }}
                 value='1'
                 icon='check'
+                iconColor={colors.tertiary}
               />
               <ToggleButton
+                style={{
+                  flex: 1,
+                  backgroundColor: !field.value ? colors.tertiary100 : colors.background
+                }}
                 value='0'
+                iconColor={colors.tertiary}
                 icon='close'
               />
             </ToggleButton.Row>

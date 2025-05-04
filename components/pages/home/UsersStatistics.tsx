@@ -1,18 +1,16 @@
 import { Fragment, useMemo } from 'react';
 import { ImageBackground, View } from 'react-native';
-import { Icon } from 'react-native-paper';
 
 import { globalStyles } from '../../../constants/globalStyles';
 import useThemeColors from '../../../hooks/useThemeColors';
 import CustomText from '../../ui/CustomText';
-import PageWrapper from '../../ui/PageWrapper';
 
 import { homeStyles } from './home.styles';
 
 const activeUserImg = require('../../../assets/images/home/activeUsers.png');
 const inActiveUserImg = require('../../../assets/images/home/inActiveUsers.png');
 
-const UsersStatistics = () => {
+const UsersStatistics = ({ users }: { users: Record<string, number> }) => {
   const { colors } = useThemeColors();
 
   const dynamicStyles = useMemo(() => {
@@ -40,7 +38,7 @@ const UsersStatistics = () => {
               Active Users{' '}
             </CustomText>
             <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.activeUsersText]}>
-              {0}
+              {users?.['1'] || 0}
             </CustomText>
           </View>
 
@@ -58,7 +56,7 @@ const UsersStatistics = () => {
               InActive Users
             </CustomText>
             <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.inActiveUserText]}>
-              {0}
+              {users?.['0'] || 0}
             </CustomText>
           </View>
 

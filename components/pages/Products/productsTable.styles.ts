@@ -2,6 +2,15 @@ import { StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 const productsTableStyles = StyleSheet.create({
+  tableContainer: {
+    borderRadius: 12,
+    // elevation: 2,
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 4,
+    overflow: 'hidden'
+  },
   idColumn: {
     width: moderateScale(20),
     maxWidth: moderateScale(40),
@@ -9,7 +18,8 @@ const productsTableStyles = StyleSheet.create({
   },
   menuItem: {
     borderRadius: 8,
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    marginInline: 8
   },
   menuItemCont: {
     flexDirection: 'row',

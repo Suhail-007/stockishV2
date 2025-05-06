@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import LogRocket from 'logrocket';
 
 //Reducers
 import authReducer from '../features/auth';
@@ -11,8 +12,19 @@ const combinedReducers = combineReducers({
   products: productReducer
 });
 
+// Create LogRocket Redux middleware
+// @ts-ignore - The types for LogRocket are incomplete
+const logRocketMiddleware = __DEV__ ? [] : [LogRocket.reduxMiddleware()];
+
 const store = configureStore({
-  reducer: combinedReducers
+  reducer: combinedReducers,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ['persist/PERSIST']
+      }
+    }).concat(logRocketMiddleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

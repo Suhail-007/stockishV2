@@ -1,12 +1,10 @@
 import { FC, Fragment, useMemo } from 'react';
 import { ImageBackground, View } from 'react-native';
-import { Icon } from 'react-native-paper';
 
 import { globalStyles } from '../../../constants/globalStyles';
 import { PRODUCT_STATUS } from '../../../enums/Product.enum';
 import useThemeColors from '../../../hooks/useThemeColors';
 import CustomText from '../../ui/CustomText';
-import PageWrapper from '../../ui/PageWrapper';
 
 import { homeStyles } from './home.styles';
 
@@ -35,7 +33,7 @@ const ProductStatistics: FC<{ data: Record<PRODUCT_STATUS, number> }> = (props) 
   return (
     <Fragment>
       <View style={homeStyles.ordersStatisticsCont}>
-        <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.productStatisticsCont]}>
+        <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.orderStatisticsCont]}>
           <View>
             <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.activeUsersText]}>
               Active Products{' '}
@@ -53,7 +51,7 @@ const ProductStatistics: FC<{ data: Record<PRODUCT_STATUS, number> }> = (props) 
           />
         </View>
 
-        <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.productStatisticsCont]}>
+        <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.orderStatisticsCont]}>
           <View>
             <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.inActiveUserText]}>
               InActive Products

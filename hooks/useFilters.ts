@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { defaultFilters } from '../constants/variables';
 import { Filters } from '../utils/global.type';
 
 /**
@@ -10,16 +11,6 @@ import { Filters } from '../utils/global.type';
  * @returns An object with the current filter state and a function to update the filter state.
  */
 const useFilters = <T extends Filters>(initialFilters?: Partial<T>) => {
-  const defaultFilters: Filters = {
-    searchKey: '',
-    isActive: true,
-    minPriceFilter: 0,
-    maxPriceFilter: 0,
-    sortBy: 'ASC',
-    groupBy: '',
-    userId: 0
-  };
-
   const [filters, setFilters] = useState<T>({
     ...defaultFilters,
     ...initialFilters
@@ -27,7 +18,8 @@ const useFilters = <T extends Filters>(initialFilters?: Partial<T>) => {
 
   return {
     filters,
-    setFilters
+    setFilters,
+    defaultFilters
   };
 };
 

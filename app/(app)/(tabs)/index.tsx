@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import React from 'react';
+import { Icon } from 'react-native-paper';
 
 import ConditionalRender from '@/components/ConditionalRender';
 import Home from '@/components/pages/home/Home';
@@ -15,10 +17,10 @@ import { USER_ROLE } from '@/enums/User.enum';
 import { useAppSelector } from '@/store/store';
 
 import ErrorMessage from '../../../components/ErrorMessage';
+import { homeStyles } from '../../../components/pages/home/home.styles';
+import AnimatedPageWrapper from '../../../components/ui/AnimatedPageWrapper';
 import useDashboardQueries from '../../../hooks/queries/useDashboardQueries';
 import { useUserDetails } from '../../../hooks/queries/useUserDetails';
-import { Icon } from 'react-native-paper';
-import { homeStyles } from '../../../components/pages/home/home.styles';
 
 export default function Index() {
   const { isLoading, error } = useUserDetails();
@@ -47,93 +49,105 @@ export default function Index() {
 
   const _orderStatistics = orderStatistics?.data?.data?.data;
 
+  const onChangeFilter = useCallback(
+    (key: string, field: 'month' | 'year', value: any) => {
+      setFilters((prev) => ({
+        ...prev,
+        [key]: {
+          ...prev[key as keyof typeof prev],
+          [field]: value
+        }
+      }));
+    },
+    [setFilters]
+  );
+
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitialLoad(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <PageWrapper.Scroll scrollEnabled={!isLoading}>
+    <PageWrapper.Scroll
+      linearGradient
+      scrollEnabled={!isLoading}>
       {error && !isLoading && <ErrorMessage error={error} />}
 
       {!error && (
         <Home isLoading={isLoading}>
-          <ConditionalRender
-            condition={lastFiveOrders.isPending}
-            isTrueComponent={<HomeSkeleton.LastFiveOrders />}
-            isFalseComponent={<LastFiveOrders items={lastFiveOrders.data?.data?.data || []} />}
-          />
-
-          <PageWrapper.Section
-            title='Total Balance'
-            icon={
-              <Icon
-                size={24}
-                source={'account-cash'}
-              />
-            }>
+          <AnimatedPageWrapper.SlideInRight
+            isLoading={lastFiveOrders.isPending}
+            shouldAnimate={isInitialLoad}>
             <ConditionalRender
-              condition={totalRemainingBalance.isPending}
-              isFalseComponent={
-                <TotalBalance
-                  amount={totalRemainingBalance.data?.data?.data || 0}
-                  selectedMonth={filters.getTotalRemainingBalance.month}
-                  selectedYear={filters.getTotalRemainingBalance.year}
-                  onMonthChange={(month) =>
-                    setFilters((prev) => ({
-                      ...prev,
-                      getTotalRemainingBalance: { ...prev.getTotalRemainingBalance, month }
-                    }))
-                  }
-                  onYearChange={(year) =>
-                    setFilters((prev) => ({
-                      ...prev,
-                      getTotalRemainingBalance: { ...prev.getTotalRemainingBalance, year }
-                    }))
-                  }
-                />
-              }
-              isTrueComponent={<HomeSkeleton.TotalBalance />}
+              condition={lastFiveOrders.isPending}
+              isTrueComponent={<HomeSkeleton.LastFiveOrders />}
+              isFalseComponent={<LastFiveOrders items={lastFiveOrders.data?.data?.data || []} />}
             />
-          </PageWrapper.Section>
+          </AnimatedPageWrapper.SlideInRight>
 
           <PageWrapper.Section
-            title='Monthly Sell/Profit'
             icon={
               <Icon
                 size={24}
-                source={'account-cash'}
-              />
-            }>
-            <ConditionalRender
-              condition={totalRemainingBalance.isPending}
-              isFalseComponent={
-                <TotalBalance
-                  amount={totalRemainingBalance.data?.data?.data || 0}
-                  selectedMonth={filters.getTotalRemainingBalance.month}
-                  selectedYear={filters.getTotalRemainingBalance.year}
-                  onMonthChange={(month) =>
-                    setFilters((prev) => ({
-                      ...prev,
-                      getTotalRemainingBalance: { ...prev.getTotalRemainingBalance, month }
-                    }))
-                  }
-                  onYearChange={(year) =>
-                    setFilters((prev) => ({
-                      ...prev,
-                      getTotalRemainingBalance: { ...prev.getTotalRemainingBalance, year }
-                    }))
-                  }
-                />
-              }
-              isTrueComponent={<HomeSkeleton.TotalBalance />}
-            />
-          </PageWrapper.Section>
-
-          <PageWrapper.Section
-            title={'Monthly Orders'}
-            icon={
-              <Icon
-                size={24}
-                source={'calendar'}
+                source={'wallet'}
               />
             }
-            style={homeStyles.monthlyOrdersCont}>
+            title='Total Balance'
+            style={homeStyles.statsSection}>
+            <AnimatedPageWrapper.SlideInRight
+              delay={200}
+              isLoading={totalRemainingBalance.isPending}
+              shouldAnimate={isInitialLoad}>
+              <ConditionalRender
+                condition={totalRemainingBalance.isPending}
+                isTrueComponent={<HomeSkeleton.TotalBalance />}
+                isFalseComponent={
+                  <TotalBalance
+                    amount={totalRemainingBalance.data?.data?.data || 0}
+                    selectedMonth={filters.getTotalRemainingBalance.month}
+                    selectedYear={filters.getTotalRemainingBalance.year}
+                    onMonthChange={(month) => onChangeFilter('getTotalRemainingBalance', 'month', month)}
+                    onYearChange={(year) => onChangeFilter('getTotalRemainingBalance', 'year', year)}
+                  />
+                }
+              />
+            </AnimatedPageWrapper.SlideInRight>
+          </PageWrapper.Section>
+
+          <PageWrapper.Section
+            style={{ gap: 10 }}
+            icon={
+              <Icon
+                size={24}
+                source={'chart-bar'}
+              />
+            }
+            title='Monthly Statistics'>
+            <AnimatedPageWrapper.SlideInRight
+              delay={400}
+              isLoading={orderStatistics.isPending}
+              shouldAnimate={isInitialLoad}>
+              <ConditionalRender
+                condition={orderStatistics?.isPending}
+                isTrueComponent={<HomeSkeleton.MonthlySellNProfit />}
+                isFalseComponent={
+                  <MonthlySellStats
+                    selectedMonth={filters.getOrderStatisticsById.month}
+                    selectedYear={filters.getOrderStatisticsById.year}
+                    totalAmount={_orderStatistics?.totalAmount || 0}
+                    totalProfit={_orderStatistics?.totalProfit || 0}
+                    onMonthChange={(month) => onChangeFilter('getOrderStatisticsById', 'month', month)}
+                    onYearChange={(year) => onChangeFilter('getOrderStatisticsById', 'year', year)}
+                  />
+                }
+              />
+            </AnimatedPageWrapper.SlideInRight>
+
             <ConditionalRender
               condition={orderStatistics.isPending}
               isTrueComponent={<HomeSkeleton.MonthlyOrders />}
@@ -141,35 +155,43 @@ export default function Index() {
             />
           </PageWrapper.Section>
 
-          <PageWrapper.Section
-            icon={
-              <Icon
-                size={24}
-                source={'account-group'}
+          <AnimatedPageWrapper.SlideInRight
+            delay={500}
+            shouldAnimate={isInitialLoad}>
+            <PageWrapper.Section
+              icon={
+                <Icon
+                  size={24}
+                  source={'account-group'}
+                />
+              }
+              title={'Users Statistics'}>
+              <ConditionalRender
+                condition={usersCountByTenant.isPending}
+                isTrueComponent={<HomeSkeleton.UsersStatistics />}
+                isFalseComponent={<UsersStatistics users={usersCountByTenant.data?.data?.data || {}} />}
               />
-            }
-            title={'Users Statistics'}>
-            <ConditionalRender
-              condition={usersCountByTenant.isPending}
-              isTrueComponent={<HomeSkeleton.UsersStatistics />}
-              isFalseComponent={<UsersStatistics />}
-            />
-          </PageWrapper.Section>
+            </PageWrapper.Section>
+          </AnimatedPageWrapper.SlideInRight>
 
-          <PageWrapper.Section
-            icon={
-              <Icon
-                size={24}
-                source={'account-group'}
+          <AnimatedPageWrapper.SlideInRight
+            delay={600}
+            shouldAnimate={isInitialLoad}>
+            <PageWrapper.Section
+              icon={
+                <Icon
+                  size={24}
+                  source={'account-group'}
+                />
+              }
+              title={'Products Statistics'}>
+              <ConditionalRender
+                condition={productsCountByTenant.isPending}
+                isTrueComponent={<HomeSkeleton.ProductStatistics />}
+                isFalseComponent={<ProductStatistics data={{ 0: inActiveProduct, 1: activeProduct }} />}
               />
-            }
-            title={'Products Statistics'}>
-            <ConditionalRender
-              condition={productsCountByTenant.isPending}
-              isTrueComponent={<HomeSkeleton.ProductStatistics />}
-              isFalseComponent={<ProductStatistics data={{ 0: inActiveProduct, 1: activeProduct }} />}
-            />
-          </PageWrapper.Section>
+            </PageWrapper.Section>
+          </AnimatedPageWrapper.SlideInRight>
         </Home>
       )}
     </PageWrapper.Scroll>

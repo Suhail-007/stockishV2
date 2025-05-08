@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { DataTable } from 'react-native-paper';
 
-import { PRODUCT_TABLE_COLS } from './helper';
-import productsTableStyles from './productsTable.styles';
+import { PRODUCT_TABLE_COLS } from '../helper';
+import productsTableStyles from '../productsTable.styles';
 
 const _ProductTableColumns = () => {
   return (
@@ -12,7 +12,6 @@ const _ProductTableColumns = () => {
           return (
             <DataTable.Title
               key={column}
-              numeric
               style={productsTableStyles.idColumn}>
               {column}
             </DataTable.Title>

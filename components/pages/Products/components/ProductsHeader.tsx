@@ -2,11 +2,11 @@ import { memo, useMemo, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { Icon, Searchbar } from 'react-native-paper';
 
-import useThemeColors from '../../../hooks/useThemeColors';
-import CustomText from '../../ui/CustomText';
+import useThemeColors from '../../../../hooks/useThemeColors';
+import CustomText from '../../../ui/CustomText';
+import { ProductHeaderProps } from '../productsTable.type';
 
 import productHeaderStyles from './productsHeader.styles';
-import { ProductHeaderProps } from './productsTable.type';
 
 let timeout: any;
 

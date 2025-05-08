@@ -12,5 +12,7 @@ export const STATUS_CODES = {
   serviceUnavailable: 503,
   gatewayTimeout: 504,
   networkAuthenticationRequired: 511,
-  successWithNoContent: 204
+  successWithNoContent: 204,
+  successWithPartialContent: 206,
+  tooManyRequests: 429
 };

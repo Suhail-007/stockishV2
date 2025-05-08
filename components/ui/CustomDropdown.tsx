@@ -1,8 +1,10 @@
 import { memo } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { Menu } from 'react-native-paper';
-import CustomText from './CustomText';
+
 import useThemeColors from '../../hooks/useThemeColors';
+
+import CustomText from './CustomText';
 
 interface DropdownItem {
   label: string;

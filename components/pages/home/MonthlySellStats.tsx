@@ -2,13 +2,13 @@ import { Fragment, memo, useMemo } from 'react';
 import { View } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { Icon } from 'react-native-paper';
-import CalendarFilter from './CalendarFilter';
+
 
 import { globalStyles } from '../../../constants/globalStyles';
 import useThemeColors from '../../../hooks/useThemeColors';
 import CustomText from '../../ui/CustomText';
-import PageWrapper from '../../ui/PageWrapper';
 
+import CalendarFilter from './CalendarFilter';
 import { homeStyles } from './home.styles';
 
 const totalBalanceImage = require('../../../assets/images/home/balanceAmount.png');
@@ -43,66 +43,68 @@ const _MonthlySellStats = ({
 
   return (
     <Fragment>
-      <CalendarFilter
-        selectedMonth={selectedMonth}
-        selectedYear={selectedYear}
-        onMonthChange={onMonthChange!}
-        onYearChange={onYearChange!}
-      />
+      <View>
+        <CalendarFilter
+          selectedMonth={selectedMonth}
+          selectedYear={selectedYear}
+          onMonthChange={onMonthChange!}
+          onYearChange={onYearChange!}
+        />
 
-      <View style={[globalStyles.card, homeStyles.totalBalanceCont, dynamicStyles.cont]}>
-        <View style={{ width: '83%' }}>
-          <View>
+        <View style={[globalStyles.card, homeStyles.totalBalanceCont, dynamicStyles.cont]}>
+          <View style={homeStyles.typographyCont}>
+            <View>
+              <CustomText
+                adjustsFontSizeToFit
+                variant='bodyMedium'
+                fontVariant='quicksandSemiBold'
+                weight={'600'}
+                style={[homeStyles.orderStatisticsContHeading, dynamicStyles.textColor]}>
+                Total Monthly Sell
+              </CustomText>
+            </View>
+
             <CustomText
-              adjustsFontSizeToFit
-              variant='bodyMedium'
-              fontVariant='quicksandSemiBold'
-              weight={'600'}
-              style={[homeStyles.orderStatisticsContHeading, dynamicStyles.textColor]}>
-              Total Monthly Sell
+              fontVariant='quicksandBold'
+              weight={'700'}
+              style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.textColor]}>
+              ₹ {totalAmount}
+            </CustomText>
+          </View>
+          <ImageBackground
+            resizeMode='contain'
+            imageStyle={homeStyles.totalBalanceBgImage}
+            source={totalBalanceImage}></ImageBackground>
+        </View>
+
+        <View style={[globalStyles.card, homeStyles.totalBalanceCont, dynamicStyles.cont, { marginTop: 10 }]}>
+          <View style={homeStyles.typographyCont}>
+            <View>
+              <CustomText
+                adjustsFontSizeToFit
+                variant='bodyMedium'
+                fontVariant='quicksandSemiBold'
+                weight={'600'}
+                style={[homeStyles.orderStatisticsContHeading, dynamicStyles.textColor]}>
+                Total Monthly Profit
+              </CustomText>
+            </View>
+
+            <CustomText
+              fontVariant='quicksandBold'
+              weight={'700'}
+              style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.textColor]}>
+              ₹ {totalProfit}
             </CustomText>
           </View>
 
-          <CustomText
-            fontVariant='quicksandBold'
-            weight={'700'}
-            style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.textColor]}>
-            ₹ {totalAmount}
-          </CustomText>
-        </View>
-        <ImageBackground
-          resizeMode='contain'
-          imageStyle={homeStyles.totalBalanceBgImage}
-          source={totalBalanceImage}></ImageBackground>
-      </View>
-
-      <View style={[globalStyles.card, homeStyles.totalBalanceCont, dynamicStyles.cont, { marginTop: 20 }]}>
-        <View style={{ width: '83%' }}>
-          <View>
-            <CustomText
-              adjustsFontSizeToFit
-              variant='bodyMedium'
-              fontVariant='quicksandSemiBold'
-              weight={'600'}
-              style={[homeStyles.orderStatisticsContHeading, dynamicStyles.textColor]}>
-              Total Monthly Profit
-            </CustomText>
+          <View style={{ opacity: 0.4, justifyContent: 'center' }}>
+            <Icon
+              size={50}
+              color={colors.tertiary}
+              source='calendar'
+            />
           </View>
-
-          <CustomText
-            fontVariant='quicksandBold'
-            weight={'700'}
-            style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.textColor]}>
-            ₹ {totalProfit}
-          </CustomText>
-        </View>
-
-        <View style={{ opacity: 0.4 }}>
-          <Icon
-            size={50}
-            color={colors.tertiary}
-            source='calendar'
-          />
         </View>
       </View>
     </Fragment>

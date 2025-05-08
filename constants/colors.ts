@@ -1,4 +1,5 @@
 import { MD3Theme } from 'react-native-paper';
+import { grey50 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
@@ -60,6 +61,7 @@ const Colors = {
     yellow100: '#fff39be1',
     green100: '#cdfac1ff',
     red100: '#fbc5c5',
+    grey50: '#f5f5f5',
     grey100: '#f2f2f2',
     grey200: '#e0e0e0',
 
@@ -123,6 +125,7 @@ const Colors = {
     yellow100: '#f1ecbc',
     green100: '#baeebe',
     red100: '#fbc5c5ff',
+    grey50: '#f5f5f5',
     grey100: '#f2f2f2',
     grey200: '#e1dddd',
 

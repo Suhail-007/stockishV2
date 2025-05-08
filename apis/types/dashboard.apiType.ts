@@ -17,7 +17,7 @@ export type getOrdersStatisticsByIdData = {
 
 export type GetUserCountByTenantRes = API_BASE_RESPONSE<GetUserCountByTenantData>;
 
-export type GetUserCountByTenantData = Record<string, number> | number;
+export type GetUserCountByTenantData = Record<string, number>;
 
 export type StatisticsPayload = {
   id: number;

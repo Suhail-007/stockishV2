@@ -1,14 +1,11 @@
-import React, { Fragment, memo, useEffect, useMemo, useState } from 'react';
+import React, { Fragment, memo, useMemo } from 'react';
 import { View } from 'react-native';
 import { ImageBackground } from 'react-native';
-import { Icon } from 'react-native-paper';
 
 import { getOrdersStatisticsByIdData } from '../../../apis/types/dashboard.apiType';
 import { globalStyles } from '../../../constants/globalStyles';
 import useThemeColors from '../../../hooks/useThemeColors';
 import CustomText from '../../ui/CustomText';
-import PageWrapper from '../../ui/PageWrapper';
-import { getOrdersStatisticsForTenantFromStorage } from '../helper';
 
 import { homeStyles } from './home.styles';
 

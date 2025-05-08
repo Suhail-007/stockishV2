@@ -7,28 +7,56 @@ import useThemeColors from '../../hooks/useThemeColors';
 import CustomText from './CustomText';
 import { pageDefaultStyles } from './styles/PageWrapper.styles';
 import { SectionPageProps } from './types/PageWrapper.type';
-
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const PageWrapper = () => null;
 
-const _Scroll: FC<ScrollViewProps> = ({ children, style, ...props }) => {
-  const { colors } = useThemeColors();
+const _Scroll: FC<ScrollViewProps & { linearGradient?: boolean; colors?: any }> = ({
+  children,
+  linearGradient,
+  style,
+  colors = [],
+  ...props
+}) => {
+  const { colors: colorsTheme } = useThemeColors();
 
   const dynamicStyles = {
     bg: {
-      backgroundColor: colors.screenBg
+      backgroundColor: linearGradient ? 'transparent' : colorsTheme.background
     }
   };
 
+  if (!linearGradient) {
+    return (
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[{ flexGrow: 1, paddingBottom: scale(130) }]}
+        style={[pageDefaultStyles.pageWrapper, dynamicStyles.bg, style]}
+        {...props}>
+        {children}
+      </ScrollView>
+    );
+  }
+
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={[{ flexGrow: 1, paddingBottom: scale(100) }]}
-      style={[pageDefaultStyles.pageWrapper, dynamicStyles.bg, style]}
-      {...props}>
-      {children}
-    </ScrollView>
+    <LinearGradient
+      style={{ flex: 1 }}
+      colors={[
+        colorsTheme.background,
+        colorsTheme.background,
+        colorsTheme.background,
+        colorsTheme.background,
+        colorsTheme.tertiary100,
+        colorsTheme.primary50
+      ]}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[{ flexGrow: 1, paddingBottom: scale(130) }]}
+        style={[pageDefaultStyles.pageWrapper, dynamicStyles.bg, style]}
+        {...props}>
+        {children}
+      </ScrollView>
+    </LinearGradient>
   );
 };
 const _ViewWrapper: FC<ViewProps> = ({ children, style, ...props }) => {
@@ -49,10 +77,19 @@ const _ViewWrapper: FC<ViewProps> = ({ children, style, ...props }) => {
   );
 };
 
-const _SectionPage: FC<SectionPageProps> = ({ children, style, title, titleContStyle, titleProps, icon, ...props }) => {
+const _SectionPage: FC<SectionPageProps> = ({
+  children,
+  style: contStyle,
+  title,
+  titleContStyle,
+  titleProps,
+  icon,
+  ...props
+}) => {
+  const { colors } = useThemeColors();
   return (
     <View
-      style={style}
+      style={contStyle}
       {...props}>
       {(icon || title) && (
         <View style={[pageDefaultStyles.heading, titleContStyle]}>
@@ -61,7 +98,8 @@ const _SectionPage: FC<SectionPageProps> = ({ children, style, title, titleContS
           {title && (
             <CustomText
               variant='titleLarge'
-              {...titleProps}>
+              {...titleProps}
+              style={[{ color: colors.textPrimary }, titleProps?.style]}>
               {title}
             </CustomText>
           )}

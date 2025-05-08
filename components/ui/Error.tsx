@@ -34,11 +34,28 @@ const Message = ({ msg, statusCode, contStyle, messageStyle }: ErrorMessageProps
     }
   };
 
-  const isServiceUnavailable =
-    statusCode === STATUS_CODES.serviceUnavailable || statusCode === STATUS_CODES.internalServerError;
-  const notFoundError = statusCode === STATUS_CODES.notFound;
-
-  //Add info and success styles
+  const getErrorMessage = () => {
+    switch (statusCode) {
+      case STATUS_CODES.serviceUnavailable:
+        return 'Service is temporarily unavailable. Please try again later.';
+      case STATUS_CODES.internalServerError:
+        return 'An internal server error occurred. Our team has been notified.';
+      case STATUS_CODES.notFound:
+        return msg || 'The requested resource was not found.';
+      case STATUS_CODES.unauthorized:
+        return 'You are not authorized to perform this action.';
+      case STATUS_CODES.forbidden:
+        return 'Access denied. You do not have permission to perform this action.';
+      case STATUS_CODES.badRequest:
+        return msg || 'Invalid request. Please check your input.';
+      case STATUS_CODES.conflict:
+        return msg || 'This operation caused a conflict with existing data.';
+      case STATUS_CODES.tooManyRequests:
+        return 'Too many requests. Please try again later.';
+      default:
+        return msg || 'An unexpected error occurred.';
+    }
+  };
 
   return (
     <Animated.View
@@ -49,27 +66,11 @@ const Message = ({ msg, statusCode, contStyle, messageStyle }: ErrorMessageProps
         size={18}
         color={colors.error}
       />
-      {notFoundError && (
-        <Text
-          variant='bodySmall'
-          style={[styles.errorText, dynamicStyles.errorText, messageStyle]}>
-          {msg} {statusCode ? `(${statusCode})` : ''}
-        </Text>
-      )}
-      {isServiceUnavailable && (
-        <Text
-          variant='bodySmall'
-          style={[styles.errorText, dynamicStyles.errorText, messageStyle]}>
-          Service Unavailable {statusCode ? `(${statusCode})` : ''}
-        </Text>
-      )}
-      {!isServiceUnavailable && (
-        <Text
-          variant='bodySmall'
-          style={[styles.errorText, dynamicStyles.errorText, messageStyle]}>
-          {msg} {statusCode ? `(${statusCode})` : ''}
-        </Text>
-      )}
+      <Text
+        variant='bodySmall'
+        style={[styles.errorText, dynamicStyles.errorText, messageStyle]}>
+        {getErrorMessage()} {statusCode ? `(${statusCode})` : ''}
+      </Text>
     </Animated.View>
   );
 };

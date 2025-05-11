@@ -104,7 +104,7 @@ export default function SignIn() {
               }
             })
           );
-          router.replace('/(app)/(tabs)');
+          router.replace('/(app)/(drawer)/(tabs)');
         }
       }
     );

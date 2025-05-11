@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import LogRocket from '@logrocket/react-native';
+// import LogRocket from '@logrocket/react-native';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 //Reducers
@@ -14,7 +14,7 @@ const combinedReducers = combineReducers({
 
 // Create LogRocket Redux middleware
 // @ts-ignore - The types for LogRocket are incomplete
-const logRocketMiddleware = __DEV__ ? [] : [LogRocket.reduxMiddleware()];
+// const logRocketMiddleware = __DEV__ ? [] : [LogRocket.reduxMiddleware()];
 
 const store = configureStore({
   reducer: combinedReducers,
@@ -24,7 +24,7 @@ const store = configureStore({
         // Ignore these action types
         ignoredActions: ['persist/PERSIST']
       }
-    }).concat(logRocketMiddleware)
+    })
 });
 
 export type RootState = ReturnType<typeof store.getState>;

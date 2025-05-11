@@ -15,10 +15,10 @@ import { SessionProvider } from '../ctx';
 import TanStackQueryProvider from '../query/queryClient';
 import { RootState } from '../store/store';
 import store from '../store/store';
-import { identifyUser, initializeLogRocket } from '../utils/logrocket';
+// import { identifyUser, initializeLogRocket } from '../utils/logrocket';
 
 // Initialize LogRocket
-initializeLogRocket();
+// initializeLogRocket();
 
 // you usually export this from a tamagui.config.ts file
 const config = createTamagui(defaultConfig);
@@ -32,13 +32,13 @@ function LogRocketUserIdentifier() {
   useEffect(() => {
     if (user?.id) {
       // Identify user with LogRocket when they're authenticated
-      identifyUser(String(user.id), {
-        name: `${user.firstName} ${user.lastName}`,
-        email: user.email,
-        phone: user.phoneNumber,
-        role: user.role,
-        tenantId: user.tenantId
-      });
+      // identifyUser(String(user.id), {
+      //   name: `${user.firstName} ${user.lastName}`,
+      //   email: user.email,
+      //   phone: user.phoneNumber,
+      //   role: user.role,
+      //   tenantId: user.tenantId
+      // });
     }
   }, [user, segments, pathname]);
 

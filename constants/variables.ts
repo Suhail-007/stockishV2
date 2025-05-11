@@ -4,8 +4,7 @@ export const StorageKeys = {
   SESSION: 'session',
   REFRESH_TOKEN: 'refresh_token',
   USER_INFO: 'USER_INFO',
-  ORDER_STATISTICS: 'ORDER_STATISTICS',
-  NEW_ACCESS_TOKEN: 'NEW_ACCESS_TOKEN'
+  ORDER_STATISTICS: 'ORDER_STATISTICS'
 };
 
 export const BACKGROUND_TASKS = {

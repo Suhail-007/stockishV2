@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios';
 
-import { logNetworkRequest } from '../utils/logrocket';
+// import { logNetworkRequest } from '../utils/logrocket';
 
 export type AxiosInstanceParameter = CreateAxiosDefaults;
 
@@ -67,25 +67,24 @@ defaultInstance.interceptors.response.use(
       const { _requestData } = response.config;
 
       // Log the network request and response
-      logNetworkRequest(_requestData, {
-        status: response.status,
-        body: response.data,
-        headers: response.headers
-      });
+      // logNetworkRequest(_requestData, {
+      //   status: response.status,
+      //   body: response.data,
+      //   headers: response.headers
+      // });
     }
     return response;
   },
   (error) => {
     // Skip logging in development mode
     if (!__DEV__ && error.config && error.config._requestData) {
-      const { _requestData } = error.config;
-
+      // const { _requestData } = error.config;
       // Log the network request and error response
-      logNetworkRequest(_requestData, {
-        status: error.response?.status || 0,
-        body: error.response?.data || { message: error.message },
-        headers: error.response?.headers || {}
-      });
+      // logNetworkRequest(_requestData, {
+      //   status: error.response?.status || 0,
+      //   body: error.response?.data || { message: error.message },
+      //   headers: error.response?.headers || {}
+      // });
     }
     return Promise.reject(error);
   }

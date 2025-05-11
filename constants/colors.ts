@@ -1,6 +1,5 @@
 import { MD3Theme } from 'react-native-paper';
 
-import { grey50 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 const tintColorLight = '#2f95dc';
@@ -166,7 +165,5 @@ const Colors = {
 // Active Tab Highlight / Selected Item → #6851A4 (Deep Purple to maintain brand consistency)
 
 // Hover Effects & Links → #008BB0 (Teal Blue for subtle interaction cues)
-
-export type ThemeType<T> = Omit<MD3Theme, 'colors'> & { colors: T & MD3Colors };
 
 export default Colors;

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import LogRocket from '@logrocket/react-native';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import LogRocket from 'logrocket';
 
 //Reducers
 import authReducer from '../features/auth';

@@ -61,7 +61,7 @@ export default function AppLayout() {
   return (
     <Fragment>
       <Stack
-        initialRouteName='(tabs)'
+        initialRouteName='(drawer)'
         screenOptions={{ headerShown: false }}>
         <Stack.Screen
           options={{

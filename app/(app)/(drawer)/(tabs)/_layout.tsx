@@ -3,7 +3,7 @@ import { Pressable, StyleProp, ViewStyle } from 'react-native';
 import { Icon } from 'react-native-paper';
 
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import Constants from 'expo-constants';
+// import Constants from 'expo-constants';
 import { router, Tabs } from 'expo-router';
 
 import Header from '@/components/ui/Header';
@@ -43,6 +43,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      initialRouteName='index'
       tabBar={(props: BottomTabBarProps) => <TabBar {...props} />}
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint

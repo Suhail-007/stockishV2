@@ -1,5 +1,4 @@
-import LogRocket from 'logrocket';
-import setupLogRocketReact from '@logrocket/react-native';
+import LogRocket from '@logrocket/react-native';
 
 // TODO: IMPORTANT - Replace this with your actual LogRocket app ID from the LogRocket dashboard
 // Format: 'orgname/appname'
@@ -22,7 +21,6 @@ export const initializeLogRocket = () => {
 
   LogRocket.init(LOGROCKET_APP_ID);
   // @ts-ignore - The types for LogRocket are incomplete
-  setupLogRocketReact(LogRocket);
 
   // Log exceptions to LogRocket
   const errorHandler = ErrorUtils.getGlobalHandler();

@@ -3,24 +3,23 @@ import React from 'react';
 import { Icon } from 'react-native-paper';
 
 import ConditionalRender from '@/components/ConditionalRender';
+import ErrorMessage from '@/components/ErrorMessage';
 import Home from '@/components/pages/home/Home';
 import HomeSkeleton from '@/components/pages/home/Home.Skeleton';
+import { homeStyles } from '@/components/pages/home/home.styles';
 import LastFiveOrders from '@/components/pages/home/LastFiveOrders';
 import MonthlyOrders from '@/components/pages/home/MonthlyOrders';
 import MonthlySellStats from '@/components/pages/home/MonthlySellStats';
 import ProductStatistics from '@/components/pages/home/ProductStatistics';
 import TotalBalance from '@/components/pages/home/TotalBalance';
 import UsersStatistics from '@/components/pages/home/UsersStatistics';
+import AnimatedPageWrapper from '@/components/ui/AnimatedPageWrapper';
 import PageWrapper from '@/components/ui/PageWrapper';
 
 import { USER_ROLE } from '@/enums/User.enum';
+import useDashboardQueries from '@/hooks/queries/useDashboardQueries';
+import { useUserDetails } from '@/hooks/queries/useUserDetails';
 import { useAppSelector } from '@/store/store';
-
-import ErrorMessage from '../../../components/ErrorMessage';
-import { homeStyles } from '../../../components/pages/home/home.styles';
-import AnimatedPageWrapper from '../../../components/ui/AnimatedPageWrapper';
-import useDashboardQueries from '../../../hooks/queries/useDashboardQueries';
-import { useUserDetails } from '../../../hooks/queries/useUserDetails';
 
 export default function Index() {
   const { isLoading, error } = useUserDetails();

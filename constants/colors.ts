@@ -1,6 +1,6 @@
 import { MD3Theme } from 'react-native-paper';
-import { grey50 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
+import { grey50 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 const tintColorLight = '#2f95dc';
@@ -23,7 +23,6 @@ const Colors = {
 
     //Tertiary
     tertiary: '#2969B7',
-    tertiary100: '#deecfd',
 
     // 🔤 Text
     textPrimary: '#333333',
@@ -64,6 +63,8 @@ const Colors = {
     grey50: '#f5f5f5',
     grey100: '#f2f2f2',
     grey200: '#e0e0e0',
+    tertiary50: '#e8f5fb',
+    tertiary100: '#deecfd',
 
     //Skeleton
     skeleton: '#dfdddd',
@@ -86,7 +87,6 @@ const Colors = {
 
     //Tertiary
     tertiary: '#2c578b',
-    tertiary100: '#43648b',
 
     // 🔤 Text
     textPrimary: '#FFFFFF',
@@ -128,6 +128,8 @@ const Colors = {
     grey50: '#f5f5f5',
     grey100: '#f2f2f2',
     grey200: '#e1dddd',
+    tertiary50: '#6b808a',
+    tertiary100: '#43648b',
 
     //Skeleton
     skeleton: '#555',

@@ -1,41 +1,43 @@
-import { useState, useEffect } from 'react';
-import { LayoutChangeEvent, StyleSheet } from 'react-native';
+import { useEffect } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
+import { AntDesign } from '@expo/vector-icons';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { useLinkBuilder } from '@react-navigation/native';
+import { DrawerActions, useLinkBuilder } from '@react-navigation/native';
 
 import useThemeColors from '../../../hooks/useThemeColors';
+import CustomText from '../CustomText';
 
 import TabBarButton from './TabBarButton';
 
 const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
-  const [dimensions, setDimensions] = useState({ height: 20, width: 100 });
+  // const [dimensions, setDimensions] = useState({ height: 20, width: 100 });
 
   const { colors } = useThemeColors();
   const { buildHref } = useLinkBuilder();
 
-  const buttonWidth = dimensions.width / state.routes.length;
+  // const buttonWidth = dimensions.width / state.routes.length;
 
-  const onTabBarLayout = (e: LayoutChangeEvent) => {
-    setDimensions({
-      height: e.nativeEvent.layout.height,
-      width: e.nativeEvent.layout.width
-    });
-  };
+  // const onTabBarLayout = (e: LayoutChangeEvent) => {
+  //   setDimensions({
+  //     height: e.nativeEvent.layout.height,
+  //     width: e.nativeEvent.layout.width
+  //   });
+  // };
 
-  const tabBarPositionX = useSharedValue(0);
+  // const tabBarPositionX = useSharedValue(0);
   const opacity = useSharedValue(1);
 
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: tabBarPositionX.value
-        }
-      ]
-    };
-  });
+  // const animatedStyles = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [
+  //       {
+  //         translateX: tabBarPositionX.value
+  //       }
+  //     ]
+  //   };
+  // });
 
   const animatedOpacity = useAnimatedStyle(() => {
     return {
@@ -68,13 +70,13 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
       opacity.value = withSpring(0.4, { duration: 3000 });
     }, 500);
 
-    tabBarPositionX.value = withSpring(buttonWidth * state.index, { duration: 1700 });
+    // tabBarPositionX.value = withSpring(buttonWidth * state.index, { duration: 1700 });
 
     return () => {
       clearTimeout(timeoutOne);
       clearTimeout(timeoutTwo);
     };
-  }, [state.index, opacity, buttonWidth, tabBarPositionX]);
+  }, [state.index, opacity]);
 
   // Add this useEffect to handle programmatic navigation
   // useEffect(() => {
@@ -82,22 +84,22 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   //   tabBarPositionX.value = withSpring(buttonWidth * state.index, { duration: 1700 });
   // }, [state.index]);
 
+  const openDrawer = () => {
+    navigation.dispatch(DrawerActions.openDrawer());
+  };
+
   return (
-    <Animated.View
-      onLayout={onTabBarLayout}
-      style={[styles.navCont, dynamicStyles.navCont, animatedOpacity]}>
-      <Animated.View
-        style={[
-          animatedStyles,
-          {
-            position: 'absolute',
-            backgroundColor: colors.primary,
-            borderRadius: 45,
-            marginHorizontal: 12,
-            height: dimensions.height - 15,
-            width: buttonWidth - 25
-          }
-        ]}></Animated.View>
+    <Animated.View style={[styles.navCont, dynamicStyles.navCont, animatedOpacity]}>
+      <Pressable
+        onPress={openDrawer}
+        style={{ marginLeft: 20, marginRight: 10, height: 40, justifyContent: 'center', alignItems: 'center' }}>
+        <AntDesign
+          name='menuunfold'
+          size={20}
+          color={colors.primary}
+        />
+        <CustomText style={{ color: colors.primary, fontSize: 12.5 }}>Menu</CustomText>
+      </Pressable>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -106,7 +108,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
         const isFocused = state.index === index;
 
         const onPress = () => {
-          tabBarPositionX.value = withSpring(buttonWidth * index, { duration: 1700 });
+          // tabBarPositionX.value = withSpring(buttonWidth * index, { duration: 1700 });
 
           const event = navigation.emit({
             type: 'tabPress',
@@ -155,7 +157,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginInline: 70,
+    marginInline: 50,
 
     borderRadius: 50,
     elevation: 20,

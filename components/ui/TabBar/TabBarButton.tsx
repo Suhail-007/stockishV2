@@ -54,7 +54,7 @@ const TabBarButton = ({
   }, [isFocused, scale]);
 
   const animatedIconStyle = useAnimatedStyle(() => {
-    const scaleValue = interpolate(scale.value, [0, 1], [1, 1.2]);
+    const scaleValue = interpolate(scale.value, [0, 1], [1, 1.3]);
     const top = interpolate(scale.value, [0, 1], [0, 9]);
 
     return {
@@ -83,7 +83,7 @@ const TabBarButton = ({
       onLongPress={onLongPress}
       style={styles.buttonCont}>
       <Animated.View style={[styles.tabBarItem, animatedIconStyle]}>
-        {icon[routeName as keyof typeof icon]({ color: isFocused ? colors.textWhite : colors.text })}
+        {icon[routeName as keyof typeof icon]({ color: isFocused ? colors.primary : colors.text })}
         <Animated.Text
           style={[{ color: isFocused ? colors.textWhite : colors.text }, styles.tabBarItemText, animatedTextStyle]}>
           {label}

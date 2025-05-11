@@ -2,12 +2,13 @@ import React, { FC, memo } from 'react';
 import { ScrollView, ScrollViewProps, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
+import { LinearGradient } from 'expo-linear-gradient';
+
 import useThemeColors from '../../hooks/useThemeColors';
 
 import CustomText from './CustomText';
 import { pageDefaultStyles } from './styles/PageWrapper.styles';
 import { SectionPageProps } from './types/PageWrapper.type';
-import { LinearGradient } from 'expo-linear-gradient';
 
 const PageWrapper = () => null;
 
@@ -41,14 +42,7 @@ const _Scroll: FC<ScrollViewProps & { linearGradient?: boolean; colors?: any }> 
   return (
     <LinearGradient
       style={{ flex: 1 }}
-      colors={[
-        colorsTheme.background,
-        colorsTheme.background,
-        colorsTheme.background,
-        colorsTheme.background,
-        colorsTheme.tertiary100,
-        colorsTheme.primary50
-      ]}>
+      colors={[colorsTheme.background, colorsTheme.primary50, colorsTheme.background]}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[{ flexGrow: 1, paddingBottom: scale(130) }]}

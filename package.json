@@ -27,7 +27,7 @@
     "@gorhom/bottom-sheet": "^5.1.2",
     "@logrocket/react-native": "^1.51.0",
     "@react-native-async-storage/async-storage": "1.23.1",
-    "@react-navigation/drawer": "^7.3.9",
+    "@react-navigation/drawer": "^7.3.11",
     "@react-navigation/native": "^7.0.14",
     "@reduxjs/toolkit": "^2.6.1",
     "@tamagui/config": "^1.126.3",

@@ -16,8 +16,8 @@ import ConditionalRender from '../../ConditionalRender';
 import ErrorMessage from '../../ErrorMessage';
 import PageWrapper from '../../ui/PageWrapper';
 
-import ProductSkeleton from './components/ProductSkeleton';
 import ProductsHeader from './components/ProductsHeader';
+import ProductSkeleton from './components/ProductSkeleton';
 import ProductsTable from './ProductsTable';
 
 const ProductPage = () => {
@@ -83,7 +83,7 @@ const ProductPage = () => {
       pathname: '/filter',
       params: {
         stringifiedData: JSON.stringify(filters),
-        goToRoute: '/(app)/(tabs)/products' as Route
+        goToRoute: '/(app)/(drawer)/(tabs)/products' as Route
       }
     });
   };
@@ -91,7 +91,7 @@ const ProductPage = () => {
   const clearNewlyAddedProduct = () => {
     setNewlyAddedProduct(null);
     router.navigate({
-      pathname: '/(app)/(tabs)/products',
+      pathname: '/(app)/(drawer)/(tabs)/products',
       params: {}
     });
   };
@@ -99,7 +99,7 @@ const ProductPage = () => {
   const clearFilters = () => {
     setFilters({ ...defaultFilters, page: 1, pageSize: 20 });
     router.navigate({
-      pathname: '/(app)/(tabs)/products',
+      pathname: '/(app)/(drawer)/(tabs)/products',
       params: {}
     });
   };

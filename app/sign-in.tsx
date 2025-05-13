@@ -110,6 +110,11 @@ export default function SignIn() {
     );
   };
 
+  const goBackToEmail = () => {
+    setStep('email');
+    setValue('password', '');
+  };
+
   const dynamicStyles = useMemo(
     () => ({
       container: { padding: width * 0.05, backgroundColor: colors.screenBg },
@@ -178,14 +183,25 @@ export default function SignIn() {
       {emailError && <ErrorMessage error={emailError} />}
       {signInError && <ErrorMessage error={signInError} />}
 
-      <Button.Primary
-        onPress={handleSubmit(step === 'email' ? handleSubmitEmail : handleSignIn)}
-        loading={isEmailPending || signInIsPending}
-        disabled={isEmailPending || signInIsPending}
-        style={[signInStyles.button]}
-        labelStyle={signInStyles.buttonLabel}>
-        {step === 'email' ? 'Continue' : 'Sign In'}
-      </Button.Primary>
+      <View>
+        <Button.Primary
+          onPress={handleSubmit(step === 'email' ? handleSubmitEmail : handleSignIn)}
+          loading={isEmailPending || signInIsPending}
+          disabled={isEmailPending || signInIsPending}
+          style={[signInStyles.button]}
+          labelStyle={signInStyles.buttonLabel}>
+          {step === 'email' ? 'Continue' : 'Sign In'}
+        </Button.Primary>
+        {step === 'password' && (
+          <Button.Transparent
+            style={signInStyles.goBackBtn}
+            onPress={goBackToEmail}
+            textColor={colors.textPrimary}
+            icon={'arrow-left'}>
+            Go back to email
+          </Button.Transparent>
+        )}
+      </View>
     </PageWrapper.Scroll>
   );
 }

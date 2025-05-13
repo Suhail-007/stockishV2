@@ -26,5 +26,8 @@ export const signInStyles = StyleSheet.create({
   },
   buttonLabel: {
     fontSize: 16
+  },
+  goBackBtn: {
+    marginTop: 20
   }
 });

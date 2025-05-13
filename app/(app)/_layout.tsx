@@ -85,6 +85,13 @@ export default function AppLayout() {
             animation: 'slide_from_right'
           }}
         />
+
+        <Stack.Screen
+          name='setting-user-permissions'
+          options={{
+            headerShown: false
+          }}
+        />
       </Stack>
     </Fragment>
   );

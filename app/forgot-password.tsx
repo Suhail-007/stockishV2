@@ -1,7 +1,7 @@
 import { Fragment, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
-import { Text } from 'react-native-paper';
+import { ActivityIndicator, Text } from 'react-native-paper';
 import { moderateScale, scale } from 'react-native-size-matters';
 
 import { FormData } from '../components/pages/sign-in/type';
@@ -16,7 +16,7 @@ const { width } = Dimensions.get('window');
 
 export default function ForgotPassword() {
   const { colors } = useThemeColors();
-  const { control } = useForm<FormData>();
+  const { control, formState } = useForm<FormData>();
 
   const dynamicStyles = useMemo(
     () => ({
@@ -75,16 +75,16 @@ export default function ForgotPassword() {
                     error: colors.error
                   }
                 }}
-                // right={
-                //   isEmailPending ? (
-                //     <TextInput.Icon icon={() => <ActivityIndicator color={colors.tertiary} />} />
-                //   ) : (
-                //     <TextInput.Icon
-                //       color={colors.tertiary}
-                //       icon='email-outline'
-                //     />
-                //   )
-                // }
+                right={
+                  formState.isSubmitting ? (
+                    <TextInput.Icon icon={() => <ActivityIndicator color={colors.tertiary} />} />
+                  ) : (
+                    <TextInput.Icon
+                      color={colors.tertiary}
+                      icon='email-outline'
+                    />
+                  )
+                }
               />
               {fieldState.error && (
                 <Text style={[globalStyles.errorText, dynamicStyles.errorText]}>{fieldState.error.message}</Text>
@@ -93,19 +93,11 @@ export default function ForgotPassword() {
           );
         }}
       />
-      {/* 
-      <Error.Message
-        contStyle={styles.errorCont}
-        statusCode={TYPED_EMAIL_ERROR?.status || TYPED_SIGNIN_ERROR?.status}
-        msg={TYPED_EMAIL_ERROR?.message || TYPED_SIGNIN_ERROR?.message}
-      /> */}
 
       <Button.Primary
-        // onPress={handleSubmit()}
-
         style={[styles.button, { marginTop: scale(20) }]}
         labelStyle={styles.buttonLabel}>
-        Find my account
+        Send Reset Link
       </Button.Primary>
     </ScrollView>
   );

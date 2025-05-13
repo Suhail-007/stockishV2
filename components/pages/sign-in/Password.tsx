@@ -7,6 +7,9 @@ import useThemeColors from '../../../hooks/useThemeColors';
 import FormController from '../../FormController';
 import { PasswordStepProps } from '../../types/signIn.type';
 import TextInput from '../../ui/TextInput';
+import { Pressable, View } from 'react-native';
+import { router } from 'expo-router';
+import CustomText from '../../ui/CustomText';
 
 /**
  * A component that renders a text input for a user's password.
@@ -52,6 +55,13 @@ const PasswordStep = ({ control, showPassword, setShowPassword, signInIsPending 
               )
             }
           />
+          <View>
+            <Pressable
+              onPress={() => router.push('/forgot-password')}
+              style={{ marginTop: 10 }}>
+              <CustomText style={{ color: colors.tertiary }}>Forgot password?</CustomText>
+            </Pressable>
+          </View>
         </Fragment>
       )}
     />

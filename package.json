@@ -18,14 +18,16 @@
       "exclude": [
         "eslint",
         "eslint-config-expo",
-        "@eslint/compat"
+        "@eslint/compat",
+        "react-native-progress-steps",
+        "lucide-react-native"
       ]
     }
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
     "@gorhom/bottom-sheet": "^5.1.4",
-    "@logrocket/react-native": "^1.51.1",
+   
     "@react-native-async-storage/async-storage": "2.1.2",
     "@react-navigation/drawer": "^7.3.11",
     "@react-navigation/native": "^7.1.8",
@@ -47,7 +49,7 @@
     "expo-status-bar": "~2.2.3",
     "expo-system-ui": "~5.0.7",
     "expo-web-browser": "~14.1.6",
-    "logrocket": "^10.0.0",
+
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-hook-form": "^7.56.3",

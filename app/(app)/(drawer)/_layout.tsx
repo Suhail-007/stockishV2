@@ -1,4 +1,4 @@
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Drawer } from 'expo-router/drawer';
 
 import _DrawerContent from '../../../components/ui/Drawer/DrawerContent';
@@ -8,6 +8,7 @@ import { useAppSelector } from '../../../store/store';
 const DrawerLayout = () => {
   const user = useAppSelector((state) => state.auth.user);
   const { colors } = useThemeColors();
+
   return (
     <Drawer
       screenOptions={() => ({
@@ -21,7 +22,6 @@ const DrawerLayout = () => {
         options={{
           headerShown: false,
           title: 'Home',
-
           drawerIcon: (props) => (
             <AntDesign
               {...props}
@@ -30,7 +30,20 @@ const DrawerLayout = () => {
           )
         }}
       />
-      <Drawer.Screen />
+
+      <Drawer.Screen
+        name='notifications'
+        options={{
+          title: 'Notifications',
+          drawerIcon: (props) => (
+            <AntDesign
+              {...props}
+              name='notification'
+            />
+          )
+        }}
+      />
+
       <Drawer.Screen
         name='my-profile'
         options={{
@@ -44,53 +57,41 @@ const DrawerLayout = () => {
         }}
       />
 
+      <Drawer.Screen
+        name='settings'
+        options={{
+          title: 'Settings',
+          drawerIcon: (props) => (
+            <AntDesign
+              {...props}
+              name='setting'
+            />
+          )
+        }}
+      />
+
       <Drawer.Protected guard={!user?.isTenant || true}>
         <Drawer.Screen
           name='(admin)/users'
           options={{
             title: 'Users',
-            drawerIcon(props) {
-              return (
-                <AntDesign
-                  {...props}
-                  name='user'
-                />
-              );
-            }
-          }}
-        />
-      </Drawer.Protected>
-
-      <Drawer.Screen
-        name='settings'
-        options={{
-          title: 'Settings',
-          drawerIcon(props) {
-            return (
-              <AntDesign
-                {...props}
-                name='setting'
-              />
-            );
-          }
-        }}
-      />
-
-      {/* If user is not a tenant change guard=true */}
-      <Drawer.Protected guard={!user?.isTenant || true}>
-        <Drawer.Screen
-          name='(admin)/organization'
-          options={{
-            title: 'Organization',
-
-            drawerStyle: {
-              display: 'none',
-              height: 0
-            },
             drawerIcon: (props) => (
               <AntDesign
                 {...props}
                 name='team'
+              />
+            )
+          }}
+        />
+
+        <Drawer.Screen
+          name='(admin)/organization'
+          options={{
+            title: 'Organization',
+            drawerIcon: (props) => (
+              <MaterialCommunityIcons
+                {...props}
+                name='office-building-cog-outline'
               />
             )
           }}

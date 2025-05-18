@@ -4,6 +4,7 @@ import { moderateScale, scale } from 'react-native-size-matters';
 import SkeletonLoader from '../../SkeletonLoader';
 
 import { homeSkeletonStyles } from './home.styles';
+import { ActivityIndicator } from 'react-native-paper';
 
 /**
  * A skeleton component for the home page.
@@ -18,10 +19,11 @@ const Greetings = () => (
   <View style={homeSkeletonStyles.heading}>
     <SkeletonLoader
       containerStyle={{
+        width: '50%',
         height: moderateScale(30)
       }}
     />
-    <SkeletonLoader containerStyle={{ height: moderateScale(20) }} />
+    <SkeletonLoader containerStyle={{ height: moderateScale(20), width: '60%' }} />
   </View>
 );
 const LastFiveOrders = () => (
@@ -49,21 +51,13 @@ const TotalBalance = () => (
   </View>
 );
 
-/**
- * A skeleton component for monthly sell and profit.
- *
- * @param {boolean} loading if true, show skeleton loader.
- * @returns {JSX.Element} a skeleton component for monthly sell and profit.
- */
-const MonthlySellNProfit = () => (
-  <View style={[homeSkeletonStyles.sectionCont, homeSkeletonStyles.usersCont]}>
-    {Array.from({ length: 2 }).map((_, index) => (
-      <SkeletonLoader
-        key={index}
-        containerStyle={[homeSkeletonStyles.skeletonBox]}
-      />
-    ))}
-  </View>
+const MonthlyStatsAmount = ({ color }: { color: string }) => (
+  <ActivityIndicator
+    size='small'
+    style={{ height: 36 }}
+    color={color}
+    animating
+  />
 );
 
 const UsersStatistics = () => (
@@ -88,14 +82,14 @@ Greetings.displayName = 'Greetings';
 LastFiveOrders.displayName = 'LastFiveOrders';
 TotalBalance.displayName = 'TotalBalance';
 MonthlyOrders.displayName = 'MonthlyOrders';
-MonthlySellNProfit.displayName = 'MonthlySellNProfit';
+MonthlyStatsAmount.displayName = 'MonthlyStatsAmount';
 UsersStatistics.displayName = 'UsersStatistics';
 ProductStatistics.displayName = 'ProductStatistics';
 
 HomeSkeleton.Greetings = Greetings;
 HomeSkeleton.LastFiveOrders = LastFiveOrders;
 HomeSkeleton.TotalBalance = TotalBalance;
-HomeSkeleton.MonthlySellNProfit = MonthlySellNProfit;
+HomeSkeleton.MonthlyStatsAmount = MonthlyStatsAmount;
 HomeSkeleton.MonthlyOrders = MonthlyOrders;
 HomeSkeleton.UsersStatistics = UsersStatistics;
 HomeSkeleton.ProductStatistics = ProductStatistics;

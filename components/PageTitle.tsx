@@ -2,7 +2,6 @@ import { Fragment, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
-
 import useThemeColors from '../hooks/useThemeColors';
 import { getGreeting, getGreetingQuestion } from '../libs';
 import { useAppSelector } from '../store/store';
@@ -32,7 +31,9 @@ const _PageTitle = ({
   containerStyles,
   titleStyles,
   subtitleStyles,
-  showGreeting
+  showGreeting,
+  titleProps,
+  subtitleProps
 }: PageTitleProps) => {
   const { colors } = useThemeColors();
   const { user } = useAppSelector((state) => state.auth);
@@ -57,12 +58,14 @@ const _PageTitle = ({
         <View>
           <CustomText
             style={[dynamicStyles.title, titleStyles]}
-            variant='titleLarge'>
+            variant='titleLarge'
+            {...titleProps}>
             {randomGreeting}, {userTitle} {user?.firstName} {user?.lastName}
           </CustomText>
           <CustomText
             variant='titleMedium'
-            style={[styles.randomGreetingQuestionText, dynamicStyles.subtitle, subtitleStyles]}>
+            style={[styles.randomGreetingQuestionText, dynamicStyles.subtitle, subtitleStyles]}
+            {...subtitleProps}>
             {randomQuestion}
           </CustomText>
         </View>

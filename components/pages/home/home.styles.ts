@@ -6,28 +6,86 @@ export const homeStyles = StyleSheet.create({
     marginBottom: 0
   },
 
-  monthlyOrdersCont: {
-    marginTop: 20
+  headingCont: {
+    paddingHorizontal: 24,
+    paddingVertical: 35,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30
+  },
+
+  mainCont: {
+    paddingTop: 0,
+    paddingHorizontal: 10,
+    gap: 10
+  },
+
+  monthlyStatsCont: {
+    position: 'relative',
+    top: -10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10
+  },
+
+  recentOrdersHeadingRootCont: {
+    marginBottom: 0,
+    padding: 20,
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+
+  recentOrdersHeadingCont: {
+    flexDirection: 'row',
+    gap: 10,
+
+    alignItems: 'center'
+  },
+
+  recentOrdersTable: {
+    borderRadius: 0,
+    backgroundColor: '#fcfcfc',
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16
+  },
+
+  recentOrdersStatusCol: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 20
+  },
+
+  noRecentOrdersFoundCont: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 40,
+
+    marginTop: 10
   },
 
   ordersStatisticsCont: {
-    gap: 10,
+    gap: 12,
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    marginTop: 8
   },
 
   heroGradient: {
-    padding: 20,
-    paddingTop: 0,
-    borderRadius: 16,
+    padding: 24,
+    paddingTop: 16,
+    borderRadius: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3
+    shadowRadius: 12,
+    elevation: 4
   },
   statsSection: {
-    marginVertical: 16
+    marginVertical: 20
   },
   cardContainer: {
     flexDirection: 'row',
@@ -43,58 +101,58 @@ export const homeStyles = StyleSheet.create({
 
   orderStatisticsCont: {
     width: '48%',
-    height: scale(80), // Increased height
+    height: scale(100),
     overflow: 'hidden',
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
-    transform: [{ scale: 1 }] // For animation
+    shadowRadius: 10,
+    elevation: 4,
+    justifyContent: 'space-between'
   },
 
   orderStatisticsContHeading: {
-    fontSize: scale(14),
     textTransform: 'capitalize',
-    letterSpacing: 0.5,
     marginBottom: 8,
-    opacity: 0.8
+    opacity: 0.9
   },
 
   orderStatisticsContSubHeading: {
-    fontSize: scale(24),
-    letterSpacing: 0.5,
-    fontWeight: '600'
+    fontWeight: '700'
   },
 
   orderBgImage: {
-    opacity: 0.55,
-    width: 80,
-    height: 50,
+    opacity: 0.45,
+    width: 90,
+    height: 60,
     position: 'absolute',
-    right: 0,
-    top: 10,
-    bottom: 10
+    right: -5,
+    top: 15
   },
 
   totalBalanceCont: {
-    height: scale(90),
-    padding: 20,
+    height: scale(110),
+    padding: 24,
     borderRadius: 20,
     overflow: 'hidden',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 5
   },
 
   totalBalanceBgImage: {
-    opacity: 0.55,
-    width: 50,
-    height: 50,
+    opacity: 0.4,
+    width: 60,
+    height: 60,
     position: 'absolute',
-    right: 0,
-    top: 26,
-    bottom: 10
+    right: 10,
+    top: 25
   },
 
   productStatisticsCont: {
@@ -102,12 +160,21 @@ export const homeStyles = StyleSheet.create({
     overflow: 'hidden'
   },
 
-  typographyCont: { width: '83%', justifyContent: 'space-between', padding: 7 }
+  typographyCont: {
+    width: '85%',
+    justifyContent: 'space-between',
+    padding: 8
+  }
 });
 
 export const homeSkeletonStyles = StyleSheet.create({
   heading: {
     gap: 4
+  },
+
+  monthlyStateAmount: {
+    width: 20,
+    height: 20
   },
 
   skeletonBoxHeading: {

@@ -7,11 +7,15 @@ import useThemeColors from '../../../hooks/useThemeColors';
 import CustomText from '../../ui/CustomText';
 
 import { homeStyles } from './home.styles';
+import PageWrapper from '../../ui/PageWrapper';
+import { Icon } from 'react-native-paper';
+import { AntDesign, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import Card from '../../ui/Card/Card';
 
 const activeUserImg = require('../../../assets/images/home/activeUsers.png');
 const inActiveUserImg = require('../../../assets/images/home/inActiveUsers.png');
 
-const ProductStatistics: FC<{ data: Record<PRODUCT_STATUS, number> }> = (props) => {
+const ProductStatistics: FC<{ data: Record<PRODUCT_STATUS, number>; isLoading: boolean }> = (props) => {
   const { colors } = useThemeColors();
 
   const dynamicStyles = useMemo(() => {
@@ -32,43 +36,55 @@ const ProductStatistics: FC<{ data: Record<PRODUCT_STATUS, number> }> = (props) 
 
   return (
     <Fragment>
-      <View style={homeStyles.ordersStatisticsCont}>
-        <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.orderStatisticsCont]}>
-          <View>
-            <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.activeUsersText]}>
-              Active Products{' '}
-            </CustomText>
-            <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.activeUsersText]}>
-              {props?.data[PRODUCT_STATUS.active] || 0}
-            </CustomText>
-          </View>
+      <PageWrapper.Section
+        titleContStyle={{
+          marginTop: 10,
+          marginBottom: 0
+        }}
+        titleProps={{
+          fontVariant: 'quicksandBold',
+          weight: '700'
+        }}
+        icon={
+          <MaterialIcons
+            size={24}
+            color={colors.tertiary}
+            name='inventory'
+          />
+        }
+        title={'Products Statistics'}>
+        <View style={homeStyles.ordersStatisticsCont}>
+          <Card
+            title='Active Products'
+            icon={
+              <MaterialIcons
+                size={24}
+                color={colors.green}
+                name='inventory'
+              />
+            }
+            isLoading={props.isLoading}
+            value={props.data?.['1'] || '0'}
+            textColor={colors.textWhite}
+            linearGradientColors={[colors.green, colors.green300]}
+          />
 
-          <ImageBackground
-            resizeMode='contain'
-            source={activeUserImg}
-            imageStyle={[homeStyles.orderBgImage]}
-            style={[homeStyles.orderBgImage]}
+          <Card
+            title='Inactive Products'
+            icon={
+              <MaterialIcons
+                size={24}
+                color={colors.red}
+                name='inventory'
+              />
+            }
+            isLoading={props.isLoading}
+            value={props.data?.['0'] || '0'}
+            textColor={colors.textWhite}
+            linearGradientColors={[colors.red, colors.red, colors.red300]}
           />
         </View>
-
-        <View style={[globalStyles.card, dynamicStyles.cardBg, homeStyles.orderStatisticsCont]}>
-          <View>
-            <CustomText style={[homeStyles.orderStatisticsContHeading, dynamicStyles.inActiveUserText]}>
-              InActive Products
-            </CustomText>
-            <CustomText style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.inActiveUserText]}>
-              {props?.data[PRODUCT_STATUS.inactive] || 0}
-            </CustomText>
-          </View>
-
-          <ImageBackground
-            resizeMode='contain'
-            source={inActiveUserImg}
-            imageStyle={[homeStyles.orderBgImage]}
-            style={[homeStyles.orderBgImage]}
-          />
-        </View>
-      </View>
+      </PageWrapper.Section>
     </Fragment>
   );
 };

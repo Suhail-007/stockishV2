@@ -8,7 +8,7 @@ import { router, Tabs } from 'expo-router';
 
 import Header from '@/components/ui/Header';
 import TabBar from '@/components/ui/TabBar/TabBar';
-import { useColorScheme } from '@/components/useColorScheme';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 import Colors from '@/constants/colors';
 import useThemeColors from '@/hooks/useThemeColors';

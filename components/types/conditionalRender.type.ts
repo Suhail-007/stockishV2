@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 export type ConditionalRenderProps = {
   condition: boolean;
   isTrueComponent: JSX.Element;

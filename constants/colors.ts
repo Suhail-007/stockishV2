@@ -1,7 +1,3 @@
-import { MD3Theme } from 'react-native-paper';
-
-import { MD3Colors } from 'react-native-paper/lib/typescript/types';
-
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#ffffff';
 
@@ -15,6 +11,14 @@ const Colors = {
     backgroundWhite: '#FFFFFF',
     errorBg: '#f2dede',
     successBg: '#e1fbfc',
+    homeHeaderColor1: '#5E6FEB',
+    homeHeaderColor2: '#7667E9',
+    red: '#E45E4F',
+
+    monthlySalesLgBlue: '#5D7FEF',
+    monthlyProfitLgGreen: '#77B56C',
+    monthlyProfitLgGreenLight: '#9be48e',
+    lgBlueLight: '#919cef',
 
     // 🟦 Buttons
     buttonBg: '#007CBB',
@@ -26,8 +30,12 @@ const Colors = {
     // 🔤 Text
     textPrimary: '#333333',
     textSecondary: '#666666',
+    textTertiary: '#4B5563',
     text: '#000000',
     textWhite: '#FFFFFF',
+    green: '#6FB164',
+    yellow: '#F1BC54',
+    yellowLgLight: '#EEB660',
     yellowText900: '#918104',
     greenText900: '#056b33',
     redText900: '#b70000',
@@ -40,6 +48,7 @@ const Colors = {
     // ✅ Status & Alerts
     success: '#00979E',
     warning: '#FFA500',
+
     errorText: '#D32F2F',
 
     // 🎛 Icons & Borders
@@ -58,12 +67,16 @@ const Colors = {
     primary100: '#cfc1f2',
     yellow100: '#fff39be1',
     green100: '#cdfac1ff',
+    green300: '#81BB77',
     red100: '#fbc5c5',
     grey50: '#f5f5f5',
     grey100: '#f2f2f2',
     grey200: '#e0e0e0',
+    grey400: '#9CA3AF',
     tertiary50: '#e8f5fb',
     tertiary100: '#deecfd',
+    blue100: '#F2F5FD',
+    red300: '#E66D5F',
 
     //Skeleton
     skeleton: '#dfdddd',
@@ -79,6 +92,15 @@ const Colors = {
     backgroundWhite: '#FFFFFF',
     errorBg: '#6c3636',
     successBg: '#1b5e20',
+    homeHeaderColor1: '#5E6FEB',
+    homeHeaderColor2: '#7667E9',
+    red: '#E45E4F',
+    red300: '#E66D5F',
+
+    monthlySalesLgBlue: '#5D7FEF',
+    monthlyProfitLgGreen: '#a3db99',
+    monthlyProfitLgGreenLight: '#83BC79',
+    lgBlueLight: '#bec4f2',
 
     // 🟦 Buttons
     buttonBg: '#005A8E',
@@ -90,8 +112,12 @@ const Colors = {
     // 🔤 Text
     textPrimary: '#FFFFFF',
     textSecondary: '#B0B0B0',
+    textTertiary: '#4B5563',
     text: '#FFFFFF',
     textWhite: '#FFFFFF',
+    green: '#6FB164',
+    yellow: '#F1BC54',
+    yellowLgLight: '#EEB660',
     yellowText900: '#998700',
     greenText900: '#056b33',
     redText900: '#b70000',
@@ -104,6 +130,7 @@ const Colors = {
     // ✅ Status & Alerts
     success: '#00979E',
     warning: '#FFA500',
+
     errorText: '#D32F2F',
 
     // 🎛 Icons & Borders
@@ -123,12 +150,15 @@ const Colors = {
     primary100: '#cfc1f2',
     yellow100: '#f1ecbc',
     green100: '#baeebe',
+    green300: '#81BB77',
     red100: '#fbc5c5ff',
     grey50: '#f5f5f5',
     grey100: '#f2f2f2',
     grey200: '#e1dddd',
+    grey400: '#9CA3AF',
     tertiary50: '#6b808a',
     tertiary100: '#43648b',
+    blue100: '#F2F5FD',
 
     //Skeleton
     skeleton: '#555',

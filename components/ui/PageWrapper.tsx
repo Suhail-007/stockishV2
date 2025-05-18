@@ -78,6 +78,7 @@ const _SectionPage: FC<SectionPageProps> = ({
   titleContStyle,
   titleProps,
   icon,
+  heading,
   ...props
 }) => {
   const { colors } = useThemeColors();
@@ -85,6 +86,8 @@ const _SectionPage: FC<SectionPageProps> = ({
     <View
       style={contStyle}
       {...props}>
+      {heading && heading}
+
       {(icon || title) && (
         <View style={[pageDefaultStyles.heading, titleContStyle]}>
           {icon && icon}

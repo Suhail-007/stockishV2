@@ -35,13 +35,6 @@ export default function SignIn() {
   const { control, handleSubmit, watch, setValue } = useForm<FormData>();
   const dispatch = useAppDispatch();
   const [email, password] = watch(['email', 'password']);
-
-  useEffect(() => {
-    if (emailParam) {
-      setValue('email', emailParam);
-    }
-  }, [emailParam, setValue]);
-
   const {
     mutateAsync: checkEmailMutation,
     error: emailError,
@@ -59,6 +52,12 @@ export default function SignIn() {
     mutationFn: login,
     mutationKey: ['signIn', email, password]
   });
+
+  useEffect(() => {
+    if (emailParam) {
+      setValue('email', emailParam);
+    }
+  }, [emailParam, setValue]);
 
   const handleSubmitEmail = async () => {
     try {

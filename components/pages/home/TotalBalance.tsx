@@ -1,76 +1,33 @@
-import { Fragment, memo, useMemo } from 'react';
-import { View } from 'react-native';
-import { ImageBackground } from 'react-native';
+import { memo } from 'react';
 
-import { globalStyles } from '../../../constants/globalStyles';
 import useThemeColors from '../../../hooks/useThemeColors';
-import CustomText from '../../ui/CustomText';
 
-import CalendarFilter from './CalendarFilter';
-import { homeStyles } from './home.styles';
+import Card from '../../ui/Card/Card';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const totalBalanceImage = require('../../../assets/images/home/balanceAmount.png');
-
-const _TotalBalance = ({
-  amount = 0,
-  selectedMonth = new Date().getMonth() + 1,
-  selectedYear = new Date().getFullYear(),
-  onMonthChange,
-  onYearChange
-}: {
-  amount: number;
-  selectedMonth?: number;
-  selectedYear?: number;
-  onMonthChange?: (month: number) => void;
-  onYearChange?: (year: number) => void;
-}) => {
+const _TotalBalance = ({ amount = 0, isLoading }: { amount: number; isLoading: boolean }) => {
   const { colors } = useThemeColors();
-
-  const dynamicStyles = useMemo(() => {
-    return {
-      cont: {
-        backgroundColor: colors.tertiary100
-      },
-      textColor: {
-        color: colors.tertiary
-      }
-    };
-  }, [colors.tertiary100, colors.tertiary]);
+  const date = new Date();
+  const month = date.toLocaleString('default', { month: 'long' });
+  const year = date.getFullYear();
 
   return (
-    <Fragment>
-      <CalendarFilter
-        selectedMonth={selectedMonth}
-        selectedYear={selectedYear}
-        onMonthChange={onMonthChange!}
-        onYearChange={onYearChange!}
-      />
-      <View style={[globalStyles.card, homeStyles.totalBalanceCont, dynamicStyles.cont]}>
-        <View style={homeStyles.typographyCont}>
-          <View>
-            <CustomText
-              adjustsFontSizeToFit
-              variant='bodyMedium'
-              fontVariant='quicksandSemiBold'
-              weight={'600'}
-              style={[homeStyles.orderStatisticsContHeading, dynamicStyles.textColor]}>
-              Balance Amount
-            </CustomText>
-          </View>
-
-          <CustomText
-            fontVariant='quicksandBold'
-            weight={'700'}
-            style={[homeStyles.orderStatisticsContSubHeading, dynamicStyles.textColor]}>
-            ₹ {amount}
-          </CustomText>
-        </View>
-        <ImageBackground
-          resizeMode='contain'
-          imageStyle={homeStyles.totalBalanceBgImage}
-          source={totalBalanceImage}></ImageBackground>
-      </View>
-    </Fragment>
+    <Card
+      masked
+      isLoading={isLoading}
+      icon={
+        <MaterialIcons
+          name='currency-rupee'
+          size={24}
+          color={colors.textWhite}
+        />
+      }
+      textColor={colors.textWhite}
+      linearGradientColors={[colors.homeHeaderColor1, colors.homeHeaderColor1, colors.homeHeaderColor2]}
+      amount={amount}
+      title={`${month} ${year}`}
+      subText='Balance Amount'
+    />
   );
 };
 

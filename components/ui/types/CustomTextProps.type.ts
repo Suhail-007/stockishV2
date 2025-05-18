@@ -8,3 +8,4 @@ export type CustomTextProps = TextProps<string> & {
   color?: string;
   weight?: TextStyle['fontWeight'];
 };
+``;

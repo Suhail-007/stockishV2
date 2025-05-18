@@ -2,11 +2,11 @@ import { Fragment, useEffect } from 'react';
 
 import { useFonts } from 'expo-font';
 import { Redirect, Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
 
 import Header from '../../components/ui/Header';
 import { Fonts } from '../../constants/fonts';
 import { useSession } from '../../ctx';
+import { SplashScreen } from 'expo-router';
 
 export {
   // Catch any errors thrown by the Layout component.

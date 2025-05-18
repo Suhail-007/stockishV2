@@ -67,3 +67,32 @@ export const createFiltersQuery = <T extends Filters>(filters: Partial<T>) => {
 
   return query;
 };
+
+type GetStatusStyle = { bg: string; icon: any; text: string };
+
+/**
+ * Returns the style configuration for a given order status.
+ *
+ * The style includes background color, icon, and text based on the status:
+ * - 'delivered': Green background with a check-circle icon and 'Delivered' text.
+ * - 'pending': Yellow background with a clock-time-four icon and 'Pending' text.
+ * - 'cancelled': Red background with a close-circle icon and 'Cancelled' text.
+ * - Any other status: Gray background with an alert-circle icon and 'Unknown' text.
+ *
+ * @param status - The status of the order.
+ * @returns An object containing the background color, icon, and text for the specified status.
+ */
+export const getStatusStyle = (status: string): GetStatusStyle => {
+  switch (status.toLowerCase()) {
+    case '1':
+      return { bg: '#FACC15', icon: 'clock-time-four', text: 'Pending' };
+    case '2':
+      return { bg: '#22C55E', icon: 'check-circle', text: 'Delivered' };
+    case '3':
+      return { bg: '#EF4444', icon: 'close-circle', text: 'Cancelled' };
+    case '5':
+      return { bg: '#052127', icon: 'close-circle', text: 'MAD' };
+    default:
+      return { bg: '#D1D5DB', icon: 'alert-circle', text: 'Unknown' };
+  }
+};
